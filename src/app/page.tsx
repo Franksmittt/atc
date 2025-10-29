@@ -1,6 +1,7 @@
 // src/app/page.tsx
 import React from 'react';
-import dynamicImport from 'next/dynamic'; // Renamed the import
+// Keep dynamic import commented out for now
+// import dynamic from 'next/dynamic';
 
 import Hero from '@/components/sections/Hero';
 import TrustAndProblem from '@/components/sections/TrustAndProblem';
@@ -9,14 +10,14 @@ import ReviewWall from '@/components/sections/ReviewWall';
 import LocalProof from '@/components/sections/LocalProof';
 import ServiceFunnel from '@/components/sections/ServiceFunnel';
 
-// Force this page to be dynamically rendered
-export const dynamic = 'force-dynamic'; // Keep this export for segment config
+// Force dynamic rendering just in case, though BrandSlider is removed
+export const dynamic = 'force-dynamic';
 
-// Dynamically import BrandSlider with SSR turned off using the renamed import
-const BrandSlider = dynamicImport( // Use the renamed import here
-  () => import('@/components/sections/BrandSlider'),
-  { ssr: false } // This ensures it only renders on the client-side
-);
+// Keep BrandSlider commented out
+// const BrandSlider = dynamic(
+//   () => import('@/components/sections/BrandSlider'),
+//   { ssr: false }
+// );
 
 export default function Home() {
   return (
@@ -24,9 +25,8 @@ export default function Home() {
       {/* 1. HOOK: High-impact entry point */}
       <Hero />
 
-      {/* 2. AUTHORITY WALL: Brand Slider is placed here for INSTANT CREDIBILITY */}
-      {/* Render the dynamically imported BrandSlider */}
-      <BrandSlider />
+      {/* 2. AUTHORITY WALL: Brand Slider COMPLETELY REMOVED FOR TESTING */}
+      {/* <BrandSlider /> */}
 
       {/* 3. CONTEXT: Establishes Heritage and differentiates the Value */}
       <TrustAndProblem />
