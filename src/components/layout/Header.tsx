@@ -3,10 +3,19 @@
 
 import React, { useState } from 'react';
 import Link from 'next/link';
-// import { ThemeToggle } from '@/components/theme-toggle'; // Keep commented out for now
+import dynamic from 'next/dynamic'; // Import dynamic
+// Keep ThemeToggle commented out
 import { Button } from '@/components/ui/button';
-import { Sheet, SheetContent, SheetTrigger, SheetClose } from "@/components/ui/sheet";
+// Import Sheet primitive types if needed, but not the components directly here anymore
+// import { Sheet, SheetContent, SheetTrigger, SheetClose } from "@/components/ui/sheet";
 import { Phone, MapPin, Clock, MessageSquareText, Menu, X } from 'lucide-react';
+
+// --- Dynamically import Sheet components with SSR disabled ---
+const DynamicSheet = dynamic(() => import('@/components/ui/sheet').then((mod) => mod.Sheet), { ssr: false });
+const DynamicSheetTrigger = dynamic(() => import('@/components/ui/sheet').then((mod) => mod.SheetTrigger), { ssr: false });
+const DynamicSheetContent = dynamic(() => import('@/components/ui/sheet').then((mod) => mod.SheetContent), { ssr: false });
+const DynamicSheetClose = dynamic(() => import('@/components/ui/sheet').then((mod) => mod.SheetClose), { ssr: false });
+// --- End Dynamic Imports ---
 
 const NAV_LINKS = [
     { name: 'Our Experts', href: '/about' },
@@ -24,8 +33,7 @@ export default function Header() {
             {/* Top Bar (Keep as before) */}
             <div className="bg-neutral-900 hidden md:block border-b border-neutral-800">
                <div className="container flex h-10 max-w-screen-2xl items-center justify-end px-4 mx-auto">
-                    {/* ... content ... */}
-                     <div className="flex items-center text-xs text-neutral-400 space-x-6">
+                    <div className="flex items-center text-xs text-neutral-400 space-x-6">
                         <a href="https://maps.app.goo.gl/YourMapLink" target="_blank" rel="noopener noreferrer" className="flex items-center hover:text-white transition-colors">
                             <MapPin className="h-4 w-4 mr-1 text-primary" /> 26 St Columb St, New Redruth, Alberton
                         </a>
@@ -42,14 +50,14 @@ export default function Header() {
             {/* Main Nav Bar */}
             <div className="bg-white/95 dark:bg-neutral-800/95 backdrop-blur supports-[backdrop-filter]:bg-background/80 border-b border-neutral-200 dark:border-neutral-700">
                 <div className="container flex h-16 max-w-screen-2xl items-center justify-between px-4 mx-auto">
-                    {/* Logo (Keep as before) */}
+                    {/* Logo */}
                     <Link href="/" className="flex items-center space-x-2 flex-shrink-0 mr-6">
                         <span className="font-bold text-xl sm:text-2xl text-neutral-800 dark:text-white uppercase tracking-tight whitespace-nowrap">
                             Alberton <span className="text-primary">Tyre Clinic</span>
                         </span>
                     </Link>
 
-                    {/* Desktop Nav (Keep as before) */}
+                    {/* Desktop Nav */}
                     <nav className="hidden lg:flex items-center justify-center flex-grow space-x-1 mx-6">
                        {NAV_LINKS.map(link => (
                             <Button key={link.name} variant="ghost" asChild>
@@ -65,7 +73,7 @@ export default function Header() {
 
                     {/* Right Side */}
                     <div className="flex items-center space-x-2 flex-shrink-0">
-                        {/* WhatsApp Button (Keep as before) */}
+                        {/* WhatsApp Button */}
                         <Button
                             asChild
                             size="sm"
@@ -75,7 +83,7 @@ export default function Header() {
                                 <MessageSquareText className="h-4 w-4 mr-1.5" /> WhatsApp Now
                             </a>
                         </Button>
-                        {/* Assessment Button (Keep as before) */}
+                        {/* Assessment Button */}
                         <Button
                             asChild
                             className="hidden sm:inline-flex bg-primary hover:bg-primary/hover text-white font-bold transition-colors"
@@ -89,10 +97,9 @@ export default function Header() {
                         {/* Keep ThemeToggle commented out */}
                         {/* <ThemeToggle /> */}
 
-                        {/* --- TEMPORARILY COMMENT OUT MOBILE MENU --- */}
-                        {/*
-                        <Sheet open={isMobileMenuOpen} onOpenChange={setIsMobileMenuOpen}>
-                            <SheetTrigger asChild>
+                        {/* --- Use Dynamically Imported Mobile Menu --- */}
+                        <DynamicSheet open={isMobileMenuOpen} onOpenChange={setIsMobileMenuOpen}>
+                            <DynamicSheetTrigger asChild>
                                 <Button
                                     variant="ghost"
                                     size="icon"
@@ -101,19 +108,19 @@ export default function Header() {
                                 >
                                     <Menu className="h-6 w-6" />
                                 </Button>
-                            </SheetTrigger>
-                            <SheetContent side="right" className="w-[300px] sm:w-[400px] bg-white dark:bg-neutral-900 p-6">
+                            </DynamicSheetTrigger>
+                            <DynamicSheetContent side="right" className="w-[300px] sm:w-[400px] bg-white dark:bg-neutral-900 p-6">
                                 <div className="flex justify-between items-center mb-6">
                                     <span className="font-bold text-lg">Menu</span>
-                                    <SheetClose asChild>
+                                    <DynamicSheetClose asChild>
                                         <Button variant="ghost" size="icon" aria-label="Close menu">
                                             <X className="h-6 w-6" />
                                         </Button>
-                                    </SheetClose>
+                                    </DynamicSheetClose>
                                 </div>
                                 <nav className="flex flex-col space-y-3">
                                     {NAV_LINKS.map((link) => (
-                                        <SheetClose asChild key={link.name}>
+                                        <DynamicSheetClose asChild key={link.name}>
                                             <Link
                                                 href={link.href}
                                                 className="text-lg font-medium text-neutral-700 dark:text-neutral-200 hover:text-primary transition-colors py-2"
@@ -121,24 +128,23 @@ export default function Header() {
                                             >
                                                 {link.name}
                                             </Link>
-                                        </SheetClose>
+                                        </DynamicSheetClose>
                                     ))}
                                     <hr className="my-4 border-neutral-200 dark:border-neutral-700"/>
-                                    <SheetClose asChild>
+                                    <DynamicSheetClose asChild>
                                         <a href={WHATSAPP_LINK} target="_blank" rel="noopener noreferrer" className="flex items-center text-lg font-medium py-2 text-[#25D366] hover:text-[#128C7E] transition-colors">
                                             <MessageSquareText className="h-5 w-5 mr-2" /> WhatsApp Us
                                         </a>
-                                    </SheetClose>
-                                     <SheetClose asChild>
+                                    </DynamicSheetClose>
+                                     <DynamicSheetClose asChild>
                                         <Link href="/assessment" className="flex items-center text-lg font-medium py-2 text-primary hover:text-primary/80 transition-colors">
                                            Book FREE Assessment
                                         </Link>
-                                    </SheetClose>
+                                    </DynamicSheetClose>
                                 </nav>
-                            </SheetContent>
-                        </Sheet>
-                        */}
-                        {/* --- END OF TEMPORARILY COMMENTED OUT SECTION --- */}
+                            </DynamicSheetContent>
+                        </DynamicSheet>
+                        {/* --- End of Mobile Menu Section --- */}
                     </div>
                 </div>
             </div>
