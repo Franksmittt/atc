@@ -1,8 +1,8 @@
 // src/app/layout.tsx
 import type { Metadata } from "next";
 // Keep ThemeProvider commented out
-// import Header from "@/components/layout/Header"; // <-- Temporarily comment out
-// import Footer from "@/components/layout/Footer"; // <-- Temporarily comment out
+// import Header from "@/components/layout/Header"; // <-- Keep commented out
+import Footer from "@/components/layout/Footer"; // <-- UNCOMMENT THIS LINE
 import "./globals.css";
 
 export const metadata: Metadata = {
@@ -18,11 +18,11 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body>
-        {/* <Header /> */} {/* <-- Temporarily comment out */}
+        {/* <Header /> */} {/* <-- Keep commented out */}
         <main className="min-h-screen">
             {children}
         </main>
-        {/* <Footer /> */} {/* <-- Temporarily comment out */}
+        <Footer /> {/* <-- UNCOMMENT THIS LINE */}
       </body>
     </html>
   )
