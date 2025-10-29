@@ -3,8 +3,8 @@ import React from 'react';
 import dynamicImport from 'next/dynamic';
 
 import Hero from '@/components/sections/Hero';
-import TrustAndProblem from '@/components/sections/TrustAndProblem'; // <-- UNCOMMENT THIS IMPORT
-// import BrandsOfAuthority from '@/components/sections/BrandsOfAuthority';
+import TrustAndProblem from '@/components/sections/TrustAndProblem';
+import BrandsOfAuthority from '@/components/sections/BrandsOfAuthority'; // <-- UNCOMMENT THIS IMPORT
 // import ReviewWall from '@/components/sections/ReviewWall';
 // import LocalProof from '@/components/sections/LocalProof';
 // import ServiceFunnel from '@/components/sections/ServiceFunnel';
@@ -28,11 +28,13 @@ export default function Home() {
       <BrandSlider />
 
       {/* 3. CONTEXT: Establishes Heritage and differentiates the Value */}
-      <TrustAndProblem /> {/* <-- UNCOMMENT THIS INSTANCE */}
+      <TrustAndProblem />
+
+      {/* 4. PROOF: Validates the safety claim by showcasing premium brands (Detailed) */}
+      <BrandsOfAuthority /> {/* <-- UNCOMMENT THIS INSTANCE */}
 
       {/* --- OTHER SECTIONS STILL COMMENTED OUT --- */}
       {/*
-      <BrandsOfAuthority />
       <ReviewWall />
       <LocalProof />
       <ServiceFunnel />
