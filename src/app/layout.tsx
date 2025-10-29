@@ -1,10 +1,9 @@
 // src/app/layout.tsx
 import type { Metadata } from "next";
-// import { ThemeProvider } from "@/components/theme-provider"; // <-- Temporarily comment out
-import Header from "@/components/layout/Header";
-import Footer from "@/components/layout/Footer";
+// Keep ThemeProvider commented out
+// import Header from "@/components/layout/Header"; // <-- Temporarily comment out
+// import Footer from "@/components/layout/Footer"; // <-- Temporarily comment out
 import "./globals.css";
-
 
 export const metadata: Metadata = {
   title: "Alberton Tyre Clinic - Your Tyre Experts",
@@ -17,20 +16,13 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
-    // Temporarily removed suppressHydrationWarning as it's for ThemeProvider
     <html lang="en">
       <body>
-        {/* <ThemeProvider
-          attribute="class"
-          defaultTheme="system"
-          enableSystem
-        > */} {/* <-- Temporarily comment out wrapper */}
-          <Header />
-          <main className="min-h-screen">
-              {children}
-          </main>
-          <Footer />
-        {/* </ThemeProvider> */} {/* <-- Temporarily comment out wrapper */}
+        {/* <Header /> */} {/* <-- Temporarily comment out */}
+        <main className="min-h-screen">
+            {children}
+        </main>
+        {/* <Footer /> */} {/* <-- Temporarily comment out */}
       </body>
     </html>
   )
