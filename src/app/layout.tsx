@@ -1,7 +1,7 @@
 // src/app/layout.tsx
 import type { Metadata } from "next";
-// Keep ThemeProvider commented out
-import Header from "@/components/layout/Header"; // <-- UNCOMMENT THIS LINE
+import { ThemeProvider } from "@/components/theme-provider"; // <-- UNCOMMENT THIS LINE
+import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
 import "./globals.css";
 
@@ -16,13 +16,21 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
-    <html lang="en">
+    // Add suppressHydrationWarning back
+    <html lang="en" suppressHydrationWarning>
       <body>
-        <Header /> {/* <-- UNCOMMENT THIS LINE */}
-        <main className="min-h-screen">
-            {children}
-        </main>
-        <Footer />
+        {/* UNCOMMENT ThemeProvider wrapper */}
+        <ThemeProvider
+          attribute="class"
+          defaultTheme="system"
+          enableSystem
+        >
+          <Header />
+          <main className="min-h-screen">
+              {children}
+          </main>
+          <Footer />
+        </ThemeProvider> {/* <-- UNCOMMENT THIS LINE */}
       </body>
     </html>
   )

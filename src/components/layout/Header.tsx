@@ -3,19 +3,17 @@
 
 import React, { useState } from 'react';
 import Link from 'next/link';
-import dynamic from 'next/dynamic'; // Import dynamic
-// Keep ThemeToggle commented out
+import dynamic from 'next/dynamic';
+import { ThemeToggle } from '@/components/theme-toggle'; // <-- UNCOMMENT THIS LINE
 import { Button } from '@/components/ui/button';
-// Import Sheet primitive types if needed, but not the components directly here anymore
-// import { Sheet, SheetContent, SheetTrigger, SheetClose } from "@/components/ui/sheet";
-import { Phone, MapPin, Clock, MessageSquareText, Menu, X } from 'lucide-react';
-
-// --- Dynamically import Sheet components with SSR disabled ---
+// Keep dynamic imports for Sheet components
 const DynamicSheet = dynamic(() => import('@/components/ui/sheet').then((mod) => mod.Sheet), { ssr: false });
 const DynamicSheetTrigger = dynamic(() => import('@/components/ui/sheet').then((mod) => mod.SheetTrigger), { ssr: false });
 const DynamicSheetContent = dynamic(() => import('@/components/ui/sheet').then((mod) => mod.SheetContent), { ssr: false });
 const DynamicSheetClose = dynamic(() => import('@/components/ui/sheet').then((mod) => mod.SheetClose), { ssr: false });
-// --- End Dynamic Imports ---
+import { Phone, MapPin, Clock, MessageSquareText, Menu, X } from 'lucide-react';
+
+// NAV_LINKS and WHATSAPP_LINK remain the same
 
 const NAV_LINKS = [
     { name: 'Our Experts', href: '/about' },
@@ -25,6 +23,7 @@ const NAV_LINKS = [
 ];
 const WHATSAPP_LINK = "https://wa.me/27119078495?text=Hello%2C%20I%20saw%20your%20website%20and%20need%20a%20quote%20for%20tyres.";
 
+
 export default function Header() {
     const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
@@ -32,8 +31,9 @@ export default function Header() {
         <header className="sticky top-0 z-50 w-full">
             {/* Top Bar (Keep as before) */}
             <div className="bg-neutral-900 hidden md:block border-b border-neutral-800">
-               <div className="container flex h-10 max-w-screen-2xl items-center justify-end px-4 mx-auto">
-                    <div className="flex items-center text-xs text-neutral-400 space-x-6">
+                <div className="container flex h-10 max-w-screen-2xl items-center justify-end px-4 mx-auto">
+                    {/* ... content ... */}
+                     <div className="flex items-center text-xs text-neutral-400 space-x-6">
                         <a href="https://maps.app.goo.gl/YourMapLink" target="_blank" rel="noopener noreferrer" className="flex items-center hover:text-white transition-colors">
                             <MapPin className="h-4 w-4 mr-1 text-primary" /> 26 St Columb St, New Redruth, Alberton
                         </a>
@@ -94,11 +94,12 @@ export default function Header() {
                             </Link>
                         </Button>
 
-                        {/* Keep ThemeToggle commented out */}
-                        {/* <ThemeToggle /> */}
+                        {/* UNCOMMENT ThemeToggle */}
+                        <ThemeToggle />
 
-                        {/* --- Use Dynamically Imported Mobile Menu --- */}
+                        {/* Mobile Menu (using DynamicSheet components) */}
                         <DynamicSheet open={isMobileMenuOpen} onOpenChange={setIsMobileMenuOpen}>
+                            {/* ... SheetTrigger and SheetContent using Dynamic components ... */}
                             <DynamicSheetTrigger asChild>
                                 <Button
                                     variant="ghost"
@@ -144,7 +145,6 @@ export default function Header() {
                                 </nav>
                             </DynamicSheetContent>
                         </DynamicSheet>
-                        {/* --- End of Mobile Menu Section --- */}
                     </div>
                 </div>
             </div>
