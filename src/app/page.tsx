@@ -4,8 +4,8 @@ import dynamicImport from 'next/dynamic';
 
 import Hero from '@/components/sections/Hero';
 import TrustAndProblem from '@/components/sections/TrustAndProblem';
-import BrandsOfAuthority from '@/components/sections/BrandsOfAuthority'; // <-- UNCOMMENT THIS IMPORT
-// import ReviewWall from '@/components/sections/ReviewWall';
+import BrandsOfAuthority from '@/components/sections/BrandsOfAuthority';
+import ReviewWall from '@/components/sections/ReviewWall'; // <-- UNCOMMENT THIS IMPORT
 // import LocalProof from '@/components/sections/LocalProof';
 // import ServiceFunnel from '@/components/sections/ServiceFunnel';
 
@@ -31,11 +31,13 @@ export default function Home() {
       <TrustAndProblem />
 
       {/* 4. PROOF: Validates the safety claim by showcasing premium brands (Detailed) */}
-      <BrandsOfAuthority /> {/* <-- UNCOMMENT THIS INSTANCE */}
+      <BrandsOfAuthority />
+
+      {/* 5. SOCIAL PROOF: Integrates real customer testimonials */}
+      <ReviewWall /> {/* <-- UNCOMMENT THIS INSTANCE */}
 
       {/* --- OTHER SECTIONS STILL COMMENTED OUT --- */}
       {/*
-      <ReviewWall />
       <LocalProof />
       <ServiceFunnel />
       */}
