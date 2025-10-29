@@ -3,12 +3,11 @@
 
 import React, { useState } from 'react';
 import Link from 'next/link';
-// import { ThemeToggle } from '@/components/theme-toggle'; // <-- Temporarily comment out
+// import { ThemeToggle } from '@/components/theme-toggle'; // Keep commented out for now
 import { Button } from '@/components/ui/button';
 import { Sheet, SheetContent, SheetTrigger, SheetClose } from "@/components/ui/sheet";
 import { Phone, MapPin, Clock, MessageSquareText, Menu, X } from 'lucide-react';
 
-// Strategic navigation links (Keep NAV_LINKS and WHATSAPP_LINK as before)
 const NAV_LINKS = [
     { name: 'Our Experts', href: '/about' },
     { name: 'Services & Brands', href: '/services' },
@@ -17,7 +16,6 @@ const NAV_LINKS = [
 ];
 const WHATSAPP_LINK = "https://wa.me/27119078495?text=Hello%2C%20I%20saw%20your%20website%20and%20need%20a%20quote%20for%20tyres.";
 
-
 export default function Header() {
     const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
@@ -25,23 +23,17 @@ export default function Header() {
         <header className="sticky top-0 z-50 w-full">
             {/* Top Bar (Keep as before) */}
             <div className="bg-neutral-900 hidden md:block border-b border-neutral-800">
-                {/* ... content ... */}
-                 <div className="container flex h-10 max-w-screen-2xl items-center justify-end px-4 mx-auto">
-                    <div className="flex items-center text-xs text-neutral-400 space-x-6">
-                        {/* Address/Location */}
+               <div className="container flex h-10 max-w-screen-2xl items-center justify-end px-4 mx-auto">
+                    {/* ... content ... */}
+                     <div className="flex items-center text-xs text-neutral-400 space-x-6">
                         <a href="https://maps.app.goo.gl/YourMapLink" target="_blank" rel="noopener noreferrer" className="flex items-center hover:text-white transition-colors">
-                            <MapPin className="h-4 w-4 mr-1 text-primary" />
-                            26 St Columb St, New Redruth, Alberton
+                            <MapPin className="h-4 w-4 mr-1 text-primary" /> 26 St Columb St, New Redruth, Alberton
                         </a>
-                        {/* Phone Number */}
                         <a href="tel:+27119078495" className="flex items-center font-bold text-primary hover:text-white transition-colors">
-                            <Phone className="h-4 w-4 mr-1" />
-                            +27 11 907 8495
+                            <Phone className="h-4 w-4 mr-1" /> +27 11 907 8495
                         </a>
-                        {/* Operating Hours */}
                         <span className="flex items-center">
-                            <Clock className="h-4 w-4 mr-1 text-primary" />
-                            Mon - Fri: 08:00 - 17:00 | Sat: 08:00 - 12:00
+                            <Clock className="h-4 w-4 mr-1 text-primary" /> Mon - Fri: 08:00 - 17:00 | Sat: 08:00 - 12:00
                         </span>
                     </div>
                 </div>
@@ -59,7 +51,6 @@ export default function Header() {
 
                     {/* Desktop Nav (Keep as before) */}
                     <nav className="hidden lg:flex items-center justify-center flex-grow space-x-1 mx-6">
-                       {/* ... NAV_LINKS map ... */}
                        {NAV_LINKS.map(link => (
                             <Button key={link.name} variant="ghost" asChild>
                                 <Link
@@ -81,8 +72,7 @@ export default function Header() {
                             className="bg-[#25D366] hover:bg-[#128C7E] text-white font-bold transition-colors shadow-md hidden sm:flex"
                         >
                             <a href={WHATSAPP_LINK} target="_blank" rel="noopener noreferrer" className="flex items-center">
-                                <MessageSquareText className="h-4 w-4 mr-1.5" />
-                                WhatsApp Now
+                                <MessageSquareText className="h-4 w-4 mr-1.5" /> WhatsApp Now
                             </a>
                         </Button>
                         {/* Assessment Button (Keep as before) */}
@@ -96,11 +86,12 @@ export default function Header() {
                             </Link>
                         </Button>
 
-                        {/* <ThemeToggle /> */} {/* <-- TEMPORARILY COMMENTED OUT */}
+                        {/* Keep ThemeToggle commented out */}
+                        {/* <ThemeToggle /> */}
 
-                        {/* Mobile Menu (Sheet - Keep as before) */}
-                         <Sheet open={isMobileMenuOpen} onOpenChange={setIsMobileMenuOpen}>
-                            {/* ... SheetTrigger and SheetContent ... */}
+                        {/* --- TEMPORARILY COMMENT OUT MOBILE MENU --- */}
+                        {/*
+                        <Sheet open={isMobileMenuOpen} onOpenChange={setIsMobileMenuOpen}>
                             <SheetTrigger asChild>
                                 <Button
                                     variant="ghost"
@@ -146,6 +137,8 @@ export default function Header() {
                                 </nav>
                             </SheetContent>
                         </Sheet>
+                        */}
+                        {/* --- END OF TEMPORARILY COMMENTED OUT SECTION --- */}
                     </div>
                 </div>
             </div>
