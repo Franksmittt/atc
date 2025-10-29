@@ -5,8 +5,8 @@ import dynamicImport from 'next/dynamic';
 import Hero from '@/components/sections/Hero';
 import TrustAndProblem from '@/components/sections/TrustAndProblem';
 import BrandsOfAuthority from '@/components/sections/BrandsOfAuthority';
-import ReviewWall from '@/components/sections/ReviewWall'; // <-- UNCOMMENT THIS IMPORT
-// import LocalProof from '@/components/sections/LocalProof';
+import ReviewWall from '@/components/sections/ReviewWall';
+import LocalProof from '@/components/sections/LocalProof'; // <-- UNCOMMENT THIS IMPORT
 // import ServiceFunnel from '@/components/sections/ServiceFunnel';
 
 // Force dynamic rendering
@@ -34,11 +34,13 @@ export default function Home() {
       <BrandsOfAuthority />
 
       {/* 5. SOCIAL PROOF: Integrates real customer testimonials */}
-      <ReviewWall /> {/* <-- UNCOMMENT THIS INSTANCE */}
+      <ReviewWall />
+
+      {/* 6. CONVERSION: Quick metrics */}
+      <LocalProof /> {/* <-- UNCOMMENT THIS INSTANCE */}
 
       {/* --- OTHER SECTIONS STILL COMMENTED OUT --- */}
       {/*
-      <LocalProof />
       <ServiceFunnel />
       */}
     </main>
