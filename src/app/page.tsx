@@ -1,16 +1,17 @@
 // src/app/page.tsx
 import React from 'react';
-// Keep dynamic import commented out for now
+// Keep dynamic import commented out
 // import dynamic from 'next/dynamic';
 
 import Hero from '@/components/sections/Hero';
-import TrustAndProblem from '@/components/sections/TrustAndProblem';
-import BrandsOfAuthority from '@/components/sections/BrandsOfAuthority';
-import ReviewWall from '@/components/sections/ReviewWall';
-import LocalProof from '@/components/sections/LocalProof';
-import ServiceFunnel from '@/components/sections/ServiceFunnel';
+// Comment out all other section imports
+// import TrustAndProblem from '@/components/sections/TrustAndProblem';
+// import BrandsOfAuthority from '@/components/sections/BrandsOfAuthority';
+// import ReviewWall from '@/components/sections/ReviewWall';
+// import LocalProof from '@/components/sections/LocalProof';
+// import ServiceFunnel from '@/components/sections/ServiceFunnel';
 
-// Force dynamic rendering just in case, though BrandSlider is removed
+// Keep forcing dynamic rendering for now
 export const dynamic = 'force-dynamic';
 
 // Keep BrandSlider commented out
@@ -22,26 +23,18 @@ export const dynamic = 'force-dynamic';
 export default function Home() {
   return (
     <main>
-      {/* 1. HOOK: High-impact entry point */}
+      {/* 1. Render ONLY the Hero component */}
       <Hero />
 
-      {/* 2. AUTHORITY WALL: Brand Slider COMPLETELY REMOVED FOR TESTING */}
-      {/* <BrandSlider /> */}
-
-      {/* 3. CONTEXT: Establishes Heritage and differentiates the Value */}
+      {/* --- ALL OTHER SECTIONS TEMPORARILY REMOVED --- */}
+      {/*
+      <BrandSlider />
       <TrustAndProblem />
-
-      {/* 4. PROOF: Validates the safety claim by showcasing premium brands (Detailed) */}
       <BrandsOfAuthority />
-
-      {/* 5. SOCIAL PROOF: Integrates real customer testimonials */}
       <ReviewWall />
-
-      {/* 6. CONVERSION: Quick metrics and service funnels */}
       <LocalProof />
       <ServiceFunnel />
-
-      {/* Further content can be added here */}
+      */}
     </main>
   );
 }
