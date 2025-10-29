@@ -1,5 +1,5 @@
 // src/components/sections/LocalProof.tsx
-// Server Component - High-impact social proof section.
+"use client"; // <<<--- ADD THIS DIRECTIVE
 
 import React from 'react';
 import Link from 'next/link';
@@ -14,48 +14,46 @@ export default function LocalProof() {
 
                 {/* Main Headline: Local Authority */}
                  <h2 className="text-4xl md:text-5xl font-extrabold mb-4">
-                    {/* Corrected: Replaced 'Don't' with 'Don&apos;t' */}
                     Don&apos;t Just Take Our Word For It.
-                </h2> {/* */}
+                </h2>
                 <p className="text-xl mb-10">
                     See why over 500 drivers in Alberton trust our family-run team.
-                </p> {/* */}
+                </p>
 
                 {/* Proof Metrics Grid */}
                 <div className="grid sm:grid-cols-3 gap-8 mb-12">
 
                     {/* Metric 1: Google Rating */}
-                    <div className="bg-white dark:bg-neutral-800 text-neutral-800 dark:text-white p-6 rounded-lg shadow-xl"> {/* */}
+                    <div className="bg-white dark:bg-neutral-800 text-neutral-800 dark:text-white p-6 rounded-lg shadow-xl">
                         <div className="flex justify-center items-center text-5xl font-bold text-primary mb-2">
                             4.9
-                             <Star className="h-8 w-8 ml-2 fill-primary text-primary" /> {/* */}
+                             <Star className="h-8 w-8 ml-2 fill-primary text-primary" />
                         </div>
                         <p className="text-sm font-semibold">Average Google Rating</p>
                     </div>
 
-
                      {/* Metric 2: Total Reviews */}
-                    <div className="bg-white dark:bg-neutral-800 text-neutral-800 dark:text-white p-6 rounded-lg shadow-xl"> {/* */}
+                    <div className="bg-white dark:bg-neutral-800 text-neutral-800 dark:text-white p-6 rounded-lg shadow-xl">
                         <div className="text-5xl font-bold mb-2">
-                             500+ {/* */}
+                             500+
                         </div>
                         <p className="text-sm font-semibold text-neutral-600 dark:text-neutral-400">Verified Local Reviews</p>
                     </div>
 
-                    {/* Metric 3: Years Experience (Repetition for impact) */}
-                    <div className="bg-white dark:bg-neutral-800 text-neutral-800 dark:text-white p-6 rounded-lg shadow-xl"> {/* */}
+                    {/* Metric 3: Years Experience */}
+                    <div className="bg-white dark:bg-neutral-800 text-neutral-800 dark:text-white p-6 rounded-lg shadow-xl">
                         <div className="text-5xl font-bold text-primary mb-2">
                             28
-                         </div> {/* */}
+                         </div>
                         <p className="text-sm font-semibold">Years in Alberton</p>
                     </div>
                 </div>
 
-                {/* Closing CTA */}
-                 <Button asChild size="lg" className="bg-white text-primary hover:bg-neutral-100 font-bold"> {/* */}
+                 {/* Closing CTA */}
+                 <Button asChild size="lg" className="bg-white text-primary hover:bg-neutral-100 font-bold">
                     <Link href="/reviews">Read All Our 5-Star Reviews →</Link>
                 </Button>
             </div>
         </section>
     );
-} //
+}
