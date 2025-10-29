@@ -6,8 +6,8 @@ import Hero from '@/components/sections/Hero';
 import TrustAndProblem from '@/components/sections/TrustAndProblem';
 import BrandsOfAuthority from '@/components/sections/BrandsOfAuthority';
 import ReviewWall from '@/components/sections/ReviewWall';
-import LocalProof from '@/components/sections/LocalProof'; // <-- UNCOMMENT THIS IMPORT
-// import ServiceFunnel from '@/components/sections/ServiceFunnel';
+import LocalProof from '@/components/sections/LocalProof';
+import ServiceFunnel from '@/components/sections/ServiceFunnel'; // <-- UNCOMMENT THIS IMPORT
 
 // Force dynamic rendering
 export const dynamic = 'force-dynamic';
@@ -37,12 +37,11 @@ export default function Home() {
       <ReviewWall />
 
       {/* 6. CONVERSION: Quick metrics */}
-      <LocalProof /> {/* <-- UNCOMMENT THIS INSTANCE */}
+      <LocalProof />
 
-      {/* --- OTHER SECTIONS STILL COMMENTED OUT --- */}
-      {/*
-      <ServiceFunnel />
-      */}
+      {/* 7. CONVERSION: Service Funnel */}
+      <ServiceFunnel /> {/* <-- UNCOMMENT THIS INSTANCE */}
+
     </main>
   );
 }
