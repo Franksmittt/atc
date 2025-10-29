@@ -1,35 +1,37 @@
 // src/app/page.tsx
 import React from 'react';
-// Keep dynamic import commented out
-// import dynamic from 'next/dynamic';
+import dynamicImport from 'next/dynamic';
 
 import Hero from '@/components/sections/Hero';
-// Comment out all other section imports
-// import TrustAndProblem from '@/components/sections/TrustAndProblem';
+import TrustAndProblem from '@/components/sections/TrustAndProblem'; // <-- UNCOMMENT THIS IMPORT
 // import BrandsOfAuthority from '@/components/sections/BrandsOfAuthority';
 // import ReviewWall from '@/components/sections/ReviewWall';
 // import LocalProof from '@/components/sections/LocalProof';
 // import ServiceFunnel from '@/components/sections/ServiceFunnel';
 
-// Keep forcing dynamic rendering for now
+// Force dynamic rendering
 export const dynamic = 'force-dynamic';
 
-// Keep BrandSlider commented out
-// const BrandSlider = dynamic(
-//   () => import('@/components/sections/BrandSlider'),
-//   { ssr: false }
-// );
+// Dynamically import BrandSlider with SSR turned off
+const BrandSlider = dynamicImport(
+  () => import('@/components/sections/BrandSlider'),
+  { ssr: false }
+);
 
 export default function Home() {
   return (
     <main>
-      {/* 1. Render ONLY the Hero component */}
+      {/* 1. HOOK: High-impact entry point */}
       <Hero />
 
-      {/* --- ALL OTHER SECTIONS TEMPORARILY REMOVED --- */}
-      {/*
+      {/* 2. AUTHORITY WALL: Brand Slider is placed here for INSTANT CREDIBILITY */}
       <BrandSlider />
-      <TrustAndProblem />
+
+      {/* 3. CONTEXT: Establishes Heritage and differentiates the Value */}
+      <TrustAndProblem /> {/* <-- UNCOMMENT THIS INSTANCE */}
+
+      {/* --- OTHER SECTIONS STILL COMMENTED OUT --- */}
+      {/*
       <BrandsOfAuthority />
       <ReviewWall />
       <LocalProof />
