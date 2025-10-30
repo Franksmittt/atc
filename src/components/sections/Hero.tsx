@@ -42,7 +42,7 @@ export default function Hero() {
         {/* PRIMARY CTA BUTTON - RESPONSIVE FIX: Reduced mobile padding, allowed text wrap */}
         <Button
           asChild
-          className="h-auto py-3 px-4 text-base font-bold whitespace-normal sm:h-14 sm:py-4 sm:px-10 sm:text-lg sm:whitespace-nowrap md:text-xl transition-all bg-primary hover:bg-primary/hover text-white"
+          className="h-auto py-3 px-4 text-base font-bold whitespace-normal sm:h-14 sm:py-4 sm:px-10 sm:text-lg sm:whitespace-nowrap md:text-xl transition-all bg-primary hover:bg-primary/90 text-white"
         >
           <Link href="/assessment">
             Claim Your FREE 6-Point Vehicle Assessment Today
