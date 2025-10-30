@@ -24,7 +24,7 @@ export default function Hero() {
           className="h-auto py-3 px-4 text-base font-bold whitespace-normal sm:py-4 sm:px-8 sm:text-lg sm:whitespace-nowrap bg-primary hover:bg-primary/90 text-white"
         >
           <Link href="/assessment">
-            Claim Your FREE 6-Point Vehicle Assessment Today
+            Claim Your 6-Point Assessment Today
           </Link>
         </Button>
         <p className="mt-4 text-sm text-neutral-500">
