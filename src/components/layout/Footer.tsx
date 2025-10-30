@@ -54,7 +54,7 @@ export default function Footer() {
                         <ul className="space-y-3 text-sm">
                              <li className="flex items-start">
                                  <MapPin className="h-4 w-4 mr-2 text-primary flex-shrink-0 mt-1" /> {/* */}
-                                <a href="https://maps.app.goo.gl/YourMapLink" target="_blank" rel="noopener noreferrer" className="hover:text-primary transition-colors">
+                                <a href="http://googleusercontent.com/maps/google.com/0" target="_blank" rel="noopener noreferrer" className="hover:text-primary transition-colors">
                                      26 St Columb St, New Redruth, Alberton {/* */}
                                 </a>
                             </li>
