@@ -20,8 +20,8 @@ export default function Footer() {
                              Alberton <span className="text-primary">Tyre Clinic</span> {/* */}
                          </Link>
                         <p className="text-sm leading-relaxed text-neutral-400 max-w-xs mb-4">
-                            {/* FIX: Replaced Alberton's with Alberton&apos;s */}
-                            Alberton&apos;s trusted **family-run fitment experts since 1989**. We prioritize your safety over sales, guaranteed.
+                            {/* FIX: Replaced ' with ' */}
+                            Alberton's trusted **family-run fitment experts since 1989**. We prioritize your safety over sales, guaranteed.
                         </p>
 
                         {/* Trust Anchor Badges */}
@@ -42,9 +42,6 @@ export default function Footer() {
                             <li><Link href="/about" className="hover:text-primary transition-colors">Our Experts</Link></li>
                             <li><Link href="/blog" className="hover:text-primary transition-colors">Safety Blog</Link></li>
                             <li><Link href="/contact" className="hover:text-primary transition-colors">Contact Us</Link></li>
-                            {/* You can add more specific service links here if needed */}
-                            {/* <li><Link href="/services/tyres" className="hover:text-primary transition-colors">Tyre Sales & Fitment</Link></li> */}
-                            {/* <li><Link href="/services/brakes" className="hover:text-primary transition-colors">Brakes & Shocks</Link></li> */}
                         </ul>
                      </div>
 
@@ -90,8 +87,8 @@ export default function Footer() {
                             Safety is Free.
                         </h4> {/* */}
                         <p className="text-sm text-neutral-400 mb-4">
-                            {/* FIX: Replaced Don't with Don&apos;t and vehicle's with vehicle&apos;s */}
-                            Don&apos;t guess your vehicle&apos;s condition. Book your free safety check today.
+                            {/* FIX: Replaced ' with ' */}
+                            Don't guess your vehicle's condition. Book your free safety check today.
                         </p>
                          <Button asChild className="w-full bg-primary hover:bg-primary/hover text-white font-bold">
                             <Link href="/assessment">

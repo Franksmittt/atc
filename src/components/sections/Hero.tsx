@@ -28,7 +28,7 @@ export default function Hero() {
          {/* H1: The Core Value Proposition - White Text for Contrast */}
         <h1 className="text-5xl md:text-6xl font-extrabold mb-4
                      text-white uppercase leading-tight"> {/* */}
-           {/* FIX: Replaced Don't with Don't */}
+           {/* FIX: Replaced ' with ' */}
           Don't Just Change Tyres.
           <span className="text-primary">Invest in Safety.</span>
         </h1>
@@ -36,7 +36,7 @@ export default function Hero() {
         {/* H2/Subheading: Strategic Trust Anchors - Clear and High-Impact */}
         <h2 className="text-xl md:text-2xl font-medium mb-4
                        text-neutral-400"> {/* */}
-           {/* FIX: Replaced Alberton's with Alberton's */}
+           {/* FIX: Replaced ' with ' */}
           Alberton's Family-Run Fitment Experts Since <span className="font-extrabold text-primary">1989.</span>
          </h2>
 
@@ -51,17 +51,15 @@ export default function Hero() {
             </span>
         </div>
 
-        {/* FIX: Primary Lead Magnet CTA (FREE ASSESSMENT)
-          - Removed size="xl" to use specific utility classes
-          - Added responsive text sizes (text-lg md:text-xl)
-          - Added responsive padding (px-6 py-4 md:px-12 md:py-6)
-          - Added whitespace-normal and max-w-xs to allow text to wrap gracefully on mobile
+        {/* PRIMARY CTA BUTTON - RESPONSIVE FIX:
+          - size="xl" is the base style.
+          - Mobile (default): h-auto (auto height), py-4 (vertical padding), px-6 (horizontal padding), whitespace-normal (allows text wrap), text-base (smaller font).
+          - sm screens & up: h-14 (fixed height), sm:px-10 (standard padding), sm:whitespace-nowrap (no wrap), sm:text-lg (larger font).
         */}
         <Button
             asChild
-            className="h-auto max-w-xs whitespace-normal bg-primary hover:bg-primary/hover text-white font-bold transition-all 
-                       text-lg px-6 py-4 
-                       md:text-xl md:px-12 md:py-6"
+            size="xl"
+            className="h-auto py-4 px-6 text-base whitespace-normal sm:h-14 sm:px-10 sm:whitespace-nowrap sm:text-lg md:text-xl transition-all"
         >
           <Link href="/assessment">
             Claim Your FREE 6-Point Vehicle Assessment Today
