@@ -20,14 +20,15 @@ export default function Footer() {
                              Alberton <span className="text-primary">Tyre Clinic</span> {/* */}
                          </Link>
                         <p className="text-sm leading-relaxed text-neutral-400 max-w-xs mb-4">
-                            Alberton's trusted family run fitment experts since 1989. We prioritize your safety over sales, guaranteed.
+                            {/* FIX: Replaced Alberton's with Alberton&apos;s */}
+                            Alberton&apos;s trusted **family-run fitment experts since 1989**. We prioritize your safety over sales, guaranteed.
                         </p>
 
                         {/* Trust Anchor Badges */}
                         <div className="space-y-1 text-xs font-semibold">
                             <span className="text-primary block">✓ Official Pirelli Dealer</span> {/* */}
                              <span className="text-primary block">✓ ATE Braking Specialist</span>
-                             <span className="text-primary block">✓ 28 Years Local Service</span>
+                             <span className="text-primary block">✓ Over 35 Years Service</span>
                          </div> {/* */}
                     </div>
 
@@ -89,7 +90,8 @@ export default function Footer() {
                             Safety is Free.
                         </h4> {/* */}
                         <p className="text-sm text-neutral-400 mb-4">
-                            Don't guess your vehicle's condition. Book your free safety check today.
+                            {/* FIX: Replaced Don't with Don&apos;t and vehicle's with vehicle&apos;s */}
+                            Don&apos;t guess your vehicle&apos;s condition. Book your free safety check today.
                         </p>
                          <Button asChild className="w-full bg-primary hover:bg-primary/hover text-white font-bold">
                             <Link href="/assessment">

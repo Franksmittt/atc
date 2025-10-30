@@ -28,16 +28,16 @@ export default function Hero() {
          {/* H1: The Core Value Proposition - White Text for Contrast */}
         <h1 className="text-5xl md:text-6xl font-extrabold mb-4
                      text-white uppercase leading-tight"> {/* */}
-           {/* Corrected: Replaced 'Don't' with 'Don't' */}
-          Don't Just Change Tyres.
+           {/* FIX: Replaced Don't with Don&apos;t */}
+          Don&apos;t Just Change Tyres.
           <span className="text-primary">Invest in Safety.</span>
         </h1>
 
         {/* H2/Subheading: Strategic Trust Anchors - Clear and High-Impact */}
         <h2 className="text-xl md:text-2xl font-medium mb-4
                        text-neutral-400"> {/* */}
-           {/* Corrected: Replaced 'Alberton's' with 'Alberton's' */}
-          Alberton's Family-Run Fitment Experts Since <span className="font-extrabold text-primary">1989.</span>
+           {/* FIX: Replaced Alberton's with Alberton&apos;s */}
+          Alberton&apos;s Family-Run Fitment Experts Since <span className="font-extrabold text-primary">1989.</span>
          </h2>
 
          {/* Core USP Points - Quick Trust Indicators (Updated to stack on mobile) */}
@@ -51,21 +51,16 @@ export default function Hero() {
             </span>
         </div>
 
-        {/* PRIMARY CTA - RESPONSIVE FIX:
-          1. Shortened text from "Claim Your FREE 6-Point Vehicle Assessment Today"
-          2. Removed "py-8" which was causing excessive height.
-          3. Adjusted text size to be smaller on mobile (text-lg) and grow on larger screens (md:text-xl).
-          4. Adjusted padding (px-8) to be slightly smaller on mobile if needed, but size="xl" handles this well.
-        */}
+        {/* Primary Lead Magnet CTA (FREE ASSESSMENT) - Orange Dominant */}
         <Button
             asChild
             size="xl"
   
-              className="text-lg md:text-xl font-bold px-8 transition-all
+              className="text-xl md:text-2xl font-bold px-8 sm:px-12 py-8 transition-all
                        bg-primary hover:bg-primary/hover text-white" // Uses orange bg-primary //
         >
           <Link href="/assessment">
-            Claim Your FREE 6-Point Assessment
+            Claim Your FREE 6-Point Vehicle Assessment Today
           </Link>
          </Button>
 
