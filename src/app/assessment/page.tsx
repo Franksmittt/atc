@@ -10,6 +10,7 @@ import { createAppointment } from '@/lib/actions';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
+// Import all necessary icons
 import { Car, CheckCircle, ShieldCheck, Wrench, Phone, User, BatteryFull, Lightbulb, Gauge } from 'lucide-react';
 
 // --- Zod Client Schema (Standard form validation) ---
@@ -30,7 +31,8 @@ function SubmitButton() {
         <Button
             type="submit"
             size="xl"
-            className="w-full text-xl bg-primary hover:bg-primary/hover text-white transition-opacity font-bold py-3"
+            // FIX: Ensure button text scales down and button takes full width on all screens
+            className="w-full text-base sm:text-xl bg-primary hover:bg-primary/hover text-white transition-opacity font-bold py-3 whitespace-normal h-auto"
             disabled={pending}
         >
             {pending ? 'Booking Assessment...' : 'Book Your FREE Assessment Now'}
@@ -40,7 +42,7 @@ function SubmitButton() {
 
 // --- Assessment Page Component ---
 export default function AssessmentPage() {
-    const { register, handleSubmit, reset, formState: { errors } } = useForm<AssessmentFormData>({ // Use the defined type here
+    const { register, handleSubmit, reset, formState: { errors } } = useForm<AssessmentFormData>({
         resolver: zodResolver(AssessmentSchema),
     });
     const [state, dispatch] = useFormState(createAppointment, null);
@@ -77,35 +79,38 @@ export default function AssessmentPage() {
             {/* 1. HERO: High-Impact Value Proposition (H1 and Trust) */}
             <section className="pt-32 pb-20 bg-neutral-900 text-white border-b-8 border-primary">
                 <div className="container mx-auto px-4 text-center max-w-4xl">
-                    <h1 className="text-5xl md:text-6xl font-extrabold mb-4 uppercase leading-tight">
+                    <h1 className="text-4xl sm:text-5xl md:text-6xl font-extrabold mb-4 uppercase leading-tight">
                         Claim Your FREE 6-Point Vehicle Safety Assessment
                     </h1>
                     <p className="text-xl md:text-2xl text-primary font-bold mb-6">
                         Stop Guessing. Start Driving Safely. (No obligation. Zero cost.)
                     </p>
-                    <div className="flex justify-center space-x-8 text-lg font-medium">
-                        <span className="flex items-center"><CheckCircle className="h-5 w-5 mr-2 text-primary" /> Tyres, Brakes & Shocks</span>
-                         <span className="flex items-center"><CheckCircle className="h-5 w-5 mr-2 text-primary" /> Full Battery Test</span>
+                    {/* FIX: Use flex-wrap on small screens and reduce space */}
+                    <div className="flex flex-col sm:flex-row justify-center space-y-2 sm:space-y-0 sm:space-x-8 text-base sm:text-lg font-medium">
+                        <span className="flex items-center justify-center"><CheckCircle className="h-5 w-5 mr-2 text-primary flex-shrink-0" /> Tyres, Brakes & Shocks</span>
+                         <span className="flex items-center justify-center"><CheckCircle className="h-5 w-5 mr-2 text-primary flex-shrink-0" /> Full Battery Test</span>
                     </div>
                 </div>
             </section>
 
             {/* 2. VALUE & FORM: Conversion Core */}
-            <section className="py-24 bg-white dark:bg-neutral-800">
+            <section className="py-16 sm:py-24 bg-white dark:bg-neutral-800">
                  <div className="container mx-auto px-4 max-w-6xl">
-                    <div className="grid lg:grid-cols-2 gap-16 items-start">
+                    {/* Main grid changes from vertical stack to 2 columns on large screens */}
+                    <div className="grid lg:grid-cols-2 gap-12 sm:gap-16 items-start">
 
                         {/* A. Assessment Value & Breakdown */}
-                         <div className="space-y-8">
-                            <h2 className="text-4xl font-extrabold text-neutral-800 dark:text-white">
+                         <div className="space-y-6 sm:space-y-8">
+                            <h2 className="text-3xl sm:text-4xl font-extrabold text-neutral-800 dark:text-white">
                                 Why Is This Assessment Crucial?
                             </h2>
-                            <p className="text-lg text-neutral-600 dark:text-neutral-400">
+                            <p className="text-base sm:text-lg text-neutral-600 dark:text-neutral-400">
                                 Tyres are only part of the safety equation. Our **Alberton Tyre Clinic** experts check the entire system that keeps you on the road safely—all completely free.
                             </p>
 
                             <div className="space-y-4">
-                                <h3 className='text-2xl font-bold text-primary'>The 6-Point Safety Checklist:</h3>
+                                <h3 className='text-xl sm:text-2xl font-bold text-primary'>The 6-Point Safety Checklist:</h3>
+                                {/* Dynamically generated list */}
                                 {[
                                      { icon: Car, title: "Tyre Tread & Pressure", detail: "Checking all four tyres for wear, damage, and correct inflation." },
                                      { icon: ShieldCheck, title: "Brakes & Discs Visual Check", detail: "Assessment of brake pad wear and disc condition (critical for stopping)." },
@@ -115,10 +120,12 @@ export default function AssessmentPage() {
                                      { icon: Lightbulb, title: "Fluid & Lights Check", detail: "Windscreen wipers, oil level, and lights checked for compliance." },
                                 ].map((item, index) => (
                                     <div key={index} className="flex items-start p-3 bg-neutral-50 dark:bg-neutral-900 rounded-lg shadow-sm border-l-4 border-primary">
+                                         {/* Ensure icon doesn't shrink, forcing text to wrap beside it */}
                                          <item.icon className="h-6 w-6 text-primary mr-4 mt-1 flex-shrink-0" />
                                         <div>
                                              <p className="font-semibold text-neutral-800 dark:text-white">{item.title}</p>
-                                            <p className="text-sm text-neutral-600 dark:text-neutral-400">{item.detail}</p>
+                                             {/* FIX: Reduce detail text size on mobile for density */}
+                                            <p className="text-xs sm:text-sm text-neutral-600 dark:text-neutral-400">{item.detail}</p>
                                         </div>
                                     </div>
                                 ))}
@@ -126,16 +133,17 @@ export default function AssessmentPage() {
                          </div>
 
                         {/* B. The Booking Form */}
-                        <div className="sticky top-10 p-8 bg-neutral-100 dark:bg-neutral-900 rounded-xl shadow-2xl border-t-8 border-primary">
-                             <h2 className="text-3xl font-bold text-neutral-800 dark:text-white mb-6 text-center">
+                        {/* FIX: Added lg:p-8 to ensure sufficient padding on large screens */}
+                        <div className="sticky top-10 p-5 sm:p-8 bg-neutral-100 dark:bg-neutral-900 rounded-xl shadow-2xl border-t-8 border-primary">
+                             <h2 className="text-2xl sm:text-3xl font-bold text-neutral-800 dark:text-white mb-6 text-center">
                                 Secure Your FREE Booking
                             </h2>
-                             <form onSubmit={handleSubmit(onSubmit)} className="space-y-5">
+                             <form onSubmit={handleSubmit(onSubmit)} className="space-y-4 sm:space-y-5">
 
                                 {/* Name Input */}
                                  <div>
                                     <label htmlFor="clientName" className="flex items-center text-sm font-medium mb-1 dark:text-neutral-300">
-                                        <User className="h-4 w-4 mr-2" /> Full Name
+                                        <User className="h-4 w-4 mr-2 flex-shrink-0" /> Full Name
                                     </label>
                                     <Input
                                         id="clientName"
@@ -143,16 +151,16 @@ export default function AssessmentPage() {
                                         placeholder="Your Full Name"
                                         {...register("clientName")}
                                         className={errors.clientName ? 'border-destructive' : ''}
-                                    /> {/* Ensure this closes correctly */}
-                                    {errors.clientName && <p className="text-sm text-destructive mt-1">{errors.clientName.message?.toString()}</p>}
+                                    />
+                                    {errors.clientName && <p className="text-xs sm:text-sm text-destructive mt-1">{errors.clientName.message?.toString()}</p>}
                                     {/* Display Server-Side Validation Error (if it exists) */}
-                                    {state && typeof state === 'object' && state !== null && 'errors' in state && state.errors && 'clientName' in state.errors && state.errors.clientName && <p className="text-sm text-destructive mt-1">{state.errors.clientName.join(', ')}</p>}
+                                    {state && typeof state === 'object' && state !== null && 'errors' in state && state.errors && 'clientName' in state.errors && state.errors.clientName && <p className="text-xs sm:text-sm text-destructive mt-1">{state.errors.clientName.join(', ')}</p>}
                                  </div>
 
                                 {/* Phone Input (Crucial for lead capture) */}
                                 <div>
                                      <label htmlFor="phoneNumber" className="flex items-center text-sm font-medium mb-1 dark:text-neutral-300">
-                                        <Phone className="h-4 w-4 mr-2" /> Best Contact Number
+                                        <Phone className="h-4 w-4 mr-2 flex-shrink-0" /> Best Contact Number
                                      </label>
                                     <Input
                                         id="phoneNumber"
@@ -160,10 +168,10 @@ export default function AssessmentPage() {
                                         placeholder="082 555 1234"
                                         {...register("phoneNumber")}
                                         className={errors.phoneNumber ? 'border-destructive' : ''}
-                                    /> {/* Ensure this closes correctly */}
-                                    {errors.phoneNumber && <p className="text-sm text-destructive mt-1">{errors.phoneNumber.message?.toString()}</p>}
+                                    />
+                                    {errors.phoneNumber && <p className="text-xs sm:text-sm text-destructive mt-1">{errors.phoneNumber.message?.toString()}</p>}
                                      {/* Display Server-Side Validation Error (if it exists) */}
-                                    {state && typeof state === 'object' && state !== null && 'errors' in state && state.errors && 'phoneNumber' in state.errors && state.errors.phoneNumber && <p className="text-sm text-destructive mt-1">{state.errors.phoneNumber.join(', ')}</p>}
+                                    {state && typeof state === 'object' && state !== null && 'errors' in state && state.errors && 'phoneNumber' in state.errors && state.errors.phoneNumber && <p className="text-xs sm:text-sm text-destructive mt-1">{state.errors.phoneNumber.join(', ')}</p>}
                                  </div>
 
                                 {/* Vehicle Make (Optional but highly useful for quoting) */}
@@ -176,19 +184,19 @@ export default function AssessmentPage() {
                                         type="text"
                                         placeholder="e.g., Toyota Corolla 2018"
                                         {...register("vehicleMake")}
-                                    /> {/* Ensure this closes correctly */}
+                                    />
                                 </div>
 
                                 {/* Message Input */}
                                  <div>
                                     <label htmlFor="message" className="text-sm font-medium mb-1 dark:text-neutral-300 block">
-                                         Quick Note (e.g., &quot;Squeaky brakes&quot;) {/* Escaped quotes */}
+                                         Quick Note (e.g., &quot;Squeaky brakes&quot;)
                                     </label>
                                      <Textarea
                                         id="message"
                                         placeholder="Any specific concerns you want us to check?"
                                         {...register("message")}
-                                    /> {/* Ensure this closes correctly */}
+                                    />
                                 </div>
 
                                 {/* Submit Button */}
@@ -197,7 +205,7 @@ export default function AssessmentPage() {
 
                                 {/* Privacy/Trust Anchor */}
                                 <p className="text-xs text-center text-neutral-500 dark:text-neutral-400 mt-3">
-                                    We promise: No Spam. No Obligation. Just an honest safety check from Alberton&apos;s family-run team. {/* Escaped apostrophe */}
+                                    We promise: No Spam. No Obligation. Just an honest safety check from Alberton&apos;s family-run team.
                                 </p>
                                 {/* Display general Server-Side Validation Failure Message */}
                                 {state && typeof state === 'object' && state !== null && 'message' in state && state.message === 'Validation Failed.' && (
