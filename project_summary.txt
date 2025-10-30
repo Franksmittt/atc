@@ -1719,8 +1719,8 @@ export default function Footer() {
                              Alberton <span className="text-primary">Tyre Clinic</span> {/* */}
                          </Link>
                         <p className="text-sm leading-relaxed text-neutral-400 max-w-xs mb-4">
-                            {/* FIX: Replaced Alberton's with Alberton&apos;s */}
-                            Alberton&apos;s trusted **family-run fitment experts since 1989**. We prioritize your safety over sales, guaranteed.
+                            {/* FIX: Replaced ' with ' */}
+                            Alberton's trusted **family-run fitment experts since 1989**. We prioritize your safety over sales, guaranteed.
                         </p>
 
                         {/* Trust Anchor Badges */}
@@ -1741,9 +1741,6 @@ export default function Footer() {
                             <li><Link href="/about" className="hover:text-primary transition-colors">Our Experts</Link></li>
                             <li><Link href="/blog" className="hover:text-primary transition-colors">Safety Blog</Link></li>
                             <li><Link href="/contact" className="hover:text-primary transition-colors">Contact Us</Link></li>
-                            {/* You can add more specific service links here if needed */}
-                            {/* <li><Link href="/services/tyres" className="hover:text-primary transition-colors">Tyre Sales & Fitment</Link></li> */}
-                            {/* <li><Link href="/services/brakes" className="hover:text-primary transition-colors">Brakes & Shocks</Link></li> */}
                         </ul>
                      </div>
 
@@ -1756,7 +1753,7 @@ export default function Footer() {
                         <ul className="space-y-3 text-sm">
                              <li className="flex items-start">
                                  <MapPin className="h-4 w-4 mr-2 text-primary flex-shrink-0 mt-1" /> {/* */}
-                                <a href="https://maps.app.goo.gl/YourMapLink" target="_blank" rel="noopener noreferrer" className="hover:text-primary transition-colors">
+                                <a href="http://googleusercontent.com/maps/google.com/0" target="_blank" rel="noopener noreferrer" className="hover:text-primary transition-colors">
                                      26 St Columb St, New Redruth, Alberton {/* */}
                                 </a>
                             </li>
@@ -1789,8 +1786,8 @@ export default function Footer() {
                             Safety is Free.
                         </h4> {/* */}
                         <p className="text-sm text-neutral-400 mb-4">
-                            {/* FIX: Replaced Don't with Don&apos;t and vehicle's with vehicle&apos;s */}
-                            Don&apos;t guess your vehicle&apos;s condition. Book your free safety check today.
+                            {/* FIX: Replaced ' with ' */}
+                            Don't guess your vehicle's condition. Book your free safety check today.
                         </p>
                          <Button asChild className="w-full bg-primary hover:bg-primary/hover text-white font-bold">
                             <Link href="/assessment">
@@ -2215,16 +2212,16 @@ export default function Hero() {
          {/* H1: The Core Value Proposition - White Text for Contrast */}
         <h1 className="text-5xl md:text-6xl font-extrabold mb-4
                      text-white uppercase leading-tight"> {/* */}
-           {/* FIX: Replaced Don't with Don&apos;t */}
-          Don&apos;t Just Change Tyres.
+           {/* FIX: Replaced ' with ' */}
+          Don't Just Change Tyres.
           <span className="text-primary">Invest in Safety.</span>
         </h1>
 
         {/* H2/Subheading: Strategic Trust Anchors - Clear and High-Impact */}
         <h2 className="text-xl md:text-2xl font-medium mb-4
                        text-neutral-400"> {/* */}
-           {/* FIX: Replaced Alberton's with Alberton&apos;s */}
-          Alberton&apos;s Family-Run Fitment Experts Since <span className="font-extrabold text-primary">1989.</span>
+           {/* FIX: Replaced ' with ' */}
+          Alberton's Family-Run Fitment Experts Since <span className="font-extrabold text-primary">1989.</span>
          </h2>
 
          {/* Core USP Points - Quick Trust Indicators (Updated to stack on mobile) */}
@@ -2238,13 +2235,15 @@ export default function Hero() {
             </span>
         </div>
 
-        {/* Primary Lead Magnet CTA (FREE ASSESSMENT) - Orange Dominant */}
+        {/* PRIMARY CTA BUTTON - RESPONSIVE FIX:
+          - size="xl" is the base style.
+          - Mobile (default): h-auto (auto height), py-4 (vertical padding), px-6 (horizontal padding), whitespace-normal (allows text wrap), text-base (smaller font).
+          - sm screens & up: h-14 (fixed height), sm:px-10 (standard padding), sm:whitespace-nowrap (no wrap), sm:text-lg (larger font).
+        */}
         <Button
             asChild
             size="xl"
-  
-              className="text-xl md:text-2xl font-bold px-8 sm:px-12 py-8 transition-all
-                       bg-primary hover:bg-primary/hover text-white" // Uses orange bg-primary //
+            className="h-auto py-4 px-6 text-base whitespace-normal sm:h-14 sm:px-10 sm:whitespace-nowrap sm:text-lg md:text-xl transition-all"
         >
           <Link href="/assessment">
             Claim Your FREE 6-Point Vehicle Assessment Today
