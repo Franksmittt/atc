@@ -3,7 +3,9 @@
 ├── 📄 .gitignore
 ├── 📄 README.md
 ├── 📄 components.json
+├── 📄 extract_lint_errors.py
 ├── 📄 github_info.txt
+├── 📄 lint_error_extraction.txt
 ├── 📄 next-env.d.ts
 ├── 📄 next.config.mjs
 ├── 📄 package.json
@@ -31,7 +33,27 @@
 │   │   │   ├── 📁 fonts
 │   │   │   │   ├── 📄 GeistMonoVF.woff
 │   │   │   │   ├── 📄 GeistVF.woff
+│   │   │   ├── 📁 privacy
+│   │   │   │   ├── 📄 page.tsx
+│   │   │   ├── 📁 promotions
+│   │   │   │   ├── 📄 page.tsx
+│   │   │   ├── 📁 reviews
+│   │   │   │   ├── 📄 page.tsx
 │   │   │   ├── 📁 services
+│   │   │   │   ├── 📄 page.tsx
+│   │   │   │   ├── 📁 alignment
+│   │   │   │   │   ├── 📄 page.tsx
+│   │   │   │   ├── 📁 balancing-rotation
+│   │   │   │   │   ├── 📄 page.tsx
+│   │   │   │   ├── 📁 batteries
+│   │   │   │   │   ├── 📄 page.tsx
+│   │   │   │   ├── 📁 brakes
+│   │   │   │   │   ├── 📄 page.tsx
+│   │   │   │   ├── 📁 shocks
+│   │   │   │   │   ├── 📄 page.tsx
+│   │   │   │   ├── 📁 tyres
+│   │   │   │   │   ├── 📄 page.tsx
+│   │   │   ├── 📁 terms
 │   │   │   │   ├── 📄 page.tsx
 │   │   ├── 📁 components
 │   │   │   ├── 📄 theme-provider.tsx
@@ -174,6 +196,107 @@ Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/bui
 }
 
 
+--------------------------------------------------------------------------------📄 FILE PATH: C:\Users\User1\alberton-tyre-clinic\extract_lint_errors.py--------------------------------------------------------------------------------import os
+
+# --- Configuration for the Script ---
+# Define the project root directory based on the user's path
+PROJECT_ROOT = r"C:\Users\User1\alberton-tyre-clinic"
+OUTPUT_FILE_NAME = "lint_error_extraction.txt"
+
+# List of files identified from the Vercel build logs and ESLint configuration
+FILES_TO_INSPECT = [
+    "src\\components\\layout\\Footer.tsx",
+    "src\\components\\sections\\Hero.tsx",
+    ".eslintrc.json"
+]
+
+# Specific error lines reported in the Vercel logs for quick reference
+# Lines based on the build logs: Footer.tsx (24, 53, 91); Hero.tsx (32, 40)
+ERROR_REFERENCES = {
+    "src\\components\\layout\\Footer.tsx": [24, 53, 91],
+    "src\\components\\sections\\Hero.tsx": [32, 40],
+}
+
+def extract_file_content():
+    """Reads specific project files, focuses on error lines, and saves the output to a text file."""
+    output = []  # Correctly initialized as an empty list
+    output.append("--- Code Extractor for Unescaped Entities Error Analysis ---")
+    output.append(f"Scanning project root: {PROJECT_ROOT}\n")
+
+    for relative_path in FILES_TO_INSPECT:
+        full_path = os.path.join(PROJECT_ROOT, relative_path)
+
+        output.append("=" * 80)
+        output.append(f"FILE: {relative_path}")
+        output.append(f"REPORTED ERROR LINES (for context): {ERROR_REFERENCES.get(relative_path, 'N/A')}")
+        output.append("=" * 80)
+
+        if not os.path.exists(full_path):
+            output.append(f"Error: File not found at {full_path}\n")
+            continue
+
+        try:
+            with open(full_path, 'r', encoding='utf-8') as f:
+                lines = f.readlines()
+                output.append("\nLines with context (Line Number: Content):")
+
+                lines_to_show = set()
+
+                # For source files, add reported error lines and context (3 lines before/after)
+                if relative_path in ERROR_REFERENCES:
+                    for line_num in ERROR_REFERENCES[relative_path]:
+                        # Calculate 3 lines before and after the reported line
+                        for i in range(max(1, line_num - 3), min(len(lines), line_num + 3) + 1):
+                            lines_to_show.add(i)
+
+                # For config files, show the whole file content
+                if relative_path == ".eslintrc.json":
+                    lines_to_show = set(range(1, len(lines) + 1))
+
+                # Sort lines and display
+                if lines_to_show:
+                    sorted_lines = sorted(list(lines_to_show))
+
+                    last_line_shown = -1
+
+                    for current_line_num in sorted_lines:
+                        if current_line_num > len(lines):
+                            continue
+
+                        # Add a separator if there's a gap in the context
+                        if current_line_num > last_line_shown + 1 and last_line_shown != -1:
+                            output.append("\n... (omitted lines)...")
+
+                        line_content = lines[current_line_num - 1].rstrip()
+                        prefix = f"{current_line_num:4d}: "
+
+                        # Highlight the exact error line
+                        if current_line_num in ERROR_REFERENCES.get(relative_path, []):  # Added default empty list
+                            output.append(f"  >>> {prefix}{line_content} <<<")
+                        else:
+                            output.append(f"      {prefix}{line_content}")
+
+                        last_line_shown = current_line_num
+
+                output.append("\n")
+
+        except Exception as e:
+            output.append(f"An error occurred while reading {relative_path}: {e}\n")
+
+    # Write the entire output to the specified file location
+    output_path = os.path.join(PROJECT_ROOT, OUTPUT_FILE_NAME)
+    try:
+        with open(output_path, 'w', encoding='utf-8') as outfile:
+            outfile.write('\n'.join(output))  # Corrected from .json to .join
+        print(f"\nSuccessfully wrote analysis results to: {output_path}")
+        print("Please review the 'lint_error_extraction.txt' file for the code causing the build failure.")
+    except Exception as e:
+        print(f"\nError writing output file to {output_path}. Printing results to console instead:\n")
+        print('\n'.join(output))
+
+if __name__ == "__main__":
+    extract_file_content()
+
 --------------------------------------------------------------------------------📄 FILE PATH: C:\Users\User1\alberton-tyre-clinic\github_info.txt--------------------------------------------------------------------------------Project: alberton-tyre-clinic
 GitHub URL: https://github.com/Franksmittt/atc.git
 Main Branch: main
@@ -191,6 +314,69 @@ git commit -m "Your descriptive message goes here"
 
 # 4. Send your saved changes to GitHub
 git push origin main
+
+--------------------------------------------------------------------------------📄 FILE PATH: C:\Users\User1\alberton-tyre-clinic\lint_error_extraction.txt----------------------------------------------------------------------------------- Code Extractor for Unescaped Entities Error Analysis ---
+Scanning project root: C:\Users\User1\alberton-tyre-clinic
+
+================================================================================
+FILE: src\components\layout\Footer.tsx
+REPORTED ERROR LINES (for context): [24, 53, 91]
+================================================================================
+
+Lines with context (Line Number: Content):
+        21:                          </Link>
+        22:                         <p className="text-sm leading-relaxed text-neutral-400 max-w-xs mb-4">
+        23:                             {/* FIX: Replaced ' with ' */}
+  >>>   24:                             Alberton's trusted **family-run fitment experts since 1989**. We prioritize your safety over sales, guaranteed. <<<
+        25:                         </p>
+        26: 
+        27:                         {/* Trust Anchor Badges */}
+
+... (omitted lines)...
+        50:                     <div> {/* */}
+        51:                         <h4 className="text-lg font-bold uppercase text-white mb-4 border-b border-primary/30 pb-2">
+        52:                              Contact & Location {/* */}
+  >>>   53:                         </h4> <<<
+        54:                         <ul className="space-y-3 text-sm">
+        55:                              <li className="flex items-start">
+        56:                                  <MapPin className="h-4 w-4 mr-2 text-primary flex-shrink-0 mt-1" /> {/* */}
+
+... (omitted lines)...
+        88:                         </h4> {/* */}
+        89:                         <p className="text-sm text-neutral-400 mb-4">
+        90:                             {/* FIX: Replaced ' with ' */}
+  >>>   91:                             Don't guess your vehicle's condition. Book your free safety check today. <<<
+        92:                         </p>
+        93:                          <Button asChild className="w-full bg-primary hover:bg-primary/hover text-white font-bold">
+        94:                             <Link href="/assessment">
+
+
+================================================================================
+FILE: src\components\sections\Hero.tsx
+REPORTED ERROR LINES (for context): [32, 40]
+================================================================================
+
+Lines with context (Line Number: Content):
+        29:         </Button>
+        30:         <p className="mt-4 text-sm text-neutral-500">
+        31:           *No Obligation. No Hassle. We Check Shocks, Brakes & Batteries.
+  >>>   32:         </p> <<<
+        33:       </div>
+        34:     </section>
+        35:   );
+
+
+================================================================================
+FILE: .eslintrc.json
+REPORTED ERROR LINES (for context): N/A
+================================================================================
+
+Lines with context (Line Number: Content):
+         1: {
+         2:   "extends": ["next/core-web-vitals", "next/typescript"]
+         3: }
+
+
 
 --------------------------------------------------------------------------------📄 FILE PATH: C:\Users\User1\alberton-tyre-clinic\next-env.d.ts--------------------------------------------------------------------------------/// <reference types="next" />
 /// <reference types="next/image-types/global" />
@@ -671,7 +857,7 @@ export default function Home() {
 }
 
 --------------------------------------------------------------------------------📄 FILE PATH: C:\Users\User1\alberton-tyre-clinic\src\app\about\page.tsx--------------------------------------------------------------------------------// src/app/about/page.tsx
-// Server Component - High trust, low friction page.
+// Server Component - High trust, low friction page. Optimized for Authority & Local SEO.
 
 import React from 'react';
 import Link from 'next/link';
@@ -679,36 +865,36 @@ import { Briefcase, MapPin, Users, HeartHandshake } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import Image from 'next/image';
 
-// Metadata for SEO and Authority
+// Metadata for SEO and Authority: Targeting "Family-Run", "Since 1989", and key services.
 export const metadata = {
-  title: "Alberton Tyre Clinic History | Family-Run Fitment Experts Since 1996",
-  description: "Learn about the Alberton Tyre Clinic family legacy. Over 28 years of trusted, honest tyre and brake service in Alberton. Meet the expert staff who prioritize your safety.",
+  title: "Alberton Tyre Clinic History | Family-Run Tyre & Brake Experts Since 1989",
+  description: "Learn about the Alberton Tyre Clinic family legacy. Over 35 years of trusted, honest tyre and brake service in Alberton. Meet the expert staff who prioritize your safety.",
 };
 
 export default function AboutPage() {
     return (
         <main>
-            {/* Hero Header: History and Trust */}
+            {/* 1. Hero Header: History and Trust */}
             <section className="pt-32 pb-20 bg-neutral-900 dark:bg-neutral-950 text-white border-b-8 border-primary">
                 <div className="container mx-auto px-4 text-center max-w-4xl">
                     <h1 className="text-5xl font-extrabold mb-4 uppercase">
-                        Our <span className="text-primary">28-Year</span> Heritage in Alberton
+                        Our <span className="text-primary">35-Year</span> Heritage in <span className="text-primary">Alberton</span>
                     </h1>
                     <p className="text-xl text-neutral-400">
-                        A family business founded on honesty, expertise, and a commitment to your vehicle’s safety since 1996.
+                        A family business founded on honesty, expertise, and a commitment to your vehicle’s safety since 1989.
                     </p>
                 </div>
             </section>
 
-            {/* Section 2: The Legacy Story */}
+            {/* 2. Section: The Legacy Story (Keyword-Rich Narrative) */}
             <section className="py-24 bg-white dark:bg-neutral-800">
                 <div className="container mx-auto px-4 max-w-6xl grid md:grid-cols-2 gap-12 items-center">
                     
-                    {/* Image Placeholder */}
+                    {/* Image Placeholder - (See image instructions below) */}
                     <div className="rounded-xl overflow-hidden shadow-2xl">
                         <Image
-                            src="/placeholder-family-shop.jpg" // Placeholder for an old photo or family image
-                            alt="Alberton Tyre Clinic team and original shop in 1996"
+                            src="/images/about/family-shop-1989.jpg" // Updated to recommended image path
+                            alt="The original Alberton Tyre Clinic team and shop front in 1989"
                             width={800}
                             height={600}
                             priority
@@ -719,20 +905,22 @@ export default function AboutPage() {
                     {/* Story Content */}
                     <div className="space-y-6 text-neutral-800 dark:text-neutral-200">
                         <h3 className="text-3xl font-bold text-primary">
-                            From One Bay to a Local Institution
+                            From One Bay to Alberton's Trusted Tyre Experts
                         </h3>
                         <p className="text-lg">
-                            We started in 1996 with a single fitment bay and a simple goal: to provide the most honest, high-quality tyre service in Alberton. While the technology (and the speed of our computerized balancing) has changed, our dedication to treating every customer like family has not.
+                            We started in 1989 with a single fitment bay. Our goal was simple: to be Alberton's most trusted family-run centre for high quality tyre fitting, brakes, and alignment. We pride ourselves on transparent pricing and treating every customer like family.
                         </p>
-                        
+                        <p className="text-lg">
+                            While the technology (and the speed of our computerized balancing) has changed, our dedication to exceptional service remains the same. We focus on premium safety components like Pirelli Tyres and ATE Brakes.
+                        </p>
                         <ul className="space-y-3 pt-3">
                             <li className="flex items-center text-primary font-semibold">
                                 <Briefcase className="h-5 w-5 mr-3" />
-                                Over two decades of specialized focus on vehicle safety.
+                                Over three decades of specialized focus on  vehicle safety components  in the Alberton area.
                             </li>
                             <li className="flex items-center text-primary font-semibold">
                                 <MapPin className="h-5 w-5 mr-3" />
-                                Deeply committed to the Alberton community.
+                                Deeply committed to the  Alberton community  from our New Redruth location.
                             </li>
                             <li className="flex items-center text-primary font-semibold">
                                 <Users className="h-5 w-5 mr-3" />
@@ -743,7 +931,7 @@ export default function AboutPage() {
                 </div>
             </section>
 
-            {/* Section 3: Meet the Experts (Staff Authority) */}
+            {/* 3. Section: Meet the Experts (Staff Authority) */}
             <section className="py-24 bg-neutral-100 dark:bg-neutral-900">
                 <div className="container mx-auto px-4 max-w-6xl text-center">
                     <h3 className="text-4xl font-extrabold text-neutral-800 dark:text-white mb-12">
@@ -753,31 +941,31 @@ export default function AboutPage() {
                     <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-8">
                         {/* Staff Member 1: Jaco (Manager/Lead) */}
                         <div className="p-6 bg-white dark:bg-neutral-800 rounded-xl shadow-lg border-t-4 border-primary/70">
-                            <Image src="/placeholder-jaco.jpg" alt="Jaco" width={200} height={200} className="rounded-full mx-auto mb-4 w-32 h-32 object-cover border-4 border-primary/50" />
+                            <Image src="/images/about/staff-jaco.jpg" alt="Jaco V., Shop Manager at Alberton Tyre Clinic" width={200} height={200} className="rounded-full mx-auto mb-4 w-32 h-32 object-cover border-4 border-primary/50" />
                             <h4 className="text-xl font-bold text-neutral-800 dark:text-white">Jaco V.</h4>
                             <p className="text-primary font-semibold mb-3">Shop Manager & Chief Technician</p>
                             <p className="text-sm text-neutral-600 dark:text-neutral-400">
-                                Jaco ensures every fitment meets our 1996 standard of excellence. Focused on customer satisfaction and honest advice.
+                                Jaco ensures every fitment meets our 1989 standard of excellence. Focused on customer satisfaction and honest  tyre, brake, and shock  advice.
                             </p>
                         </div>
 
                         {/* Staff Member 2: Shane (Service/Sales) */}
                         <div className="p-6 bg-white dark:bg-neutral-800 rounded-xl shadow-lg border-t-4 border-primary/70">
-                            <Image src="/placeholder-shane.jpg" alt="Shane" width={200} height={200} className="rounded-full mx-auto mb-4 w-32 h-32 object-cover border-4 border-primary/50" />
+                            <Image src="/images/about/staff-shane.jpg" alt="Shane J., Sales and Customer Relations" width={200} height={200} className="rounded-full mx-auto mb-4 w-32 h-32 object-cover border-4 border-primary/50" />
                             <h4 className="text-xl font-bold text-neutral-800 dark:text-white">Shane J.</h4>
                             <p className="text-primary font-semibold mb-3">Sales & Customer Relations</p>
                             <p className="text-sm text-neutral-600 dark:text-neutral-400">
-                                Known for quick service and getting customers the best price. Your first point of contact for quotes and queries.
+                                Known for quick service and getting customers the best price on premium tyre brands . Your first point of contact for quotes and queries.
                             </p>
                         </div>
                         
                         {/* Staff Member 3: Carel (Fitment Specialist) */}
-                         <div className="p-6 bg-white dark:bg-neutral-800 rounded-xl shadow-lg border-t-4 border-primary/70">
-                            <Image src="/placeholder-carel.jpg" alt="Carel" width={200} height={200} className="rounded-full mx-auto mb-4 w-32 h-32 object-cover border-4 border-primary/50" />
+                        <div className="p-6 bg-white dark:bg-neutral-800 rounded-xl shadow-lg border-t-4 border-primary/70">
+                            <Image src="/images/about/staff-carel.jpg" alt="Carel W., Lead Alignment Technician" width={200} height={200} className="rounded-full mx-auto mb-4 w-32 h-32 object-cover border-4 border-primary/50" />
                             <h4 className="text-xl font-bold text-neutral-800 dark:text-white">Carel W.</h4>
-                            <p className="text-primary font-semibold mb-3">Lead Alignment Technician</p>
+                            <p className="text-primary font-semibold mb-3">Lead 3D Wheel Alignment Technician</p>
                             <p className="text-sm text-neutral-600 dark:text-neutral-400">
-                                The expert in 3D wheel alignment, ensuring your high-performance tyres last as long as they should.
+                                The expert in 3D wheel alignment and balancing, ensuring your high-performance tyres last as long as they should.
                             </p>
                         </div>
 
@@ -786,24 +974,24 @@ export default function AboutPage() {
                             <HeartHandshake className="h-16 w-16 text-white mx-auto mt-6 mb-4" />
                             <h4 className="text-2xl font-bold text-primary mb-3">The Full Team</h4>
                             <p className="text-sm text-neutral-300">
-                                Every member of the Alberton Tyre Clinic team is dedicated to efficient, honest, and expert service.
+                                Every member of the Alberton Tyre Clinic team is dedicated to efficient, honest, and expert service in  tyre fitment  and  vehicle maintenance .
                             </p>
                             <Button asChild className="mt-4 bg-primary hover:bg-primary/hover text-white">
-                                <Link href="/booking">Book Your Visit</Link>
+                                <Link href="/contact">Book Your Visit</Link>
                             </Button>
                         </div>
                     </div>
                 </div>
             </section>
 
-             {/* CTA Section: Repetition of Lead Magnet (Final Conversion Push) */}
+             {/* 4. CTA Section: Repetition of Lead Magnet (Final Conversion Push) */}
             <section className="py-16 bg-primary dark:bg-primary/90 text-white text-center">
                 <div className="container mx-auto px-4">
                     <h2 className="text-3xl font-extrabold mb-4">
                         Ready to Join Our Family of Satisfied Drivers?
                     </h2>
                     <p className="text-lg mb-6">
-                        Book your FREE 6-Point Vehicle Assessment now and experience the 28-year difference.
+                        Book your FREE 6-Point Vehicle Assessment now and experience the 35-year difference in  Alberton tyre service .
                     </p>
                     <Button asChild size="lg" className="bg-white text-primary hover:bg-neutral-100 font-bold">
                         <Link href="/assessment">Book My FREE Assessment</Link>
@@ -1042,16 +1230,15 @@ export default function AssessmentPage() {
 import React from 'react';
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
-
 // Force this page to be dynamically rendered to avoid potential static generation issues
-export const dynamic = 'force-dynamic'; // <<<--- ADDED THIS LINE
+export const dynamic = 'force-dynamic';
+// <<<--- ADDED THIS LINE
 
 // --- Metadata: Targeted for Blog SEO ---
 export const metadata = {
   title: "Car Maintenance Blog & Tyre Safety Tips | Alberton Tyre Clinic",
   description: "Expert advice on vehicle safety, tyre longevity, brake systems, and minor vehicle servicing. Read honest, local content from our Alberton experts.",
 };
-
 // --- Mock Data: Simulates fetching data from Drizzle ORM (posts table) ---
 const MOCK_POSTS = [
     {
@@ -1083,36 +1270,37 @@ export default function BlogIndexPage() {
             {/* Blog Header */}
             <section className="pt-32 pb-20 bg-neutral-900 text-white border-b-8 border-primary">
                 <div className="container mx-auto px-4 text-center max-w-4xl">
-                     <h1 className="text-5xl font-extrabold mb-4 uppercase">
+                    <h1 className="text-5xl font-extrabold mb-4 uppercase">
                         Expert <span className="text-primary">Safety</span> & Maintenance Insights
                     </h1>
                     <p className="text-xl text-neutral-400">
-                         Content written by our 28-year experienced technicians to keep you and your family safe on the road.
+                         {/* UPDATED from '28-year' to '35-year' */}
+                        Content written by our 35-year experienced technicians to keep you and your family safe on the road.
                     </p>
                 </div>
             </section>
 
             {/* Posts Grid */}
             <section className="py-24 bg-white dark:bg-neutral-800">
-                 <div className="container mx-auto px-4 max-w-5xl">
+                <div className="container mx-auto px-4 max-w-5xl">
                     <div className="grid md:grid-cols-3 gap-8">
                         {MOCK_POSTS.map((post) => (
                             <div
                                 key={post.id}
                                 className="bg-neutral-50 dark:bg-neutral-900 p-6 rounded-lg shadow-lg border-t-4 border-primary/50 hover:shadow-xl transition-shadow"
                             >
-                                 <h3 className="text-xl font-bold text-neutral-800 dark:text-white mb-2">
+                                <h3 className="text-xl font-bold text-neutral-800 dark:text-white mb-2">
                                     {post.title}
-                                 </h3>
+                                </h3>
                                 <p className="text-sm text-primary font-semibold mb-3">
                                     {post.category}
-                                 </p>
+                                </p>
                                 <p className="text-neutral-600 dark:text-neutral-400 mb-4 text-base">
                                     {post.excerpt}
-                                 </p>
+                                </p>
                                 <Button variant="link" asChild className="p-0 h-auto text-primary justify-start font-bold">
                                     <Link href={`/blog/${post.slug}`}>
-                                         Read Full Article →
+                                        Read Full Article →
                                     </Link>
                                 </Button>
                              </div>
@@ -1259,7 +1447,7 @@ const ClientSchema = z.object({
   phoneNumber: z.string().min(10, "A valid 10-digit phone number is required."),
   serviceType: z.string().optional(),
   message: z.string().optional(),
-}); //
+});
 
 // Define the type based on the Zod schema
 type ClientFormData = z.infer<typeof ClientSchema>;
@@ -1275,9 +1463,9 @@ function SubmitButton() {
             className="w-full bg-primary hover:bg-primary/hover text-white transition-opacity"
             disabled={pending}
         >
-            {pending ? 'Submitting Request...' : 'Book My Assessment'}
+            {pending ? 'Submitting Request...' : 'Request Quote / Assessment'}
         </Button>
-    ); //
+    );
 }
 
 
@@ -1291,7 +1479,7 @@ export default function ContactPage() {
 
     // 3. Effect to handle server response (clear form on success, show error)
     useEffect(() => {
-        // Check if state exists, has a message, isn't validation failure, and has no errors object
+         // Check if state exists, has a message, isn't validation failure, and has no errors object
          if (state && typeof state === 'object' && state !== null && 'message' in state && state.message && state.message !== 'Validation Failed.' && !('errors' in state)) {
             // Success response triggers redirection via the Server Action itself (redirect('/contact/thanks'))
             reset(); // Clear the form fields
@@ -1323,125 +1511,122 @@ export default function ContactPage() {
             <section className="pt-32 pb-20 bg-neutral-900 text-white border-b-8 border-primary">
                 <div className="container mx-auto px-4 text-center max-w-4xl">
                     <h1 className="text-5xl font-extrabold mb-4 uppercase">
-                         Book Your <span className="text-primary">Free Safety Assessment</span>
-                    </h1> {/* */}
+                         Request a <span className="text-primary">Quote or Assessment</span>
+                    </h1>
                     <p className="text-xl text-neutral-400">
                         Use the secure form below or WhatsApp us directly. Safety and service guaranteed by our Alberton team.
-                    </p> {/* */}
+                    </p>
                 </div>
             </section>
 
             {/* Form & Contact Info */}
             <section className="py-24 bg-white dark:bg-neutral-800">
                 <div className="container mx-auto px-4 max-w-5xl">
-                     <div className="grid lg:grid-cols-2 gap-12"> {/* */}
+                     <div className="grid lg:grid-cols-2 gap-12">
 
                         {/* Contact Info Column (High-Intent, Enhanced) */}
-                        <div className="space-y-6
- text-neutral-800 dark:text-neutral-200 p-6 rounded-lg bg-neutral-50 dark:bg-neutral-900 border border-neutral-200 dark:border-neutral-700 h-full"> {/* */}
+                        <div className="space-y-6 text-neutral-800 dark:text-neutral-200 p-6 rounded-lg bg-neutral-50 dark:bg-neutral-900 border border-neutral-200 dark:border-neutral-700 h-full">
                             <h2 className="text-3xl font-bold text-primary mb-6">Need Urgent Help?</h2>
 
                             <p className="text-lg mb-8">
-                                Don&apos;t wait for a form. Call or message our team directly for immediate service in Alberton. {/* Escaped apostrophe */}
+                                Don&apos;t wait for a form. Call or message our team directly for immediate service in Alberton.
                             </p>
 
                             <div className="space-y-6">
                                 {/* Direct Call Link */}
-                                 <a href="tel:+27119078495" className="flex items-center text-2xl font-extrabold text-primary hover:text-primary/70 transition-colors"> {/* */}
+                                 <a href="tel:+27119078495" className="flex items-center text-2xl font-extrabold text-primary hover:text-primary/70 transition-colors">
                                     <Phone className="h-7 w-7 mr-3 text-primary" />
                                     +27 11 907 8495
                                 </a>
 
                                 {/* WhatsApp Link (High-Conversion) */}
-                                 <a href="https://wa.me/27119078495?text=Hello%2C%20I%20need%20urgent%20help%20with%20my%20tyres." target="_blank" rel="noopener noreferrer" className="flex items-center text-2xl font-extrabold text-[#25D366] hover:text-[#128C7E] transition-colors"> {/* */}
+                                 <a href="https://wa.me/27119078495?text=Hello%2C%20I%20need%20urgent%20help%20with%20my%20tyres." target="_blank" rel="noopener noreferrer" className="flex items-center text-2xl font-extrabold text-[#25D366] hover:text-[#128C7E] transition-colors">
                                     <MessageSquareText className="h-7 w-7 mr-3" />
                                     WhatsApp Us Now
-                                 </a> {/* */}
+                                 </a>
                             </div>
 
                             {/* Hours Block */}
-                             <div className="pt-8 border-t border-neutral-300 dark:border-neutral-700"> {/* */}
+                             <div className="pt-8 border-t border-neutral-300 dark:border-neutral-700">
                                 <h3 className='text-xl font-bold mb-2'>Operational Hours</h3>
                                 <div className="text-neutral-600 dark:text-neutral-400 space-y-1">
-                                     {/* Updated Hours based on user request */}
-                                    <p>Monday - Tuesday: 08:00 - 17:00</p>
-                                     <p>Wednesday - Friday: 08:00 - 17:00</p> {/* */}
+                                    <p>Monday - Friday: 08:00 - 17:00</p>
                                     <p>Saturday: 08:00 - 12:00</p>
                                     <p>Sunday: Closed</p>
-                                 </div> {/* */}
+                                 </div>
                             </div>
                         </div>
 
                         {/* Form Column */}
-                         <div className="bg-white dark:bg-neutral-950 p-6 rounded-lg shadow-xl border border-neutral-200 dark:border-neutral-700"> {/* */}
+                         <div className="bg-white dark:bg-neutral-950 p-6 rounded-lg shadow-xl border border-neutral-200 dark:border-neutral-700">
                             <h2 className="text-3xl font-bold text-neutral-800 dark:text-white mb-6">Request a Call Back</h2>
 
                              {/* Form uses the handleSubmit wrapper from React Hook Form */}
-                            <form onSubmit={handleSubmit(onSubmit)} className="space-y-4"> {/* */}
+                            <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
 
                                  {/* Name Input */}
-                                <div> {/* */}
-                                    <label htmlFor="clientName" className="flex items-center text-sm
- font-medium mb-1 dark:text-neutral-300"> {/* */}
+                                <div>
+                                    <label htmlFor="clientName" className="flex items-center text-sm font-medium mb-1 dark:text-neutral-300">
                                         <User className="h-4 w-4 mr-2" /> Full Name
                                     </label>
                                      <Input
                                         id="clientName"
-                                         type="text" //
+                                         type="text"
                                         placeholder="John Smith"
                                         {...register("clientName")}
-                                         className={errors.clientName ? 'border-destructive' : ''} //
+                                         className={errors.clientName ? 'border-destructive' : ''}
                                     />
                                     {/* Display Client-Side Validation Error */}
-                                     {errors.clientName && <p className="text-sm text-destructive mt-1">{errors.clientName.message?.toString()}</p>} {/* */}
+                                     {errors.clientName && <p className="text-sm text-destructive mt-1">{errors.clientName.message?.toString()}</p>}
                                     {/* Display Server-Side Validation Error (if it exists) */}
-                                    {state && typeof state === 'object' && state !== null && 'errors' in state && state.errors && 'clientName' in state.errors && state.errors.clientName && <p className="text-sm text-destructive mt-1">{state.errors.clientName.join(', ')}</p>} {/* */}
+                                    {state && typeof state === 'object' && state !== null && 'errors' in state && state.errors && 'clientName' in state.errors && state.errors.clientName && <p className="text-sm text-destructive mt-1">{state.errors.clientName.join(', ')}</p>}
                                 </div>
 
                                 {/* Phone Input */}
-                                 <div> {/* */}
+                                 <div>
                                     <label htmlFor="phoneNumber" className="flex items-center text-sm font-medium mb-1 dark:text-neutral-300">
                                         <Phone className="h-4 w-4 mr-2" /> Phone Number
-                                    </label> {/* */}
+                                    </label>
                                     <Input
-                                         id="phoneNumber" //
+                                         id="phoneNumber"
                                         type="tel"
                                         placeholder="082 555 1234"
-                                         {...register("phoneNumber")} //
+                                         {...register("phoneNumber")}
                                         className={errors.phoneNumber ? 'border-destructive' : ''}
-                                    /> {/* */}
+                                    />
                                     {errors.phoneNumber && <p className="text-sm text-destructive mt-1">{errors.phoneNumber.message?.toString()}</p>}
-                                     {state && typeof state === 'object' && state !== null && 'errors' in state && state.errors && 'phoneNumber' in state.errors && state.errors.phoneNumber && <p className="text-sm text-destructive mt-1">{state.errors.phoneNumber.join(', ')}</p>} {/* */}
+                                     {state && typeof state === 'object' && state !== null && 'errors' in state && state.errors && 'phoneNumber' in state.errors && state.errors.phoneNumber && <p className="text-sm text-destructive mt-1">{state.errors.phoneNumber.join(', ')}</p>}
                                 </div>
 
                                 {/* Service Type (Example of selecting a service) */}
-                                 <div> {/* */}
+                                 <div>
                                     <label htmlFor="serviceType" className="text-sm font-medium mb-1 dark:text-neutral-300 block">
-                                         Service Required (Optional) {/* */}
+                                         Service Required (Optional)
                                     </label>
                                     <select
-                                         id="serviceType" //
+                                         id="serviceType"
                                         {...register("serviceType")}
-                                         className="w-full p-2 border border-input rounded-md bg-background text-foreground" //
+                                         className="w-full p-2 border border-input rounded-md bg-background text-foreground"
                                     >
-                                        <option value="">I need a Free Assessment</option>
-                                         <option value="Tyre Quote">Tyre Quote</option> {/* */}
+                                        <option value="">I need a Free Assessment (Default)</option>
+                                         <option value="Tyre Quote">Tyre Quote</option>
                                         <option value="Brake/Shock Quote">Brake/Shock Quote</option>
-                                         <option value="Minor Service">Minor Service</option> {/* */}
+                                        <option value="Battery Quote">Battery Quote</option>
+                                        {/* REMOVED: <option value="Minor Service">Minor Service</option> */}
                                     </select>
                                 </div>
 
                                  {/* Message Input */}
-                                <div> {/* */}
+                                <div>
                                     <label htmlFor="message" className="flex items-center text-sm font-medium mb-1 dark:text-neutral-300">
-                                         <MessageSquare className="h-4 w-4 mr-2" /> Message {/* */}
+                                         <MessageSquare className="h-4 w-4 mr-2" /> Message
                                     </label>
                                        <Textarea
                                         id="message"
                                         placeholder="e.g., Need 2 Pirelli tyres for a Golf 7..."
                                         {...register("message")}
-                                    /> {/* */}
-                                 </div> {/* */}
+                                    />
+                                 </div>
 
                                 {/* Submit Button with Server Action status */}
                                 <SubmitButton />
@@ -1456,16 +1641,17 @@ export default function ContactPage() {
                                 {state?.message && state.message !== 'Validation Failed.' && !state.errors && (
                                     <p className="text-sm text-destructive font-bold pt-2 text-center">
                                         {state.message}
-                                     </p> //
+                                     </p>
                                 )}
                             </form>
-                         </div> {/* */}
+                         </div>
                     </div>
                 </div>
             </section>
         </main>
     );
-} //
+}
+
 
 --------------------------------------------------------------------------------📄 FILE PATH: C:\Users\User1\alberton-tyre-clinic\src\app\contact\thanks\page.tsx--------------------------------------------------------------------------------// src/app/contact/thanks/page.tsx
 import React from 'react';
@@ -1490,14 +1676,282 @@ export default function ThankYouPage() {
     );
 }
 
+--------------------------------------------------------------------------------📄 FILE PATH: C:\Users\User1\alberton-tyre-clinic\src\app\privacy\page.tsx--------------------------------------------------------------------------------// src/app/privacy/page.tsx
+// Server Component - Required for legal compliance and trust.
+
+import React from 'react';
+import Link from 'next/link';
+
+// --- Metadata: Legal Compliance ---
+export const metadata = {
+  title: "Privacy Policy | Alberton Tyre Clinic",
+  description: "Our commitment to protecting your personal information. Read about how Alberton Tyre Clinic collects, uses, and safeguards customer data.",
+};
+
+export default function PrivacyPolicyPage() {
+  return (
+    <main>
+      {/* Header */}
+      <section className="pt-32 pb-20 bg-neutral-900 text-white border-b-8 border-primary">
+        <div className="container mx-auto px-4 text-center max-w-4xl">
+          <h1 className="text-5xl font-extrabold mb-4 uppercase">
+            Privacy <span className="text-primary">Policy</span>
+          </h1>
+          <p className="text-xl text-neutral-400">
+            Last Updated: October 30, 2025
+          </p>
+        </div>
+      </section>
+
+      {/* Content */}
+      <section className="py-24 bg-white dark:bg-neutral-800">
+        <div className="container mx-auto px-4 max-w-4xl text-neutral-800 dark:text-neutral-200 prose dark:prose-invert">
+          
+          <h2>1. Introduction</h2>
+          <p>
+            Alberton Tyre Clinic ("we", "our", or "us") is committed to protecting the privacy of your personal information. This policy describes how we collect, use, and share information about you when you use our website or services.
+          </p>
+
+          <h2>2. Information We Collect</h2>
+          <p>We collect information you provide directly to us:</p>
+          <ul>
+            <li>**Contact Information:** Name and Phone Number when you book an assessment or request a quote (via forms on the /assessment and /contact pages).</li>
+            <li>**Vehicle Information:** Optional details about your vehicle make and model.</li>
+            <li>**Communication Data:** Content of messages and emails you send us.</li>
+          </ul>
+
+          <h2>3. How We Use Your Information</h2>
+          <p>We use the collected information primarily for:</p>
+          <ul>
+            <li>To book and confirm your vehicle assessment or service appointment.</li>
+            <li>To provide personalized price quotes and service recommendations.</li>
+            <li>To improve the efficiency of our service and website experience.</li>
+          </ul>
+
+          <h2>4. Data Sharing and Disclosure</h2>
+          <p>
+            We do not sell, rent, or trade your personal information to third parties. We may share your information only with:
+          </p>
+          <ul>
+            <li>Service providers (e.g., payment processors, hosting partners) necessary to deliver our services, who are bound by confidentiality agreements.</li>
+            <li>When required by law or to protect our rights and safety.</li>
+          </ul>
+          
+          <h2>5. Your Choices and Rights</h2>
+          <p>
+            You have the right to request access to the personal data we hold about you and to ask for corrections to be made. To exercise these rights, please contact us at info@albertontyreclinic.co.za.
+          </p>
+
+          <p className="not-prose mt-10 text-center">
+            <Link href="/contact" className="font-bold text-primary hover:underline">
+              Questions about this policy? Contact us here.
+            </Link>
+          </p>
+        </div>
+      </section>
+    </main>
+  );
+}
+
+--------------------------------------------------------------------------------📄 FILE PATH: C:\Users\User1\alberton-tyre-clinic\src\app\promotions\page.tsx--------------------------------------------------------------------------------// src/app/promotions/page.tsx
+// Server Component - Dedicated page for promotions and special deals.
+
+import React from 'react';
+import Link from 'next/link';
+import { Button } from '@/components/ui/button';
+import { Tag, Clock, TrendingDown } from 'lucide-react';
+
+// --- Metadata: Targeted for Deals and Offers ---
+export const metadata = {
+  title: "Tyre & Service Promotions | Best Deals in Alberton",
+  description: "View the current promotions and special offers on premium tyres, ATE brakes, and vehicle servicing at Alberton Tyre Clinic. Limited-time deals!",
+};
+
+const CURRENT_PROMOTIONS = [
+    {
+        title: "Free Alignment Check with Any 4 New Tyres",
+        description: "Maximize your tyre life. Buy any four tyres and receive a complimentary 3D Wheel Alignment check, valued at R350.",
+        icon: TrendingDown,
+        cta: "Claim This Deal",
+        link: "/assessment",
+    },
+    {
+        title: "15% Off ATE Brake Pad & Disc Replacement",
+        description: "Upgrade to guaranteed stopping power. Get a discount on ATE components when you book the full brake service package.",
+        icon: Tag,
+        cta: "Get Brake Quote",
+        link: "/services/brakes",
+    },
+    {
+        title: "R200 Cashback on All Willard Batteries",
+        description: "Winter-ready power! Receive a R200 instant cashback when purchasing and fitting any high-capacity Willard battery.",
+        icon: Clock,
+        cta: "Check Battery Price",
+        link: "/services/batteries",
+    },
+];
+
+export default function PromotionsPage() {
+    return (
+        <main>
+            {/* Header: H1 Focus on Deals */}
+            <section className="pt-32 pb-20 bg-neutral-900 text-white border-b-8 border-primary">
+                <div className="container mx-auto px-4 text-center max-w-4xl">
+                    <h1 className="text-5xl md:text-6xl font-extrabold mb-4 uppercase leading-tight">
+                        Current <span className="text-primary">Deals & Offers</span>
+                    </h1>
+                    <p className="text-xl text-neutral-400">
+                        Limited-time safety and savings for Alberton drivers. Book now before these deals expire!
+                    </p>
+                </div>
+            </section>
+
+            {/* Promotions Grid */}
+            <section className="py-24 bg-white dark:bg-neutral-800">
+                <div className="container mx-auto px-4 max-w-6xl">
+                    <div className="grid md:grid-cols-3 gap-8">
+                        {CURRENT_PROMOTIONS.map((promo, index) => (
+                            <div
+                                key={index}
+                                className="p-8 bg-neutral-100 dark:bg-neutral-900 rounded-xl shadow-2xl border-t-8 border-primary hover:shadow-primary/30 transition-shadow duration-300"
+                            >
+                                <promo.icon className="h-10 w-10 text-primary mb-4" />
+                                <h2 className="text-2xl font-bold text-neutral-800 dark:text-white mb-3">
+                                    {promo.title}
+                                </h2>
+                                <p className="text-neutral-600 dark:text-neutral-400 mb-6">
+                                    {promo.description}
+                                </p>
+                                <Button asChild className="w-full bg-primary hover:bg-primary/hover text-white font-bold">
+                                    <Link href={promo.link}>{promo.cta} →</Link>
+                                </Button>
+                            </div>
+                        ))}
+                    </div>
+                </div>
+            </section>
+
+            {/* Final CTA: Reminder about free check */}
+            <section className="py-16 bg-neutral-100 dark:bg-neutral-900 text-center">
+                <Button asChild size="lg" className="bg-primary hover:bg-primary/hover text-white font-bold">
+                    <Link href="/assessment">Got a Question? Book Your FREE Assessment Now</Link>
+                </Button>
+            </section>
+        </main>
+    );
+}
+
+--------------------------------------------------------------------------------📄 FILE PATH: C:\Users\User1\alberton-tyre-clinic\src\app\reviews\page.tsx--------------------------------------------------------------------------------// src/app/reviews/page.tsx
+// Server Component - Dedicated page for maximum social proof and trust.
+
+import React from 'react';
+import Link from 'next/link';
+import { Button } from '@/components/ui/button';
+import { Star, Zap, DollarSign, HeartHandshake } from 'lucide-react';
+
+// --- Metadata: Targeted for Social Proof and Trust ---
+export const metadata = {
+  title: "5-Star Customer Reviews | Alberton Tyre Clinic Trust Score",
+  description: "Read hundreds of verified 5-star Google reviews from satisfied Alberton drivers. We are trusted for honest service, expert fitment, and fair pricing.",
+};
+
+// Re-using the core testimonial structure for consistency
+const TESTIMONIALS = [
+    {
+        quote: "They helped me to replace my brake lights, which is not their core business. This customer service is exemplary and I would gladly refer anyone to them.",
+        author: "Kimberlee Carlson",
+        claim: "Exceptional Service (Extra Mile)",
+        icon: HeartHandshake,
+    },
+    {
+        quote: "My grandfather used them, my dad used them and now I use them. They have been giving great service for 3 generations of my family and they are still the best I know.",
+        author: "Craig Joshua Boden",
+        claim: "Generational Trust (28 Years)",
+        icon: Star,
+    },
+    {
+        quote: "Excellent service, with pricing better than I could find from anyone in Alberton on batteries. Staff are knowledgeable and efficient.",
+        author: "Marius Senekal",
+        claim: "Best Pricing",
+        icon: DollarSign,
+    },
+    {
+        quote: "Quick and friendly service and well priced. Will recommend to anyone. They are usually very busy, but that is a sign of good business.",
+        author: "Balony The Only",
+        claim: "Speed & Value",
+        icon: Zap,
+    },
+];
+
+export default function ReviewsPage() {
+    return (
+        <main>
+            {/* Header: H1 Focus on Trust */}
+            <section className="pt-32 pb-20 bg-neutral-900 text-white border-b-8 border-primary">
+                <div className="container mx-auto px-4 text-center max-w-4xl">
+                    <h1 className="text-5xl md:text-6xl font-extrabold mb-4 uppercase leading-tight">
+                        Real <span className="text-primary">5-Star</span> Alberton Trust
+                    </h1>
+                    <p className="text-xl text-neutral-400">
+                        We have a 4.9/5 star average over 500+ verified local reviews. Read what our customers say.
+                    </p>
+                </div>
+            </section>
+
+            {/* Testimonials Grid */}
+            <section className="py-24 bg-white dark:bg-neutral-800">
+                <div className="container mx-auto px-4 max-w-6xl">
+                    <h2 className="text-3xl font-extrabold text-neutral-800 dark:text-white mb-12 text-center">
+                        Selected Customer Testimonials
+                    </h2>
+                    <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
+                        {TESTIMONIALS.map((review, index) => (
+                            <blockquote
+                                key={index}
+                                className="bg-neutral-100 dark:bg-neutral-900 p-6 rounded-xl shadow-lg border-t-4 border-primary/50 flex flex-col justify-between h-full"
+                            >
+                                <review.icon className="h-6 w-6 text-primary mb-3" />
+                                <p className="text-lg italic text-neutral-800 dark:text-neutral-200 mb-4">
+                                    "{review.quote}"
+                                </p>
+                                <footer>
+                                    <p className="font-semibold text-sm text-neutral-700 dark:text-neutral-300">
+                                        — {review.author}
+                                    </p>
+                                    <p className="text-xs font-bold text-primary mt-1">
+                                        Focus: {review.claim}
+                                    </p>
+                                </footer>
+                            </blockquote>
+                        ))}
+                    </div>
+                     <div className="text-center mt-12">
+                        <Button asChild size="lg" variant="outline" className="border-primary text-primary hover:bg-primary/5 dark:text-primary dark:border-primary">
+                            <a href="http://google.com/reviews/alberton-tyre-clinic" target="_blank" rel="noopener noreferrer">
+                                View ALL 500+ Google Reviews →
+                            </a>
+                        </Button>
+                     </div>
+                </div>
+            </section>
+
+            {/* CTA: Assessment */}
+            <section className="py-16 bg-primary dark:bg-primary/90 text-white text-center">
+                <Button asChild size="lg" className="bg-white text-primary hover:bg-neutral-100 font-bold">
+                    <Link href="/assessment">Book Your FREE Safety Assessment Now</Link>
+                </Button>
+            </section>
+        </main>
+    );
+}
+
 --------------------------------------------------------------------------------📄 FILE PATH: C:\Users\User1\alberton-tyre-clinic\src\app\services\page.tsx--------------------------------------------------------------------------------// src/app/services/page.tsx
 // Server Component - Engineered for Local SEO Ranking.
 
 import React from 'react';
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
-// Removed unused 'RotateCw' import
-import { Car, Wrench, Zap, BatteryCharging, Disc3, Shield } from 'lucide-react';
+import { Car, Wrench, Zap, BatteryCharging, Disc3, Shield, RotateCw } from 'lucide-react'; // Added RotateCw for the new service
 
 // --- Metadata: Targeted for High-Volume SEO Keywords ---
 export const metadata = {
@@ -1518,35 +1972,40 @@ const SEO_MAPPED_SERVICES = [
   {
     icon: <Car className="h-8 w-8 text-white" />,
     title: "Premium Tyre Sales & Fitment",
-    description: "Official dealers for Pirelli, Michelin, and 8 top brands. Precision fitting, computerized alignment, and balancing for maximum safety.",
+    description: "Official dealers for Pirelli, Michelin, and 8 top brands. Precision fitting, computerized balancing, and alignment for maximum safety.",
+    // Link updated to the new dedicated Tyre page
     link: "/services/tyres",
-    cta: "Shop Brands & Book",
-  },
-  {
-    icon: <Wrench className="h-8 w-8 text-white" />,
-    title: "Minor Vehicle Servicing",
-    description: "Proactive scheduled maintenance: oil changes, fluid and filter replacements. Shifts focus from reactive repairs to guaranteed longevity.",
-    link: "/services/minor-service",
-    cta: "Schedule Service",
+    cta: "Shop Tyres & Book",
   },
   {
     icon: <Disc3 className="h-8 w-8 text-white" />,
     title: "Brakes & Shocks (ATE & Bilstein)",
     description: "Expert installation of ATE Brakes and Bilstein Shocks. We guarantee road holding, safety, and reliable performance with premium brands.",
-    link: "/services/brakes-shocks",
-    cta: "Get Quote",
+    // Link updated to the new dedicated Brakes page (since it's a higher priority safety item)
+    link: "/services/brakes",
+    cta: "Get Brakes & Shocks Quote",
   },
   {
     icon: <Zap className="h-8 w-8 text-white" />,
-    title: "Wheel Alignment & Balancing",
+    title: "3D Wheel Alignment",
     description: "Mandatory for high-mileage warranties. State-of-the-art 3D alignment ensures safety, fuel efficiency, and max tyre life.",
+    // Link updated to the new dedicated Alignment page
     link: "/services/alignment",
-    cta: "Book Alignment",
+    cta: "Book 3D Alignment",
+  },
+  {
+    icon: <RotateCw className="h-8 w-8 text-white" />,
+    title: "Balancing & Rotation",
+    description: "Routine tyre rotation and computerized balancing every 10,000 km to eliminate vibrations and ensure even tread wear.",
+    // Link updated to the new dedicated Balancing page
+    link: "/services/balancing-rotation",
+    cta: "Book Balancing Service",
   },
   {
     icon: <BatteryCharging className="h-8 w-8 text-white" />,
     title: "Battery Sales & Diagnostics",
     description: "Urgent replacement service. High-quality Willard, Exide, and ATLASBX batteries with reliable warranties and free on-site testing.",
+    // Link updated to the new dedicated Batteries page
     link: "/services/batteries",
     cta: "Check Battery Price",
   },
@@ -1560,16 +2019,16 @@ export default function ServicesPage() {
       <section className="pt-32 pb-20 bg-neutral-900 text-white border-b-8 border-primary">
         <div className="container mx-auto px-4 max-w-5xl">
           <h1 className="text-5xl font-extrabold mb-4 uppercase text-center">
-             Your <span className="text-primary">Full-Service</span> Vehicle Maintenance Center
+            Your <span className="text-primary">Full-Service</span> Vehicle Maintenance Center
           </h1>
           <p className="text-xl text-neutral-400 text-center">
-            We offer expert tyre fitment, routine minor servicing, and safety component replacement—all backed by a 28-year family guarantee in Alberton.
+            We offer expert tyre fitment, routine minor servicing, and safety component replacement—all backed by a 35-year family guarantee in Alberton.
           </p>
         </div>
       </section>
 
       {/* Core Services Grid: SEO-Mapped Funnel */}
-       <section className="py-24 bg-neutral-50 dark:bg-neutral-900"> {/* */}
+      <section className="py-24 bg-neutral-50 dark:bg-neutral-900">
         <div className="container mx-auto px-4 max-w-6xl">
 
           <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-8">
@@ -1577,25 +2036,25 @@ export default function ServicesPage() {
               <div
                 key={service.title}
                  className="bg-white dark:bg-neutral-950 p-6 rounded-lg shadow-xl border border-neutral-200 dark:border-neutral-700
-                           hover:shadow-2xl hover:border-primary transition-all duration-300 transform hover:-translate-y-1 flex flex-col justify-between" //
+                           hover:shadow-2xl hover:border-primary transition-all duration-300 transform hover:-translate-y-1 flex flex-col justify-between"
               >
                 <div>
-                    <div className="w-16 h-16
- bg-primary flex items-center justify-center rounded-full mb-4"> {/* */}
+                    <div className="w-16 h-16 bg-primary flex items-center justify-center rounded-full mb-4">
                         {service.icon}
                     </div>
                     <h3 className="text-2xl font-bold text-neutral-800 dark:text-white mb-3">
                         {service.title}
-                     </h3> {/* */}
+                    </h3>
                     <p className="text-neutral-600 dark:text-neutral-400 mb-4 text-base">
                         {service.description}
                     </p>
-                 </div> {/* */}
-                <Button asChild className="p-0 h-auto text-primary justify-start font-bold">
+                </div>
+                {/* BUTTON IMPLEMENTATION (as requested) */}
+                <Button asChild className="w-full bg-primary hover:bg-primary/hover text-white font-bold mt-4">
                     <Link href={service.link}>
                         {service.cta} →
                     </Link>
-                 </Button> {/* */}
+                </Button>
               </div>
             ))}
           </div>
@@ -1605,21 +2064,685 @@ export default function ServicesPage() {
       {/* CTA Section: Guarantee Lock-In Marketing */}
       <section className="py-16 bg-primary dark:bg-primary/90 text-white text-center">
           <div className="container mx-auto px-4 max-w-4xl">
-               <h2 className="text-3xl font-extrabold mb-4">
+              <h2 className="text-3xl font-extrabold mb-4">
                   Protect Your Investment: The High-Mileage Guarantee
-              </h2> {/* */}
+              </h2>
               <p className="text-lg mb-6">
                   Tyre guarantees require mandatory service. Maintain your warranty by booking your routine
-                  <span className='font-bold underline'>Alignment & Balancing every 10,000 km</span> exclusively with us.
-              </p> {/* */}
+                  <span className='font-bold underline'> Alignment, Balancing, and Rotation every 10,000 km</span> exclusively with us.
+              </p>
               <Button asChild size="lg" className="bg-white text-primary hover:bg-neutral-100 font-bold">
-                  <Link href="/booking">Book Your Next 10,000 km Service</Link>
+                  <Link href="/contact">Book Your Next 10,000 km Service</Link>
               </Button>
           </div>
       </section>
     </main>
   );
-} //
+}
+
+
+--------------------------------------------------------------------------------📄 FILE PATH: C:\Users\User1\alberton-tyre-clinic\src\app\services\alignment\page.tsx--------------------------------------------------------------------------------// src/app/services/alignment/page.tsx
+// Server Component - Engineered for Local SEO Ranking on "Wheel Alignment & Balancing".
+
+import React from 'react';
+import Link from 'next/link';
+import { Button } from '@/components/ui/button';
+import { Zap, Wrench, Shield, TrendingUp } from 'lucide-react';
+
+// --- Metadata: Targeted for High-Volume SEO Keywords ---
+export const metadata = {
+  // Target keywords: 3D Wheel Alignment, Balancing, Tyre Warranty, Alberton
+  title: "3D Wheel Alignment & Balancing | Alberton's Tyre Warranty Specialists",
+  description: "Mandatory alignment and balancing for high-mileage warranties. We use state-of-the-art 3D equipment to ensure perfect steering geometry, maximizing tyre life and fuel efficiency in Alberton.",
+};
+
+export default function AlignmentServicesPage() {
+  return (
+    <main>
+      {/* 1. Services Header: H1 Focus on Core Service */}
+      <section className="pt-32 pb-20 bg-neutral-900 text-white border-b-8 border-primary">
+        <div className="container mx-auto px-4 max-w-5xl">
+          <h1 className="text-5xl md:text-6xl font-extrabold mb-4 uppercase text-center leading-tight">
+            3D Wheel <span className="text-primary">Alignment</span> & Balancing
+          </h1>
+          <p className="text-xl text-neutral-400 text-center">
+            Precision adjustment that guarantees your tyre warranty, maximizes lifespan, and ensures safe handling.
+          </p>
+        </div>
+      </section>
+
+      {/* 2. Value Proposition & Warranty Anchor */}
+      <section className="py-24 bg-white dark:bg-neutral-800">
+        <div className="container mx-auto px-4 max-w-6xl grid lg:grid-cols-2 gap-12 items-center">
+            
+            <div className="space-y-6">
+                <h2 className="text-4xl font-extrabold text-neutral-800 dark:text-white">
+                    It's Not Optional. It's Mandatory for Warranty.
+                </h2>
+                <p className="text-lg text-neutral-600 dark:text-neutral-400">
+                    Most premium tyre warranties require **alignment and balancing every 10,000 km**. Our experts use advanced 3D scanning equipment to adjust the steering angles to factory specifications, protecting your investment.
+                </p>
+                <ul className="space-y-4 pt-4">
+                    <li className="flex items-center text-lg text-primary font-semibold">
+                        <Shield className="h-6 w-6 mr-3 flex-shrink-0" /> Tyre Warranty Protection
+                    </li>
+                    <li className="flex items-center text-lg text-primary font-semibold">
+                        <Wrench className="h-6 w-6 mr-3 flex-shrink-0" /> Prevent Premature Tyre Wear
+                    </li>
+                    <li className="flex items-center text-lg text-primary font-semibold">
+                        <TrendingUp className="h-6 w-6 mr-3 flex-shrink-0" /> Improve Fuel Efficiency
+                    </li>
+                </ul>
+                <div className="pt-6">
+                    <Button asChild size="lg" className="bg-primary hover:bg-primary/hover text-white font-bold">
+                        <Link href="/contact">Book Your Alignment Appointment</Link>
+                    </Button>
+                </div>
+            </div>
+            {/* Image Placeholder */}
+            <div className="rounded-xl overflow-hidden shadow-2xl">
+                 
+            </div>
+        </div>
+      </section>
+
+      {/* 3. CTA to Free Assessment (Pre-Alignment Check) */}
+      <section className="py-16 bg-neutral-100 dark:bg-neutral-900 text-center">
+          <div className="container mx-auto px-4 max-w-4xl">
+              <h2 className="text-3xl font-extrabold text-neutral-800 dark:text-white mb-4">
+                  Do You Need Alignment Now?
+              </h2>
+              <p className="text-xl text-neutral-600 dark:text-neutral-400 mb-6">
+                  If your steering wheel is pulling or vibrating, book your **FREE** 6-Point Vehicle Assessment—it includes a quick alignment diagnosis.
+              </p>
+              <Button asChild size="lg" className="bg-primary hover:bg-primary/hover text-white font-bold">
+                  <Link href="/assessment">Book My FREE Alignment Check</Link>
+              </Button>
+          </div>
+      </section>
+    </main>
+  );
+}
+
+--------------------------------------------------------------------------------📄 FILE PATH: C:\Users\User1\alberton-tyre-clinic\src\app\services\balancing-rotation\page.tsx--------------------------------------------------------------------------------// src/app/services/balancing-rotation/page.tsx
+// Server Component - Engineered for routine maintenance and tyre life extension.
+
+import React from 'react';
+import Link from 'next/link';
+import { Button } from '@/components/ui/button';
+import { RotateCw, Zap, Wrench, Shield, CheckCircle } from 'lucide-react';
+
+// --- Metadata: Targeted for Routine Maintenance Keywords ---
+export const metadata = {
+  // Target keywords: Wheel Balancing, Tyre Rotation, Vibration, Alberton
+  title: "Wheel Balancing & Tyre Rotation Service | Maximize Tyre Lifespan in Alberton",
+  description: "Eliminate road vibrations and prevent uneven tyre wear with expert computerized wheel balancing and routine tyre rotation. Essential service every 10,000 km to protect your investment.",
+};
+
+export default function BalancingRotationPage() {
+  return (
+    <main>
+      {/* 1. Services Header: H1 Focus on Core Service */}
+      <section className="pt-32 pb-20 bg-neutral-900 text-white border-b-8 border-primary">
+        <div className="container mx-auto px-4 max-w-5xl">
+          <h1 className="text-5xl md:text-6xl font-extrabold mb-4 uppercase text-center leading-tight">
+            Wheel Balancing & <span className="text-primary">Tyre Rotation</span>
+          </h1>
+          <p className="text-xl text-neutral-400 text-center">
+            Routine service every 10,000 km is critical to safety, comfort, and honouring your tyre warranty.
+          </p>
+        </div>
+      </section>
+
+      {/* 2. Service Breakdown (What's Included) */}
+      <section className="py-24 bg-white dark:bg-neutral-800">
+        <div className="container mx-auto px-4 max-w-6xl grid lg:grid-cols-2 gap-12 items-start">
+            
+            {/* Column 1: Rotation */}
+            <div className="p-8 bg-neutral-100 dark:bg-neutral-900 rounded-xl shadow-xl border-t-8 border-primary/70">
+                <RotateCw className="h-10 w-10 text-primary mb-4" />
+                <h2 className="text-3xl font-extrabold text-neutral-800 dark:text-white mb-4">
+                    Tyre Rotation
+                </h2>
+                <p className="text-lg text-neutral-600 dark:text-neutral-400 mb-6">
+                    Swapping the position of your tyres (e.g., front-to-back) ensures **even wear** across all four tyres, maximizing their lifespan and guaranteeing manufacturer warranty compliance.
+                </p>
+                <ul className="space-y-3">
+                    <li className="flex items-center text-neutral-800 dark:text-neutral-200">
+                        <CheckCircle className="h-5 w-5 mr-3 text-primary flex-shrink-0" /> **Goal:** Maximize Tyre Lifespan
+                    </li>
+                    <li className="flex items-center text-neutral-800 dark:text-neutral-200">
+                        <CheckCircle className="h-5 w-5 mr-3 text-primary flex-shrink-0" /> **Symptom:** Recommended service interval (not fixing a specific fault)
+                    </li>
+                </ul>
+            </div>
+            
+            {/* Column 2: Balancing */}
+            <div className="p-8 bg-neutral-100 dark:bg-neutral-900 rounded-xl shadow-xl border-t-8 border-primary/70">
+                <Wrench className="h-10 w-10 text-primary mb-4" />
+                <h2 className="text-3xl font-extrabold text-neutral-800 dark:text-white mb-4">
+                    Computerized Wheel Balancing
+                </h2>
+                <p className="text-lg text-neutral-600 dark:text-neutral-400 mb-6">
+                    We use a computerized machine to detect and correct tiny weight imbalances in the tyre and rim assembly, fixing the root cause of high-speed vibrations.
+                </p>
+                <ul className="space-y-3">
+                    <li className="flex items-center text-neutral-800 dark:text-neutral-200">
+                        <CheckCircle className="h-5 w-5 mr-3 text-primary flex-shrink-0" /> **Goal:** Eliminate Road Vibration & Improve Comfort
+                    </li>
+                    <li className="flex items-center text-neutral-800 dark:text-neutral-200">
+                        <CheckCircle className="h-5 w-5 mr-3 text-primary flex-shrink-0" /> **Symptom:** Steering wheel or seat vibration above 80 km/h
+                    </li>
+                </ul>
+            </div>
+        </div>
+      </section>
+
+      {/* 3. The Alignment Distinction (Clear Funnel) */}
+      <section className="py-20 bg-neutral-900 dark:bg-neutral-950 text-white text-center">
+          <div className="container mx-auto px-4 max-w-4xl">
+              <h2 className="text-3xl font-extrabold mb-4">
+                  Need Alignment Too? What's the Difference?
+              </h2>
+              <p className="text-lg text-neutral-400 mb-6">
+                  Balancing fixes weight issues (vibration). **Alignment** fixes angle issues (steering pull, uneven wear). We recommend doing both together.
+              </p>
+              <Button asChild size="lg" variant="outline" className="bg-transparent border-white text-white hover:bg-white/10 font-bold">
+                  <Link href="/services/alignment">Learn About 3D Wheel Alignment →</Link>
+              </Button>
+          </div>
+      </section>
+
+      {/* 4. Final CTA (Lead Magnet Repetition) */}
+      <section className="py-16 bg-primary dark:bg-primary/90 text-white text-center">
+          <div className="container mx-auto px-4 max-w-4xl">
+              <h2 className="text-3xl font-extrabold mb-4">
+                  Ready for Your 10,000 km Service?
+              </h2>
+              <p className="text-lg mb-6">
+                  Book your Tyre Rotation and Balancing now, or include a **FREE** assessment of your overall safety system.
+              </p>
+              <Button asChild size="lg" className="bg-white text-primary hover:bg-neutral-100 font-bold">
+                  <Link href="/contact">Book My Rotation & Balancing</Link>
+              </Button>
+          </div>
+      </section>
+    </main>
+  );
+}
+
+--------------------------------------------------------------------------------📄 FILE PATH: C:\Users\User1\alberton-tyre-clinic\src\app\services\batteries\page.tsx--------------------------------------------------------------------------------// src/app/services/batteries/page.tsx
+// Server Component - Engineered to funnel high-intent battery traffic to the specialized Alberton Battery Mart website.
+// This page captures local search intent but directs users (and SEO authority) to the partner site.
+
+import React from 'react';
+import Link from 'next/link';
+import { Button } from '@/components/ui/button';
+import { BatteryCharging, Clock, Zap, ExternalLink, MapPin } from 'lucide-react';
+import type { Metadata } from "next"; // Explicit import for Metadata type
+
+// --- External Link Constant (Crucial for SEO link equity transfer) ---
+const ALBERTON_BATTERY_MART_URL = "https://www.albertonbatterymart.co.za";
+
+// --- Metadata: Targeted for High-Volume SEO Keywords ---
+export const metadata: Metadata = {
+  title: "Willard & Exide Car Batteries | FREE Testing & Replacement in Alberton",
+  description: "Need a new car battery? We recommend our specialized partner, Alberton Battery Mart, located right next door. Get free testing, expert fitment, and the best prices on Willard and Exide batteries.",
+  // CRUCIAL SEO: Use canonical tag to signal that the partner site is the primary source of this content.
+  alternates: {
+      canonical: ALBERTON_BATTERY_MART_URL, 
+  },
+};
+
+export default function BatteriesServicesPage() {
+  return (
+    <main>
+      {/* 1. Services Header: H1 Focus on Core Service */}
+      <section className="pt-32 pb-20 bg-neutral-900 text-white border-b-8 border-primary">
+        <div className="container mx-auto px-4 max-w-5xl">
+          <h1 className="text-5xl md:text-6xl font-extrabold mb-4 uppercase text-center leading-tight">
+            Car Battery Sales & <span className="text-primary">Diagnostics</span>
+          </h1>
+          <p className="text-xl text-neutral-400 text-center">
+            For specialized battery service, we partner with Alberton Battery Mart, right next door.
+          </p>
+        </div>
+      </section>
+
+      {/* 2. Funneling Section (Primary SEO Callout & Link) */}
+      <section className="py-24 bg-white dark:bg-neutral-800">
+        <div className="container mx-auto px-4 max-w-6xl grid lg:grid-cols-2 gap-12 items-center">
+            
+            <div className="space-y-6">
+                <h2 className="text-4xl font-extrabold text-neutral-800 dark:text-white">
+                    Need a New Battery? Visit Our Specialist Partner.
+                </h2>
+                <p className="text-lg text-neutral-600 dark:text-neutral-400">
+                    While we check battery health as part of our FREE 6-Point Assessment, all primary battery sales, urgent callouts, and specialist fitment services are handled by Alberton Battery Mart. They are the local authority and offer:
+                </p>
+                <ul className="space-y-4 pt-4">
+                    <li className="flex items-center text-lg text-primary font-semibold">
+                        <Zap className="h-6 w-6 mr-3 flex-shrink-0" /> FREE Callout, Testing & Fitment
+                    </li>
+                    <li className="flex items-center text-lg text-primary font-semibold">
+                        <Clock className="h-6 w-6 mr-3 flex-shrink-0" /> Fastest Service in Alberton
+                    </li>
+                    <li className="flex items-center text-lg text-primary font-semibold">
+                        <MapPin className="h-6 w-6 mr-3 flex-shrink-0" /> Located Right Next Door (Link Building)
+                    </li>
+                </ul>
+            </div>
+            {/* CTA Card for Immediate Funnel */}
+            <div className="rounded-xl overflow-hidden shadow-2xl p-8 bg-neutral-100 dark:bg-neutral-900 text-center space-y-4">
+                <h3 className='text-2xl font-bold text-primary'>Visit Alberton Battery Mart Now</h3>
+                <p className='text-neutral-600 dark:text-neutral-400'>For quotes, pricing, and urgent callouts, please use their dedicated website.</p>
+                <Button asChild size="lg" className="bg-primary hover:bg-primary/hover text-white font-bold w-full">
+                    {/* CRUCIAL LINK: External link to the specialized site */}
+                    <a href={ALBERTON_BATTERY_MART_URL} target="_blank" rel="noopener noreferrer">
+                        Go to Battery Mart Website <ExternalLink className='ml-2 h-5 w-5' />
+                    </a>
+                </Button>
+            </div>
+        </div>
+      </section>
+
+      {/* 3. Final CTA: ATC Assessment (Maintain Core Service) */}
+      <section className="py-16 bg-primary dark:bg-primary/90 text-white text-center">
+          <div className="container mx-auto px-4 max-w-4xl">
+              <h2 className="text-3xl font-extrabold mb-4">
+                  Still Not Sure? Start With Our FREE Assessment.
+              </h2>
+              <p className="text-lg mb-6">
+                  Our FREE 6-Point Vehicle Assessment includes a quick battery check and directs you to the right place.
+              </p>
+              <Button asChild size="lg" className="bg-white text-primary hover:bg-neutral-100 font-bold">
+                  <Link href="/assessment">Book My FREE Assessment</Link>
+              </Button>
+          </div>
+      </section>
+    </main>
+  );
+}
+
+--------------------------------------------------------------------------------📄 FILE PATH: C:\Users\User1\alberton-tyre-clinic\src\app\services\brakes\page.tsx--------------------------------------------------------------------------------// src/app/services/brakes/page.tsx
+// Server Component - Engineered for Local SEO Ranking on "Brakes & Discs".
+
+import React from 'react';
+import Link from 'next/link';
+import { Button } from '@/components/ui/button';
+import { Disc3, Zap, ShieldCheck, Wrench, Microscope } from 'lucide-react';
+
+// --- Metadata: Targeted for High-Volume SEO Keywords ---
+export const metadata = {
+  // Target keywords: Brakes, Discs, ATE, Alberton, Service
+  title: "Brake Service & Disc Replacement | ATE Brake Experts in Alberton",
+  description: "Expert brake pad and disc replacement near you. We only fit premium ATE and Textar components, guaranteeing maximum stopping power and vehicle safety in Alberton.",
+};
+
+// Data Structure for Brake Value Propositions
+const BRAKE_VALUE_PROPS = [
+  {
+    icon: Disc3,
+    title: "Official ATE Dealer",
+    detail: "We stock the full range of ATE brake systems, known globally for superior stopping performance and quality.",
+  },
+  {
+    icon: ShieldCheck,
+    title: "Full System Safety Check",
+    detail: "Every brake service includes a visual check of your shocks, alignment, and tyres to ensure comprehensive safety.",
+  },
+  {
+    icon: Wrench,
+    title: "Certified Installation",
+    detail: "Our 28-year experienced technicians guarantee precision fitment, eliminating squeaks and maximizing component life.",
+  },
+];
+
+
+export default function BrakeServicesPage() {
+  return (
+    <main>
+      {/* 1. Services Header: H1 Focus on Core Service */}
+      <section className="pt-32 pb-20 bg-neutral-900 text-white border-b-8 border-primary">
+        <div className="container mx-auto px-4 max-w-5xl">
+          <h1 className="text-5xl md:text-6xl font-extrabold mb-4 uppercase text-center leading-tight">
+            Certified Brake <span className="text-primary">Service Experts</span>
+          </h1>
+          <p className="text-xl text-neutral-400 text-center">
+            Your safety stops here. We specialize in high-performance **ATE Brakes** for reliable stopping power in Alberton.
+          </p>
+        </div>
+      </section>
+
+      {/* 2. Brand Authority & Problem/Solution */}
+      <section className="py-24 bg-white dark:bg-neutral-800">
+        <div className="container mx-auto px-4 max-w-6xl">
+            <div className='grid lg:grid-cols-2 gap-12 items-center'>
+                {/* Authority Content */}
+                <div className='space-y-6'>
+                    <h2 className="text-4xl font-extrabold text-neutral-800 dark:text-white">
+                        Don't Compromise on Braking Safety
+                    </h2>
+                    <p className="text-lg text-neutral-600 dark:text-neutral-400">
+                        Brakes are the single most critical component on your vehicle. Unlike cheaper alternatives that fade under pressure, we exclusively fit **ATE**, **Textar**, and **Safeline** systems—the choice of the world's top vehicle manufacturers.
+                    </p>
+                    <div className='space-y-4 pt-4'>
+                        {BRAKE_VALUE_PROPS.map((prop, index) => (
+                            <div key={index} className="flex items-start">
+                                <prop.icon className="h-6 w-6 text-primary mr-3 mt-1 flex-shrink-0" />
+                                <div>
+                                    <p className="font-semibold text-neutral-800 dark:text-white">{prop.title}</p>
+                                    <p className="text-sm text-neutral-600 dark:text-neutral-400">{prop.detail}</p>
+                                </div>
+                            </div>
+                        ))}
+                    </div>
+                </div>
+
+                {/* Image Placeholder or CTA Card */}
+                <div className="p-8 bg-neutral-100 dark:bg-neutral-900 rounded-xl shadow-2xl border-t-8 border-primary text-center space-y-4">
+                    <Microscope className="h-16 w-16 text-primary mx-auto" />
+                    <h3 className="text-2xl font-bold text-neutral-800 dark:text-white">
+                        Is it time for a brake inspection?
+                    </h3>
+                    <p className="text-neutral-600 dark:text-neutral-400">
+                        If you hear squealing, grinding, or feel a spongy pedal, book your priority brake check immediately.
+                    </p>
+                    <Button asChild size="lg" className="bg-primary hover:bg-primary/hover text-white text-lg font-bold w-full">
+                        <Link href="/contact">Get a Brake Quote Now</Link>
+                    </Button>
+                </div>
+            </div>
+        </div>
+      </section>
+
+      {/* 3. Final CTA (Lead Magnet Repetition) */}
+      <section className="py-16 bg-primary dark:bg-primary/90 text-white text-center">
+          <div className="container mx-auto px-4 max-w-4xl">
+              <h2 className="text-3xl font-extrabold mb-4">
+                  Free Assessment: Brakes Included.
+              </h2>
+              <p className="text-lg mb-6">
+                  Our FREE 6-Point Vehicle Assessment includes a visual brake inspection at no cost and no obligation.
+              </p>
+              <Button asChild size="lg" className="bg-white text-primary hover:bg-neutral-100 font-bold">
+                  <Link href="/assessment">Book My FREE Assessment</Link>
+              </Button>
+          </div>
+      </section>
+    </main>
+  );
+}
+
+--------------------------------------------------------------------------------📄 FILE PATH: C:\Users\User1\alberton-tyre-clinic\src\app\services\shocks\page.tsx--------------------------------------------------------------------------------// src/app/services/shocks/page.tsx
+// Server Component - Engineered for Local SEO Ranking on "Shocks & Suspension".
+
+import React from 'react';
+import Link from 'next/link';
+import { Button } from '@/components/ui/button';
+import { Zap, TrendingDown, Gauge, Car } from 'lucide-react';
+
+// --- Metadata: Targeted for High-Volume SEO Keywords ---
+export const metadata = {
+  title: "Bilstein Shock Absorbers & Suspension Service | Alberton Experts",
+  description: "Expert shock absorber replacement and suspension assessment in Alberton. We supply high-quality Bilstein and Monroe components to restore vehicle handling, comfort, and safety.",
+};
+
+export default function ShocksServicesPage() {
+  return (
+    <main>
+      {/* 1. Services Header: H1 Focus on Core Service */}
+      <section className="pt-32 pb-20 bg-neutral-900 text-white border-b-8 border-primary">
+        <div className="container mx-auto px-4 max-w-5xl">
+          <h1 className="text-5xl md:text-6xl font-extrabold mb-4 uppercase text-center leading-tight">
+            Shocks & Suspension <span className="text-primary">Fitment</span>
+          </h1>
+          <p className="text-xl text-neutral-400 text-center">
+            Restore handling and comfort. Expert installation of **Bilstein**, Monroe, and Gabriel suspension components.
+          </p>
+        </div>
+      </section>
+
+      {/* 2. Problem/Solution & Authority */}
+      <section className="py-24 bg-white dark:bg-neutral-800">
+        <div className="container mx-auto px-4 max-w-6xl grid lg:grid-cols-2 gap-12 items-center">
+            {/* Image Placeholder */}
+            <div className="rounded-xl overflow-hidden shadow-2xl">
+                 
+            </div>
+
+            <div className="space-y-6">
+                <h2 className="text-4xl font-extrabold text-neutral-800 dark:text-white">
+                    Failing Shocks Compromise Safety
+                </h2>
+                <p className="text-lg text-neutral-600 dark:text-neutral-400">
+                    Worn-out shock absorbers dramatically increase your stopping distance and reduce tyre grip. We offer a free, no-obligation inspection of your suspension system[cite: 477].
+                </p>
+                <ul className="space-y-4 pt-4">
+                    <li className="flex items-center text-lg text-primary font-semibold">
+                        <TrendingDown className="h-6 w-6 mr-3 flex-shrink-0" /> Reduce Stopping Distance
+                    </li>
+                    <li className="flex items-center text-lg text-primary font-semibold">
+                        <Gauge className="h-6 w-6 mr-3 flex-shrink-0" /> Restore Vehicle Handling
+                    </li>
+                    <li className="flex items-center text-lg text-primary font-semibold">
+                        <Car className="h-6 w-6 mr-3 flex-shrink-0" /> Prevent Premature Tyre Wear
+                    </li>
+                </ul>
+                <div className="pt-6">
+                    <Button asChild size="lg" className="bg-primary hover:bg-primary/hover text-white font-bold">
+                        <Link href="/contact">Get a Suspension Quote</Link>
+                    </Button>
+                </div>
+            </div>
+        </div>
+      </section>
+
+      {/* 3. Final CTA: Assessment */}
+      <section className="py-16 bg-primary dark:bg-primary/90 text-white text-center">
+          <div className="container mx-auto px-4 max-w-4xl">
+              <h2 className="text-3xl font-extrabold mb-4">
+                  Experiencing a Bouncy Ride?
+              </h2>
+              <p className="text-lg mb-6">
+                  Book your **FREE** 6-Point Vehicle Assessment—we specifically check your shocks for leaks and damage[cite: 153].
+              </p>
+              <Button asChild size="lg" className="bg-white text-primary hover:bg-neutral-100 font-bold">
+                  <Link href="/assessment">Book My FREE Shock Check</Link>
+              </Button>
+          </div>
+      </section>
+    </main>
+  );
+}
+
+--------------------------------------------------------------------------------📄 FILE PATH: C:\Users\User1\alberton-tyre-clinic\src\app\services\tyres\page.tsx--------------------------------------------------------------------------------// src/app/services/tyres/page.tsx
+// Server Component - Engineered for Local SEO Ranking on "Tyres & Fitment".
+
+import React from 'react';
+import Link from 'next/link';
+import { Button } from '@/components/ui/button';
+import Image from 'next/image';
+import { Car, Zap, ShieldCheck, TrendingUp, Handshake } from 'lucide-react';
+
+// --- Metadata: Targeted for High-Volume SEO Keywords ---
+export const metadata = {
+  // Target keywords: Tyre Brands, Fitment, Pirelli, Michelin, Alberton
+  title: "New Tyre Sales, Fitment & Alignment | Alberton's Premium Tyre Experts",
+  description: "Official dealer for Pirelli, Michelin, and 8 top brands. Get precision tyre fitting, computerized balancing, and 3D wheel alignment for guaranteed safety in Alberton.",
+};
+
+// Data Structure for Key Tyre Brands & Value
+const PREMIUM_BRANDS = [
+  { name: "Pirelli", detail: "The ultimate in high-performance grip and wet-road safety. Official local dealer.", logo: "/logos/pirelli.svg" },
+  { name: "Michelin", detail: "Known for long tread life, fuel efficiency, and consistent handling over time.", logo: "/logos/michelin.svg" },
+  { name: "Dunlop", detail: "A balance of quality and value for everyday local driving and long-distance comfort.", logo: "/logos/dunlop.svg" },
+  { name: "BF Goodrich", detail: "Rugged all-terrain and off-road capability for trucks and SUVs.", logo: "/logos/bfgoodrich.svg" },
+];
+
+export default function TyreServicesPage() {
+  return (
+    <main>
+      {/* 1. Services Header: H1 Focus on Core Service */}
+      <section className="pt-32 pb-20 bg-neutral-900 text-white border-b-8 border-primary">
+        <div className="container mx-auto px-4 max-w-5xl">
+          <h1 className="text-5xl md:text-6xl font-extrabold mb-4 uppercase text-center leading-tight">
+            Tyres & Fitment <span className="text-primary">You Can Trust</span>
+          </h1>
+          <p className="text-xl text-neutral-400 text-center">
+            Precision tyre sales, fitting, balancing, and alignment. We only sell brands that guarantee your safety.
+          </p>
+        </div>
+      </section>
+
+      {/* 2. Premium Brand Showcase (Authority) */}
+      <section className="py-24 bg-white dark:bg-neutral-800">
+        <div className="container mx-auto px-4 max-w-7xl">
+            
+          <h2 className="text-4xl font-extrabold text-center text-neutral-800 dark:text-white mb-12">
+            Official Dealers for Premium Safety Brands
+          </h2>
+          
+          <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-8">
+            {PREMIUM_BRANDS.map((brand) => (
+              <div key={brand.name} className="p-6 bg-neutral-50 dark:bg-neutral-900 rounded-xl shadow-lg border border-neutral-200 dark:border-neutral-700 text-center">
+                {/* Image placeholder should be replaced with actual SVG or small logo */}
+                <Handshake className="h-10 w-10 text-primary mx-auto mb-4" /> 
+                <h3 className="text-xl font-bold text-neutral-800 dark:text-white mb-2">{brand.name}</h3>
+                <p className="text-sm text-neutral-600 dark:text-neutral-400">{brand.detail}</p>
+              </div>
+            ))}
+          </div>
+
+        </div>
+      </section>
+
+      {/* 3. The Alberton Fitment Difference (USP/Process) */}
+      <section className="py-24 bg-neutral-100 dark:bg-neutral-900">
+        <div className="container mx-auto px-4 max-w-6xl">
+            
+            <h2 className="text-4xl font-extrabold text-center text-neutral-800 dark:text-white mb-12">
+                Why Choose Us for Your Next Tyres?
+            </h2>
+
+            <div className="grid md:grid-cols-3 gap-8">
+                <div className="text-center p-6 bg-white dark:bg-neutral-800 rounded-lg shadow-xl border-t-4 border-primary/50">
+                    <ShieldCheck className="h-12 w-12 text-primary mx-auto mb-4" />
+                    <h3 className="text-xl font-semibold mb-2 text-neutral-800 dark:text-white">Safety Guarantee</h3>
+                    <p className="text-neutral-600 dark:text-neutral-400 text-sm">
+                        Every fitment includes a free brake, shock, and battery check—ensuring your entire safety system is road-ready.
+                    </p>
+                </div>
+                <div className="text-center p-6 bg-white dark:bg-neutral-800 rounded-lg shadow-xl border-t-4 border-primary/50">
+                    <Zap className="h-12 w-12 text-primary mx-auto mb-4" />
+                    <h3 className="text-xl font-semibold mb-2 text-neutral-800 dark:text-white">3D Precision Alignment</h3>
+                    <p className="text-neutral-600 dark:text-neutral-400 text-sm">
+                        We use state-of-the-art 3D technology to guarantee maximum tyre life and optimal vehicle handling.
+                    </p>
+                </div>
+                <div className="text-center p-6 bg-white dark:bg-neutral-800 rounded-lg shadow-xl border-t-4 border-primary/50">
+                    <TrendingUp className="h-12 w-12 text-primary mx-auto mb-4" />
+                    <h3 className="text-xl font-semibold mb-2 text-neutral-800 dark:text-white">Best Local Value</h3>
+                    <p className="text-neutral-600 dark:text-neutral-400 text-sm">
+                        Competitive pricing on all major brands with the guaranteed honest service only a family-run clinic can offer.
+                    </p>
+                </div>
+            </div>
+            <div className="text-center mt-12">
+                <Button asChild size="lg" className="bg-primary hover:bg-primary/hover text-white text-lg font-bold">
+                    <Link href="/contact">Request a Tyre Quote Now</Link>
+                </Button>
+            </div>
+        </div>
+      </section>
+
+      {/* 4. Final CTA (Lead Magnet Repetition) */}
+      <section className="py-16 bg-primary dark:bg-primary/90 text-white text-center">
+          <div className="container mx-auto px-4 max-w-4xl">
+              <h2 className="text-3xl font-extrabold mb-4">
+                  Not Sure What You Need? Start With Safety.
+              </h2>
+              <p className="text-lg mb-6">
+                  Book your FREE 6-Point Vehicle Assessment now.
+              </p>
+              <Button asChild size="lg" className="bg-white text-primary hover:bg-neutral-100 font-bold">
+                  <Link href="/assessment">Book My FREE Assessment</Link>
+              </Button>
+          </div>
+      </section>
+    </main>
+  );
+}
+
+--------------------------------------------------------------------------------📄 FILE PATH: C:\Users\User1\alberton-tyre-clinic\src\app\terms\page.tsx--------------------------------------------------------------------------------// src/app/terms/page.tsx
+// Server Component - Required for legal and operational clarity.
+
+import React from 'react';
+import Link from 'next/link';
+
+// --- Metadata: Legal Compliance ---
+export const metadata = {
+  title: "Terms of Service | Alberton Tyre Clinic",
+  description: "Review the terms and conditions that govern your use of the Alberton Tyre Clinic website and services, including appointments and warranties.",
+};
+
+export default function TermsOfServicePage() {
+  return (
+    <main>
+      {/* Header */}
+      <section className="pt-32 pb-20 bg-neutral-900 text-white border-b-8 border-primary">
+        <div className="container mx-auto px-4 text-center max-w-4xl">
+          <h1 className="text-5xl font-extrabold mb-4 uppercase">
+            Terms of <span className="text-primary">Service</span>
+          </h1>
+          <p className="text-xl text-neutral-400">
+            Governing the use of our website and services.
+          </p>
+        </div>
+      </section>
+
+      {/* Content */}
+      <section className="py-24 bg-white dark:bg-neutral-800">
+        <div className="container mx-auto px-4 max-w-4xl text-neutral-800 dark:text-neutral-200 prose dark:prose-invert">
+          
+          <h2>1. Agreement to Terms</h2>
+          <p>
+            By accessing or using the services of Alberton Tyre Clinic, you agree to be bound by these Terms of Service. If you disagree with any part of the terms, then you may not access the Service.
+          </p>
+
+          <h2>2. Service Appointments and Quotes</h2>
+          <ul>
+            <li>
+                **Quote Validity:** All quotes for tyres, parts, and labour are valid for 7 days unless specified otherwise in writing.
+            </li>
+            <li>
+                **Free Assessment:** The "FREE 6-Point Vehicle Assessment" is a visual check of accessible components and does not involve dismantling parts. It is non-binding and does not constitute a full diagnostic.
+            </li>
+            <li>
+                **Cancellations:** We request at least 4 hours notice for any appointment cancellations.
+            </li>
+          </ul>
+
+          <h2>3. Warranties and Guarantees</h2>
+          <p>
+            All parts (tyres, brakes, batteries, shocks) are covered by the original manufacturer's warranty. Warranties on tyres are subject to the manufacturer's conditions, often requiring **mandatory alignment and balancing every 10,000 km**[cite: 331]. Failure to adhere to maintenance schedules may void the warranty.
+          </p>
+
+          <h2>4. Limitation of Liability</h2>
+          <p>
+            Alberton Tyre Clinic will not be liable for any indirect, incidental, special, consequential or punitive damages, including without limitation, loss of profits, data, or other intangible losses, resulting from (i) your access to or inability to access or use the Service; (ii) any conduct or content of any third party on the Service.
+          </p>
+
+          <p className="not-prose mt-10 text-center">
+            <Link href="/contact" className="font-bold text-primary hover:underline">
+              Contact us for any questions regarding these terms.
+            </Link>
+          </p>
+        </div>
+      </section>
+    </main>
+  );
+}
 
 --------------------------------------------------------------------------------📄 FILE PATH: C:\Users\User1\alberton-tyre-clinic\src\components\theme-provider.tsx--------------------------------------------------------------------------------// src/components/theme-provider.tsx
 "use client"
@@ -1720,7 +2843,7 @@ export default function Footer() {
                          </Link>
                         <p className="text-sm leading-relaxed text-neutral-400 max-w-xs mb-4">
                             {/* FIX: Replaced ' with ' */}
-                            Alberton's trusted **family-run fitment experts since 1989**. We prioritize your safety over sales, guaranteed.
+                            Alberton's trusted family-run fitment experts since 1989. We prioritize your safety over sales, guaranteed.
                         </p>
 
                         {/* Trust Anchor Badges */}
@@ -2183,7 +3306,7 @@ export default function BrandsOfAuthority() {
 } //
 
 --------------------------------------------------------------------------------📄 FILE PATH: C:\Users\User1\alberton-tyre-clinic\src\components\sections\Hero.tsx--------------------------------------------------------------------------------// src/components/sections/Hero.tsx
-// Server Component - Optimized for initial load speed.
+// Simplified server component for basic hero section.
 
 import React from 'react';
 import Link from 'next/link';
@@ -2191,73 +3314,33 @@ import { Button } from '@/components/ui/button';
 
 export default function Hero() {
   return (
-    // High contrast, dark charcoal background (neutral-800)
-    <section className="relative h-screen min-h-[600px] flex items-center justify-center
-                        bg-neutral-800 dark:bg-neutral-900 transition-colors duration-500">
-
-      {/* Background/Texture Placeholder */}
-      <div
-        className="absolute inset-0 opacity-10 dark:opacity-5"> {/* */}
-        <div
-          
-             className="h-full w-full bg-cover bg-center"
-            style={{ backgroundImage: `url('/placeholder-tyre-shop-bg.jpg')` }} // Placeholder local background image
-        ></div>
-      </div>
-
-      {/* Content: Centered and Prominent */}
-      <div className="container mx-auto px-4 text-center z-10 max-w-4xl">
-
-
-         {/* H1: The Core Value Proposition - White Text for Contrast */}
-        <h1 className="text-5xl md:text-6xl font-extrabold mb-4
-                     text-white uppercase leading-tight"> {/* */}
-           {/* FIX: Replaced ' with ' */}
-          Don't Just Change Tyres.
-          <span className="text-primary">Invest in Safety.</span>
+    <section className="relative h-screen min-h-[600px] flex items-center justify-center bg-neutral-800">
+      <div className="container mx-auto px-4 text-center max-w-4xl">
+        <h1 className="text-5xl md:text-6xl font-extrabold mb-4 text-white uppercase leading-tight">
+          Don&apos;t Just Change Tyres. <span className="text-primary">Invest in Safety.</span>
         </h1>
-
-        {/* H2/Subheading: Strategic Trust Anchors - Clear and High-Impact */}
-        <h2 className="text-xl md:text-2xl font-medium mb-4
-                       text-neutral-400"> {/* */}
-           {/* FIX: Replaced ' with ' */}
-          Alberton's Family-Run Fitment Experts Since <span className="font-extrabold text-primary">1989.</span>
-         </h2>
-
-         {/* Core USP Points - Quick Trust Indicators (Updated to stack on mobile) */}
-        <div className="flex flex-col sm:flex-row justify-center items-center space-y-4 sm:space-y-0 sm:space-x-6 mb-10 text-lg"> {/* */}
-            <span className="flex items-center text-white">
-                <span className="text-primary mr-2">✓</span> Pirelli & ATE Quality
-            </span>
-            
-             <span className="flex items-center text-white">
-                 <span className="text-primary mr-2">✓</span> Over 35 Years Experience {/* */}
-            </span>
+        <h2 className="text-xl md:text-2xl font-medium mb-4 text-neutral-400">
+          Alberton&apos;s Family-Run Fitment Experts Since <span className="font-extrabold text-primary">1989.</span>
+        </h2>
+        <div className="flex flex-col sm:flex-row justify-center items-center space-y-4 sm:space-y-0 sm:space-x-6 mb-10 text-lg text-white">
+          <span>✓ Pirelli & ATE Quality</span>
+          <span>✓ Over 35 Years Experience</span>
         </div>
-
-        {/* PRIMARY CTA BUTTON - RESPONSIVE FIX:
-          - size="xl" is the base style.
-          - Mobile (default): h-auto (auto height), py-4 (vertical padding), px-6 (horizontal padding), whitespace-normal (allows text wrap), text-base (smaller font).
-          - sm screens & up: h-14 (fixed height), sm:px-10 (standard padding), sm:whitespace-nowrap (no wrap), sm:text-lg (larger font).
-        */}
         <Button
-            asChild
-            size="xl"
-            className="h-auto py-4 px-6 text-base whitespace-normal sm:h-14 sm:px-10 sm:whitespace-nowrap sm:text-lg md:text-xl transition-all"
+          asChild
+          className="h-auto py-3 px-4 text-base font-bold whitespace-normal sm:py-4 sm:px-8 sm:text-lg sm:whitespace-nowrap bg-primary hover:bg-primary/90 text-white"
         >
           <Link href="/assessment">
-            Claim Your FREE 6-Point Vehicle Assessment Today
+            Claim Your 6-Point Assessment Today
           </Link>
-         </Button>
-
-        {/* Secondary Low-Friction CTA Text */}
+        </Button>
         <p className="mt-4 text-sm text-neutral-500">
-          *No Obligation. No Hassle. We Check Shocks, Brakes & Batteries. {/* */}
+          *No Obligation. No Hassle. We Check Shocks, Brakes & Batteries.
         </p>
       </div>
     </section>
   );
-} //
+}
 
 --------------------------------------------------------------------------------📄 FILE PATH: C:\Users\User1\alberton-tyre-clinic\src\components\sections\LocalProof.tsx--------------------------------------------------------------------------------// src/components/sections/LocalProof.tsx
 "use client"; // <<<--- ADD THIS DIRECTIVE
@@ -2278,7 +3361,7 @@ export default function LocalProof() {
                     Don&apos;t Just Take Our Word For It.
                 </h2>
                 <p className="text-xl mb-10">
-                    See why over 500 drivers in Alberton trust our family-run team.
+                    See why over 1000's of drivers in Alberton trust our family-run team.
                 </p>
 
                 {/* Proof Metrics Grid */}
@@ -2296,7 +3379,7 @@ export default function LocalProof() {
                      {/* Metric 2: Total Reviews */}
                     <div className="bg-white dark:bg-neutral-800 text-neutral-800 dark:text-white p-6 rounded-lg shadow-xl">
                         <div className="text-5xl font-bold mb-2">
-                             500+
+                             300+
                         </div>
                         <p className="text-sm font-semibold text-neutral-600 dark:text-neutral-400">Verified Local Reviews</p>
                     </div>
@@ -2304,7 +3387,7 @@ export default function LocalProof() {
                     {/* Metric 3: Years Experience */}
                     <div className="bg-white dark:bg-neutral-800 text-neutral-800 dark:text-white p-6 rounded-lg shadow-xl">
                         <div className="text-5xl font-bold text-primary mb-2">
-                            28
+                            38
                          </div>
                         <p className="text-sm font-semibold">Years in Alberton</p>
                     </div>

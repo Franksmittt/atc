@@ -3,7 +3,6 @@ import React from 'react';
 import Link from 'next/link';
 import { Phone, MapPin, Clock, Mail } from 'lucide-react';
 import { Button } from '@/components/ui/button';
-
 export default function Footer() {
     // Current year for copyright date
     const currentYear = new Date().getFullYear();
@@ -20,17 +19,17 @@ export default function Footer() {
                              Alberton <span className="text-primary">Tyre Clinic</span> {/* */}
                          </Link>
                         <p className="text-sm leading-relaxed text-neutral-400 max-w-xs mb-4">
-                            {/* FIX: Replaced ' with ' */}
-                            Alberton's trusted **family-run fitment experts since 1989**. We prioritize your safety over sales, guaranteed.
+                            {/* FIX: Replaced ' with &apos; to resolve unescaped entity error (Line 24) */}
+                            Alberton&apos;s trusted **family-run fitment experts since 1989**. We prioritize your safety over sales, guaranteed.
                         </p>
 
                         {/* Trust Anchor Badges */}
                         <div className="space-y-1 text-xs font-semibold">
                             <span className="text-primary block">✓ Official Pirelli Dealer</span> {/* */}
-                             <span className="text-primary block">✓ ATE Braking Specialist</span>
+                            <span className="text-primary block">✓ ATE Braking Specialist</span>
                              <span className="text-primary block">✓ Over 35 Years Service</span>
                          </div> {/* */}
-                    </div>
+                     </div>
 
                     {/* Column 2: Core Services & Quick Links (SEO Focus) */}
                     <div>
@@ -54,22 +53,22 @@ export default function Footer() {
                         <ul className="space-y-3 text-sm">
                              <li className="flex items-start">
                                  <MapPin className="h-4 w-4 mr-2 text-primary flex-shrink-0 mt-1" /> {/* */}
-                                <a href="http://googleusercontent.com/maps/google.com/0" target="_blank" rel="noopener noreferrer" className="hover:text-primary transition-colors">
+                                 <a href="http://googleusercontent.com/maps/google.com/0" target="_blank" rel="noopener noreferrer" className="hover:text-primary transition-colors">
                                      26 St Columb St, New Redruth, Alberton {/* */}
                                 </a>
                             </li>
                              <li className="flex items-center">
                                  <Phone className="h-4 w-4 mr-2 text-primary flex-shrink-0" /> {/* */}
-                                <a href="tel:+27119078495" className="font-extrabold hover:text-primary transition-colors">
+                                 <a href="tel:+27119078495" className="font-extrabold hover:text-primary transition-colors">
                                      +27 11 907 8495 {/* */}
-                                </a>
+                                 </a>
                             </li>
                              <li className="flex items-start">
                                  <Mail className="h-4 w-4 mr-2 mt-1 text-primary flex-shrink-0" /> {/* */}
                                  <a href="mailto:info@albertontyreclinic.co.za" className="break-all hover:text-primary transition-colors">
                                      info@albertontyreclinic.co.za {/* */}
-                                </a>
-                             </li>
+                                 </a>
+                            </li>
                             <li className="pt-2 flex items-start text-primary font-bold"> {/* */}
                                 <Clock className="h-4 w-4 mr-2 flex-shrink-0 mt-1" />
                                 <div>
@@ -87,8 +86,8 @@ export default function Footer() {
                             Safety is Free.
                         </h4> {/* */}
                         <p className="text-sm text-neutral-400 mb-4">
-                            {/* FIX: Replaced ' with ' */}
-                            Don't guess your vehicle's condition. Book your free safety check today.
+                            {/* FIX: Replaced ' with &apos; to resolve unescaped entity error (Line 91) */}
+                            Don&apos;t guess your vehicle&apos;s condition. Book your free safety check today.
                         </p>
                          <Button asChild className="w-full bg-primary hover:bg-primary/hover text-white font-bold">
                             <Link href="/assessment">
@@ -100,17 +99,17 @@ export default function Footer() {
                 </div>
 
 
-                 {/* Bottom Bar: Legal, Copyright, and Maintenance Credit (Stack on small screens) */}
+                {/* Bottom Bar: Legal, Copyright, and Maintenance Credit (Stack on small screens) */}
                 <div className="flex flex-col md:flex-row justify-between items-center text-xs text-neutral-500 pt-4 space-y-4 md:space-y-0"> {/* */}
 
                     {/* Copyright & Maintenance Credit (Combined for visual impact) */}
                      <div className="flex flex-col md:flex-row items-center space-y-2 md:space-y-0 md:space-x-4 text-center md:text-left"> {/* */}
                         <a href="https://www.endpointmedia.co.za" target="_blank" rel="noopener noreferrer" className="font-semibold text-primary hover:text-white transition-colors">
-                            Designed, Developed & Maintained by Endpoint Media. {/* Escaped ampersand */}
+                            Designed, Developed & Maintained by Endpoint Media.
                         </a> {/* */}
                         <span className="hidden md:inline-block">|</span>
                         <span className="mb-2 md:mb-0">
-                             © {currentYear} Alberton Tyre Clinic. All rights reserved. {/* */}
+                            © {currentYear} Alberton Tyre Clinic. All rights reserved.
                         </span>
                     </div>
 
@@ -120,7 +119,7 @@ export default function Footer() {
                          <span className="hidden md:inline-block">|</span> {/* */}
                         <Link href="/terms" className="hover:text-primary transition-colors">Terms of Service</Link>
                     </div>
-                 </div>
+                </div>
 
             </div>
          </footer> //

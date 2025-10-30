@@ -5,7 +5,6 @@ import React from 'react';
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
 import { Star } from 'lucide-react';
-
 export default function LocalProof() {
     return (
         // Bright, primary-colored background to break up the dark sections
@@ -17,7 +16,7 @@ export default function LocalProof() {
                     Don&apos;t Just Take Our Word For It.
                 </h2>
                 <p className="text-xl mb-10">
-                    See why over 500 drivers in Alberton trust our family-run team.
+                    See why over 1000&apos;s of drivers in Alberton trust our family-run team.
                 </p>
 
                 {/* Proof Metrics Grid */}
@@ -35,7 +34,7 @@ export default function LocalProof() {
                      {/* Metric 2: Total Reviews */}
                     <div className="bg-white dark:bg-neutral-800 text-neutral-800 dark:text-white p-6 rounded-lg shadow-xl">
                         <div className="text-5xl font-bold mb-2">
-                             500+
+                             300+
                         </div>
                         <p className="text-sm font-semibold text-neutral-600 dark:text-neutral-400">Verified Local Reviews</p>
                     </div>
@@ -43,7 +42,7 @@ export default function LocalProof() {
                     {/* Metric 3: Years Experience */}
                     <div className="bg-white dark:bg-neutral-800 text-neutral-800 dark:text-white p-6 rounded-lg shadow-xl">
                         <div className="text-5xl font-bold text-primary mb-2">
-                            28
+                            38
                          </div>
                         <p className="text-sm font-semibold">Years in Alberton</p>
                     </div>

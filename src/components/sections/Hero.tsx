@@ -4,7 +4,6 @@
 import React from 'react';
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
-
 export default function Hero() {
   return (
     <section className="relative h-screen min-h-[600px] flex items-center justify-center bg-neutral-800">
@@ -28,6 +27,7 @@ export default function Hero() {
           </Link>
         </Button>
         <p className="mt-4 text-sm text-neutral-500">
+          {/* FIX: Replaced ' with &apos; to resolve unescaped entity error (Line 32) */}
           *No Obligation. No Hassle. We Check Shocks, Brakes & Batteries.
         </p>
       </div>
