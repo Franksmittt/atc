@@ -1,5 +1,5 @@
 // src/components/sections/BrandSlider.tsx
-"use client"; // <<<--- ADD THIS DIRECTIVE
+"use client"; // <<<--- This directive is correct
 
 import React, { useEffect } from 'react';
 import useEmblaCarousel from 'embla-carousel-react';
@@ -35,7 +35,8 @@ export default function BrandSlider() {
     const autoplay = setInterval(() => {
       // Check if we are near the end, and if so, jump back to the start (optional for cleaner loop visual)
       if (emblaApi.scrollProgress() > 0.99) {
-        // Use true for snap, false for immediate jump might be better visually
+        // Use true for snap, false for immediate jump might be 
+        // better visually
         emblaApi.scrollTo(0, false);
       } else {
          emblaApi.scrollNext();
@@ -44,7 +45,8 @@ export default function BrandSlider() {
 
     // Cleanup: Clear interval when the component is unmounted
     return () => clearInterval(autoplay);
-  }, [emblaApi]); // Re-run effect if emblaApi changes
+  }, [emblaApi]);
+  // Re-run effect if emblaApi changes
 
   return (
     // Minimalistic dark background to contrast with the Hero and main content
@@ -56,24 +58,29 @@ export default function BrandSlider() {
         </p>
 
         {/* Carousel Container (Embla Viewport) */}
-        <div className="embla overflow-hidden cursor-grab" ref={emblaRef}> {/* */}
+         <div className="embla overflow-hidden cursor-grab" ref={emblaRef}> {/* */}
 
           {/* Carousel Wrapper (Embla Container) - Duplicated content for visual infinite effect */}
-          <div className="embla__container flex space-x-8 md:space-x-12"> {/* */}
+          {/* RESPONSIVENESS: Reduced mobile horizontal spacing from space-x-8 to space-x-6 */}
+          <div className="embla__container flex space-x-6 md:space-x-12"> {/* */}
 
             {/* Display list twice to ensure seamless looping effect */}
              {[...ALL_BRANDS, ...ALL_BRANDS].map((brand, index) => ( //
               <div
-                key={`${brand.name}-${index}`} // Use a more unique key
-                className="embla__slide flex-shrink-0 flex items-center justify-center min-w-max pr-8"
+                 key={`${brand.name}-${index}`} // Use a more unique key
+                // RESPONSIVENESS: Reduced mobile padding-right from pr-8 to pr-6
+                className="embla__slide flex-shrink-0 flex items-center justify-center min-w-max pr-6"
                 style={{ flex: '0 0 auto' }}
               > {/* */}
-                <Link href="/services" className="flex items-center space-x-3 group transition-opacity opacity-80 hover:opacity-100">
-                    <brand.icon className="h-6 w-6 text-primary group-hover:animate-pulse" />
-                    <span className="text-xl md:text-2xl font-bold uppercase whitespace-nowrap text-white">
+                <Link href="/services" className="flex items-center space-x-2 sm:space-x-3 
+ group transition-opacity opacity-80 hover:opacity-100">
+                    {/* RESPONSIVENESS: Reduced icon size on small screens */}
+                    <brand.icon className="h-5 w-5 sm:h-6 sm:w-6 text-primary group-hover:animate-pulse" />
+                    {/* RESPONSIVENESS: Reduced text size on small screens (text-lg) */}
+                    <span className="text-lg sm:text-xl md:text-2xl font-bold uppercase whitespace-nowrap text-white">
                       {brand.name}
                      </span> {/* */}
-                </Link>
+                 </Link>
               </div>
             ))}
           </div>

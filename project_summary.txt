@@ -475,50 +475,102 @@ export default config;
 
 @layer base {
   /* HSL values for the Grey/White base and the Tyre Orange accent */
-  
+
   :root {
-    --background: 0 0% 100%;       /* White BG (Light Mode Default) */
-    --foreground: 210 40% 9.8%;    /* Near-Black Text */
-    
+    --background: 0 0% 100%; /* White BG (Light Mode Default) */
+    --foreground: 210 40% 9.8%; /* Near-Black Text */
+
     /* PRIMARY COLOR DEFINITION (Tyre Orange: #F17924) */
-    --primary: 25 90% 55%;         
+    --primary: 25 90% 55%;
     --primary-foreground: 0 0% 100%; /* White text on Orange */
 
     --secondary: 210 30% 96.1%;
     --secondary-foreground: 222.2 47.4% 11.2%;
-    --ring: 25 90% 55%; 
+
+    --muted: 210 40% 96.1%; /* Added based on shadcn defaults */
+    --muted-foreground: 215.4 16.3% 46.9%; /* Added based on shadcn defaults */
+
+    --accent: 210 40% 96.1%; /* Added based on shadcn defaults */
+    --accent-foreground: 222.2 47.4% 11.2%; /* Added based on shadcn defaults */
+
+    --destructive: 0 84.2% 60.2%; /* Added based on shadcn defaults */
+    --destructive-foreground: 210 40% 98%; /* Added based on shadcn defaults */
+
+    --border: 214.3 31.8% 91.4%; /* Added based on shadcn defaults */
+    --input: 214.3 31.8% 91.4%; /* Added based on shadcn defaults */
+
+    --ring: 25 90% 55%; /* Keep ring as primary color */
     --card: 0 0% 100%;
     --card-foreground: 222.2 47.4% 11.2%;
+
+    --popover: 0 0% 100%; /* Added based on shadcn defaults */
+    --popover-foreground: 222.2 47.4% 11.2%; /* Added based on shadcn defaults */
+
     --radius: 0.5rem;
-    /* ... ensure other color variables are here ... */
+    /* Chart variables (ensure these are defined if used) */
+    --chart-1: 220 70% 50%;
+    --chart-2: 160 60% 45%;
+    --chart-3: 30 80% 55%;
+    --chart-4: 280 65% 60%;
+    --chart-5: 340 75% 55%;
   }
 
-  /* Dark Mode Variables (Header/Hero Background) */
+  /* Dark Mode Variables */
   .dark {
     --background: 222.2 47.4% 11.2%; /* Dark Charcoal BG (Dark Mode Default) */
-    --foreground: 210 40% 98%;      /* White Text */
-    
+    --foreground: 210 40% 98%; /* White Text */
+
     /* PRIMARY COLOR DEFINITION (Dark Mode) */
     --primary: 25 90% 65%; /* Slightly brighter orange for visibility on dark BG */
     --primary-foreground: 0 0% 100%; /* White text on Orange */
 
     --secondary: 217.2 32.6% 17.5%;
     --secondary-foreground: 210 40% 98%;
-    /* ... */
+
+    --muted: 217.2 32.6% 17.5%; /* Added based on shadcn defaults */
+    --muted-foreground: 215 20.2% 65.1%; /* Added based on shadcn defaults */
+
+    --accent: 217.2 32.6% 17.5%; /* Added based on shadcn defaults */
+    --accent-foreground: 210 40% 98%; /* Added based on shadcn defaults */
+
+    --destructive: 0 62.8% 30.6%; /* Added based on shadcn defaults */
+    --destructive-foreground: 210 40% 98%; /* Added based on shadcn defaults */
+
+    --border: 217.2 32.6% 17.5%; /* Added based on shadcn defaults */
+    --input: 217.2 32.6% 17.5%; /* Added based on shadcn defaults */
+
+    --ring: 25 90% 65%; /* Match dark primary */
+    --card: 222.2 47.4% 11.2%;
+    --card-foreground: 210 40% 98%;
+
+    --popover: 222.2 47.4% 11.2%; /* Added based on shadcn defaults */
+    --popover-foreground: 210 40% 98%; /* Added based on shadcn defaults */
+
+    /* Chart variables (ensure these are defined if used for dark mode) */
+    --chart-1: 210 70% 60%;
+    --chart-2: 150 60% 55%;
+    --chart-3: 40 80% 65%;
+    --chart-4: 270 65% 70%;
+    --chart-5: 350 75% 65%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border; /* Apply border color globally */
+  }
+  body {
+    @apply bg-background text-foreground; /* Apply bg/text colors globally */
+    font-feature-settings: "rlig" 1, "calt" 1; /* Enable ligatures */
   }
 }
 
 --------------------------------------------------------------------------------📄 FILE PATH: C:\Users\User1\alberton-tyre-clinic\src\app\layout.tsx--------------------------------------------------------------------------------// src/app/layout.tsx
 import type { Metadata } from "next";
-// Assuming you have a default font imported or generated here:
-// import { Inter } from "next/font/google"; 
+import { ThemeProvider } from "@/components/theme-provider"; // <-- UNCOMMENT THIS LINE
+import Header from "@/components/layout/Header";
+import Footer from "@/components/layout/Footer";
 import "./globals.css";
-
-// --- Imports for Global Structure and Theming ---
-import { ThemeProvider } from "@/components/theme-provider" 
-import Header from "@/components/layout/Header"; 
-import Footer from "@/components/layout/Footer"; 
-
 
 export const metadata: Metadata = {
   title: "Alberton Tyre Clinic - Your Tyre Experts",
@@ -531,22 +583,21 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
-    // 1. Root HTML tag with suppressHydrationWarning for theme switching
-    <html lang="en" suppressHydrationWarning> 
+    // Add suppressHydrationWarning back
+    <html lang="en" suppressHydrationWarning>
       <body>
-        {/* 2. Theme Provider wraps everything, enabling Dark Mode context */}
+        {/* UNCOMMENT ThemeProvider wrapper */}
         <ThemeProvider
           attribute="class"
-          defaultTheme="system" 
+          defaultTheme="system"
           enableSystem
         >
-          <Header /> 
-          {/* 3. Main content area */}
+          <Header />
           <main className="min-h-screen">
               {children}
           </main>
-          <Footer /> {/* 4. Footer at the very bottom */}
-        </ThemeProvider>
+          <Footer />
+        </ThemeProvider> {/* <-- UNCOMMENT THIS LINE */}
       </body>
     </html>
   )
@@ -554,13 +605,23 @@ export default function RootLayout({
 
 --------------------------------------------------------------------------------📄 FILE PATH: C:\Users\User1\alberton-tyre-clinic\src\app\page.tsx--------------------------------------------------------------------------------// src/app/page.tsx
 import React from 'react';
+import dynamicImport from 'next/dynamic';
+
 import Hero from '@/components/sections/Hero';
 import TrustAndProblem from '@/components/sections/TrustAndProblem';
 import BrandsOfAuthority from '@/components/sections/BrandsOfAuthority';
 import ReviewWall from '@/components/sections/ReviewWall';
 import LocalProof from '@/components/sections/LocalProof';
-import ServiceFunnel from '@/components/sections/ServiceFunnel';
-// import BrandSlider from '@/components/sections/BrandSlider'; // <-- TEMPORARILY COMMENTED OUT
+import ServiceFunnel from '@/components/sections/ServiceFunnel'; // <-- UNCOMMENT THIS IMPORT
+
+// Force dynamic rendering
+export const dynamic = 'force-dynamic';
+
+// Dynamically import BrandSlider with SSR turned off
+const BrandSlider = dynamicImport(
+  () => import('@/components/sections/BrandSlider'),
+  { ssr: false }
+);
 
 export default function Home() {
   return (
@@ -569,7 +630,7 @@ export default function Home() {
       <Hero />
 
       {/* 2. AUTHORITY WALL: Brand Slider is placed here for INSTANT CREDIBILITY */}
-      {/* <BrandSlider />  // <-- TEMPORARILY COMMENTED OUT */}
+      <BrandSlider />
 
       {/* 3. CONTEXT: Establishes Heritage and differentiates the Value */}
       <TrustAndProblem />
@@ -580,11 +641,12 @@ export default function Home() {
       {/* 5. SOCIAL PROOF: Integrates real customer testimonials */}
       <ReviewWall />
 
-      {/* 6. CONVERSION: Quick metrics and service funnels */}
+      {/* 6. CONVERSION: Quick metrics */}
       <LocalProof />
-      <ServiceFunnel />
 
-      {/* Further content can be added here */}
+      {/* 7. CONVERSION: Service Funnel */}
+      <ServiceFunnel /> {/* <-- UNCOMMENT THIS INSTANCE */}
+
     </main>
   );
 }
@@ -961,13 +1023,15 @@ export default function AssessmentPage() {
 import React from 'react';
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
-// Unused icons (Briefcase, Zap, MapPin) removed from lucide-react import
+
+// Force this page to be dynamically rendered to avoid potential static generation issues
+export const dynamic = 'force-dynamic'; // <<<--- ADDED THIS LINE
 
 // --- Metadata: Targeted for Blog SEO ---
 export const metadata = {
   title: "Car Maintenance Blog & Tyre Safety Tips | Alberton Tyre Clinic",
   description: "Expert advice on vehicle safety, tyre longevity, brake systems, and minor vehicle servicing. Read honest, local content from our Alberton experts.",
-}; //
+};
 
 // --- Mock Data: Simulates fetching data from Drizzle ORM (posts table) ---
 const MOCK_POSTS = [
@@ -977,7 +1041,7 @@ const MOCK_POSTS = [
         title: "Pirelli vs. Michelin: Which Tyre Guarantees More Safety on Alberton Roads?",
         category: "Tyres & Safety",
         excerpt: "A deep dive into the performance metrics of our two premium tyre brands and how they handle common hazards on South African roads.",
-    }, //
+    },
     {
         id: 2,
         slug: "stop-the-squeal-ate-brakes-vs-generic",
@@ -990,7 +1054,7 @@ const MOCK_POSTS = [
         slug: "shock-absorber-warning-signs",
         title: "5 Warning Signs Your Shock Absorbers are Failing (And Why You Need a Free Check)",
         category: "Suspension & Servicing",
-        excerpt: "Ignoring shocks affects steering, braking, and tyre wear. Know the signs and book your free diagnostic assessment today.", //
+        excerpt: "Ignoring shocks affects steering, braking, and tyre wear. Know the signs and book your free diagnostic assessment today.",
     },
 ];
 
@@ -1002,37 +1066,37 @@ export default function BlogIndexPage() {
                 <div className="container mx-auto px-4 text-center max-w-4xl">
                      <h1 className="text-5xl font-extrabold mb-4 uppercase">
                         Expert <span className="text-primary">Safety</span> & Maintenance Insights
-                    </h1> {/* */}
+                    </h1>
                     <p className="text-xl text-neutral-400">
                          Content written by our 28-year experienced technicians to keep you and your family safe on the road.
-                    </p> {/* */}
+                    </p>
                 </div>
             </section>
 
             {/* Posts Grid */}
             <section className="py-24 bg-white dark:bg-neutral-800">
-                 <div className="container mx-auto px-4 max-w-5xl"> {/* */}
+                 <div className="container mx-auto px-4 max-w-5xl">
                     <div className="grid md:grid-cols-3 gap-8">
                         {MOCK_POSTS.map((post) => (
                             <div
                                 key={post.id}
                                 className="bg-neutral-50 dark:bg-neutral-900 p-6 rounded-lg shadow-lg border-t-4 border-primary/50 hover:shadow-xl transition-shadow"
-                            > {/* */}
+                            >
                                  <h3 className="text-xl font-bold text-neutral-800 dark:text-white mb-2">
                                     {post.title}
-                                 </h3> {/* */}
+                                 </h3>
                                 <p className="text-sm text-primary font-semibold mb-3">
                                     {post.category}
-                                 </p> {/* */}
+                                 </p>
                                 <p className="text-neutral-600 dark:text-neutral-400 mb-4 text-base">
                                     {post.excerpt}
-                                 </p> {/* */}
+                                 </p>
                                 <Button variant="link" asChild className="p-0 h-auto text-primary justify-start font-bold">
                                     <Link href={`/blog/${post.slug}`}>
                                          Read Full Article →
-                                    </Link> {/* */}
+                                    </Link>
                                 </Button>
-                             </div> //
+                             </div>
                         ))}
                     </div>
                 </div>
@@ -1041,12 +1105,12 @@ export default function BlogIndexPage() {
             {/* Final CTA: Reiterate Lead Magnet */}
             <section className="py-16 bg-neutral-100 dark:bg-neutral-900 text-center">
                 <Button asChild size="lg" className="bg-primary hover:bg-primary/hover text-white font-bold">
-                    <Link href="/assessment">Got a Question? Book Your FREE Assessment Now</Link> {/* */}
+                    <Link href="/assessment">Got a Question? Book Your FREE Assessment Now</Link>
                 </Button>
             </section>
         </main>
     );
-} //
+}
 
 --------------------------------------------------------------------------------📄 FILE PATH: C:\Users\User1\alberton-tyre-clinic\src\app\blog\[slug]\page.tsx--------------------------------------------------------------------------------// src/app/blog/[slug]/page.tsx
 // Dynamic Server Component - Optimized for Article Content.
@@ -1740,76 +1804,71 @@ export default function Footer() {
 }
 
 --------------------------------------------------------------------------------📄 FILE PATH: C:\Users\User1\alberton-tyre-clinic\src\components\layout\Header.tsx--------------------------------------------------------------------------------// src/components/layout/Header.tsx
-"use client"; // Add this directive because we'll use useState for mobile menu
+"use client";
 
-import React, { useState } from 'react'; // Import useState
+import React, { useState } from 'react';
 import Link from 'next/link';
-import { ThemeToggle } from '@/components/theme-toggle';
+import dynamic from 'next/dynamic';
+import { ThemeToggle } from '@/components/theme-toggle'; // <-- UNCOMMENT THIS LINE
 import { Button } from '@/components/ui/button';
-import { Sheet, SheetContent, SheetTrigger, SheetClose } from "@/components/ui/sheet"; // Import Sheet components
-import { Phone, MapPin, Clock, MessageSquareText, Menu, X } from 'lucide-react'; // Import Menu and X icons
+// Keep dynamic imports for Sheet components
+const DynamicSheet = dynamic(() => import('@/components/ui/sheet').then((mod) => mod.Sheet), { ssr: false });
+const DynamicSheetTrigger = dynamic(() => import('@/components/ui/sheet').then((mod) => mod.SheetTrigger), { ssr: false });
+const DynamicSheetContent = dynamic(() => import('@/components/ui/sheet').then((mod) => mod.SheetContent), { ssr: false });
+const DynamicSheetClose = dynamic(() => import('@/components/ui/sheet').then((mod) => mod.SheetClose), { ssr: false });
+import { Phone, MapPin, Clock, MessageSquareText, Menu, X } from 'lucide-react';
 
-// Strategic navigation links
+// NAV_LINKS and WHATSAPP_LINK remain the same
+
 const NAV_LINKS = [
     { name: 'Our Experts', href: '/about' },
     { name: 'Services & Brands', href: '/services' },
     { name: 'Blog', href: '/blog' },
     { name: 'Contact Us', href: '/contact' },
 ];
-
-// High-impact WhatsApp link
 const WHATSAPP_LINK = "https://wa.me/27119078495?text=Hello%2C%20I%20saw%20your%20website%20and%20need%20a%20quote%20for%20tyres.";
 
+
 export default function Header() {
-    // State to control mobile menu visibility
     const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
     return (
-        // Ensure the header takes full width and stays sticky
         <header className="sticky top-0 z-50 w-full">
-            {/* 1. TOP BAR: URGENT CONTACT & HOURS (Dark Charcoal) */}
+            {/* Top Bar (Keep as before) */}
             <div className="bg-neutral-900 hidden md:block border-b border-neutral-800">
                 <div className="container flex h-10 max-w-screen-2xl items-center justify-end px-4 mx-auto">
-                    <div className="flex items-center text-xs text-neutral-400 space-x-6">
-                        {/* Address/Location */}
+                    {/* ... content ... */}
+                     <div className="flex items-center text-xs text-neutral-400 space-x-6">
                         <a href="https://maps.app.goo.gl/YourMapLink" target="_blank" rel="noopener noreferrer" className="flex items-center hover:text-white transition-colors">
-                            <MapPin className="h-4 w-4 mr-1 text-primary" />
-                            26 St Columb St, New Redruth, Alberton
+                            <MapPin className="h-4 w-4 mr-1 text-primary" /> 26 St Columb St, New Redruth, Alberton
                         </a>
-                        {/* Phone Number */}
                         <a href="tel:+27119078495" className="flex items-center font-bold text-primary hover:text-white transition-colors">
-                            <Phone className="h-4 w-4 mr-1" />
-                            +27 11 907 8495
+                            <Phone className="h-4 w-4 mr-1" /> +27 11 907 8495
                         </a>
-                        {/* Operating Hours (Updated) */}
                         <span className="flex items-center">
-                            <Clock className="h-4 w-4 mr-1 text-primary" />
-                            Mon - Fri: 08:00 - 17:00 | Sat: 08:00 - 12:00
+                            <Clock className="h-4 w-4 mr-1 text-primary" /> Mon - Fri: 08:00 - 17:00 | Sat: 08:00 - 12:00
                         </span>
                     </div>
                 </div>
             </div>
 
-            {/* 2. MAIN NAV BAR: BRANDING, NAV LINKS & CTAS */}
-            <div className="bg-white/95 dark:bg-neutral-800/95 backdrop-blur supports-[backdrop-filter]:bg-background/80
-                            border-b border-neutral-200 dark:border-neutral-700">
+            {/* Main Nav Bar */}
+            <div className="bg-white/95 dark:bg-neutral-800/95 backdrop-blur supports-[backdrop-filter]:bg-background/80 border-b border-neutral-200 dark:border-neutral-700">
                 <div className="container flex h-16 max-w-screen-2xl items-center justify-between px-4 mx-auto">
-
-                    {/* Logo/Home Link */}
+                    {/* Logo */}
                     <Link href="/" className="flex items-center space-x-2 flex-shrink-0 mr-6">
-                        {/* Consider adding an actual logo image here */}
                         <span className="font-bold text-xl sm:text-2xl text-neutral-800 dark:text-white uppercase tracking-tight whitespace-nowrap">
                             Alberton <span className="text-primary">Tyre Clinic</span>
                         </span>
                     </Link>
 
-                    {/* Desktop Navigation Links (Centered) */}
+                    {/* Desktop Nav */}
                     <nav className="hidden lg:flex items-center justify-center flex-grow space-x-1 mx-6">
-                        {NAV_LINKS.map(link => (
+                       {NAV_LINKS.map(link => (
                             <Button key={link.name} variant="ghost" asChild>
                                 <Link
                                     href={link.href}
-                                    className="text-sm font-medium text-neutral-700 dark:text-neutral-200 hover:text-primary transition-colors px-3 py-2" // Added padding
+                                    className="text-sm font-medium text-neutral-700 dark:text-neutral-200 hover:text-primary transition-colors px-3 py-2"
                                 >
                                     {link.name}
                                 </Link>
@@ -1817,21 +1876,19 @@ export default function Header() {
                         ))}
                     </nav>
 
-                    {/* Right-side CTAs & Mobile Menu Trigger */}
+                    {/* Right Side */}
                     <div className="flex items-center space-x-2 flex-shrink-0">
-                        {/* CTA 1: WHATSAPP (Always visible on desktop, moved inside mobile menu otherwise) */}
+                        {/* WhatsApp Button */}
                         <Button
                             asChild
                             size="sm"
-                            className="bg-[#25D366] hover:bg-[#128C7E] text-white font-bold transition-colors shadow-md hidden sm:flex" // Hide below sm breakpoint
+                            className="bg-[#25D366] hover:bg-[#128C7E] text-white font-bold transition-colors shadow-md hidden sm:flex"
                         >
                             <a href={WHATSAPP_LINK} target="_blank" rel="noopener noreferrer" className="flex items-center">
-                                <MessageSquareText className="h-4 w-4 mr-1.5" />
-                                WhatsApp Now
+                                <MessageSquareText className="h-4 w-4 mr-1.5" /> WhatsApp Now
                             </a>
                         </Button>
-
-                        {/* CTA 2: FREE ASSESSMENT (Hidden below sm breakpoint) */}
+                        {/* Assessment Button */}
                         <Button
                             asChild
                             className="hidden sm:inline-flex bg-primary hover:bg-primary/hover text-white font-bold transition-colors"
@@ -1842,64 +1899,63 @@ export default function Header() {
                             </Link>
                         </Button>
 
-                        {/* Theme Toggle */}
+                        {/* UNCOMMENT ThemeToggle */}
                         <ThemeToggle />
 
-                        {/* Mobile Menu Button (Visible only on lg and below) */}
-                        <Sheet open={isMobileMenuOpen} onOpenChange={setIsMobileMenuOpen}>
-                            <SheetTrigger asChild>
+                        {/* Mobile Menu (using DynamicSheet components) */}
+                        <DynamicSheet open={isMobileMenuOpen} onOpenChange={setIsMobileMenuOpen}>
+                            {/* ... SheetTrigger and SheetContent using Dynamic components ... */}
+                            <DynamicSheetTrigger asChild>
                                 <Button
                                     variant="ghost"
                                     size="icon"
                                     className="lg:hidden text-neutral-800 dark:text-neutral-200"
                                     aria-label="Open main menu"
                                 >
-                                    <Menu className="h-6 w-6" /> {/* Use Menu icon */}
+                                    <Menu className="h-6 w-6" />
                                 </Button>
-                            </SheetTrigger>
-                            <SheetContent side="right" className="w-[300px] sm:w-[400px] bg-white dark:bg-neutral-900 p-6">
-                                {/* Optional: Add a header inside the sheet */}
+                            </DynamicSheetTrigger>
+                            <DynamicSheetContent side="right" className="w-[300px] sm:w-[400px] bg-white dark:bg-neutral-900 p-6">
                                 <div className="flex justify-between items-center mb-6">
                                     <span className="font-bold text-lg">Menu</span>
-                                    <SheetClose asChild>
+                                    <DynamicSheetClose asChild>
                                         <Button variant="ghost" size="icon" aria-label="Close menu">
                                             <X className="h-6 w-6" />
                                         </Button>
-                                    </SheetClose>
+                                    </DynamicSheetClose>
                                 </div>
                                 <nav className="flex flex-col space-y-3">
                                     {NAV_LINKS.map((link) => (
-                                        <SheetClose asChild key={link.name}>
+                                        <DynamicSheetClose asChild key={link.name}>
                                             <Link
                                                 href={link.href}
                                                 className="text-lg font-medium text-neutral-700 dark:text-neutral-200 hover:text-primary transition-colors py-2"
-                                                onClick={() => setIsMobileMenuOpen(false)} // Close menu on link click
+                                                onClick={() => setIsMobileMenuOpen(false)}
                                             >
                                                 {link.name}
                                             </Link>
-                                        </SheetClose>
+                                        </DynamicSheetClose>
                                     ))}
-                                    {/* Mobile CTAs */}
                                     <hr className="my-4 border-neutral-200 dark:border-neutral-700"/>
-                                    <SheetClose asChild>
+                                    <DynamicSheetClose asChild>
                                         <a href={WHATSAPP_LINK} target="_blank" rel="noopener noreferrer" className="flex items-center text-lg font-medium py-2 text-[#25D366] hover:text-[#128C7E] transition-colors">
                                             <MessageSquareText className="h-5 w-5 mr-2" /> WhatsApp Us
                                         </a>
-                                    </SheetClose>
-                                     <SheetClose asChild>
+                                    </DynamicSheetClose>
+                                     <DynamicSheetClose asChild>
                                         <Link href="/assessment" className="flex items-center text-lg font-medium py-2 text-primary hover:text-primary/80 transition-colors">
                                            Book FREE Assessment
                                         </Link>
-                                    </SheetClose>
+                                    </DynamicSheetClose>
                                 </nav>
-                            </SheetContent>
-                        </Sheet> {/* Correctly closed Sheet component */}
-                    </div> {/* Correctly closed right-side div */}
-                </div> {/* Correctly closed container div */}
-            </div> {/* Correctly closed main nav bar div */}
-        </header> /* Correctly closed header element */
-    ); // Correctly closed return statement
-} // Correctly closed component function
+                            </DynamicSheetContent>
+                        </DynamicSheet>
+                    </div>
+                </div>
+            </div>
+        </header>
+    );
+}
 
 --------------------------------------------------------------------------------📄 FILE PATH: C:\Users\User1\alberton-tyre-clinic\src\components\sections\BrandSlider.tsx--------------------------------------------------------------------------------// src/components/sections/BrandSlider.tsx
 "use client"; // <<<--- ADD THIS DIRECTIVE
@@ -2170,7 +2226,7 @@ export default function Hero() {
 } //
 
 --------------------------------------------------------------------------------📄 FILE PATH: C:\Users\User1\alberton-tyre-clinic\src\components\sections\LocalProof.tsx--------------------------------------------------------------------------------// src/components/sections/LocalProof.tsx
-// Server Component - High-impact social proof section.
+"use client"; // <<<--- ADD THIS DIRECTIVE
 
 import React from 'react';
 import Link from 'next/link';
@@ -2185,51 +2241,49 @@ export default function LocalProof() {
 
                 {/* Main Headline: Local Authority */}
                  <h2 className="text-4xl md:text-5xl font-extrabold mb-4">
-                    {/* Corrected: Replaced 'Don't' with 'Don&apos;t' */}
                     Don&apos;t Just Take Our Word For It.
-                </h2> {/* */}
+                </h2>
                 <p className="text-xl mb-10">
                     See why over 500 drivers in Alberton trust our family-run team.
-                </p> {/* */}
+                </p>
 
                 {/* Proof Metrics Grid */}
                 <div className="grid sm:grid-cols-3 gap-8 mb-12">
 
                     {/* Metric 1: Google Rating */}
-                    <div className="bg-white dark:bg-neutral-800 text-neutral-800 dark:text-white p-6 rounded-lg shadow-xl"> {/* */}
+                    <div className="bg-white dark:bg-neutral-800 text-neutral-800 dark:text-white p-6 rounded-lg shadow-xl">
                         <div className="flex justify-center items-center text-5xl font-bold text-primary mb-2">
                             4.9
-                             <Star className="h-8 w-8 ml-2 fill-primary text-primary" /> {/* */}
+                             <Star className="h-8 w-8 ml-2 fill-primary text-primary" />
                         </div>
                         <p className="text-sm font-semibold">Average Google Rating</p>
                     </div>
 
-
                      {/* Metric 2: Total Reviews */}
-                    <div className="bg-white dark:bg-neutral-800 text-neutral-800 dark:text-white p-6 rounded-lg shadow-xl"> {/* */}
+                    <div className="bg-white dark:bg-neutral-800 text-neutral-800 dark:text-white p-6 rounded-lg shadow-xl">
                         <div className="text-5xl font-bold mb-2">
-                             500+ {/* */}
+                             500+
                         </div>
                         <p className="text-sm font-semibold text-neutral-600 dark:text-neutral-400">Verified Local Reviews</p>
                     </div>
 
-                    {/* Metric 3: Years Experience (Repetition for impact) */}
-                    <div className="bg-white dark:bg-neutral-800 text-neutral-800 dark:text-white p-6 rounded-lg shadow-xl"> {/* */}
+                    {/* Metric 3: Years Experience */}
+                    <div className="bg-white dark:bg-neutral-800 text-neutral-800 dark:text-white p-6 rounded-lg shadow-xl">
                         <div className="text-5xl font-bold text-primary mb-2">
                             28
-                         </div> {/* */}
+                         </div>
                         <p className="text-sm font-semibold">Years in Alberton</p>
                     </div>
                 </div>
 
-                {/* Closing CTA */}
-                 <Button asChild size="lg" className="bg-white text-primary hover:bg-neutral-100 font-bold"> {/* */}
+                 {/* Closing CTA */}
+                 <Button asChild size="lg" className="bg-white text-primary hover:bg-neutral-100 font-bold">
                     <Link href="/reviews">Read All Our 5-Star Reviews →</Link>
                 </Button>
             </div>
         </section>
     );
-} //
+}
 
 --------------------------------------------------------------------------------📄 FILE PATH: C:\Users\User1\alberton-tyre-clinic\src\components\sections\OptimizedLocalServicePages.tsx--------------------------------------------------------------------------------// src/components/sections/OptimizedLocalServicePages.tsx
 // Server Component - Creates an optimized content structure for local SEO targeting.
