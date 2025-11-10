@@ -3,7 +3,7 @@
 
 import React from 'react';
 import Link from 'next/link';
-import { Car, Disc3, Zap, BatteryCharging, DollarSign } from 'lucide-react';
+import { Car, Disc3, Zap, BatteryCharging, DollarSign, BookOpen } from 'lucide-react';
 
 const SERVICE_CATEGORIES = [
     { title: "Tyres & Rims", icon: Car, link: "/services/tyres", cta: "Shop Tyres Now" },
@@ -11,6 +11,8 @@ const SERVICE_CATEGORIES = [
     { title: "Shocks & Suspension", icon: Zap, link: "/services/shocks", cta: "Get Suspension Quote" },
     { title: "Car Batteries", icon: BatteryCharging, link: "/services/batteries", cta: "Free Battery Test" },
     { title: "Promotions & Deals", icon: DollarSign, link: "/promotions", cta: "View Deals" },
+    // --- NEW: Pro Tip Card linking to the new blog post ---
+    { title: "Pro Tip: Tyre Guide", icon: BookOpen, link: "/blog/how-to-read-your-tyre-size", cta: "Read Guide" },
 ];
 
 export default function ServiceFunnel() {
@@ -28,7 +30,8 @@ export default function ServiceFunnel() {
                     </p>
                 </header>
 
-                <div className="grid sm:grid-cols-2 lg:grid-cols-5 gap-4">
+                {/* --- Grid adjusted for 6 items (3 columns on small screens, 5 on large) --- */}
+                <div className="grid sm:grid-cols-3 lg:grid-cols-6 gap-4">
                     {SERVICE_CATEGORIES.map((category) => (
                         <Link 
                             key={category.title} 

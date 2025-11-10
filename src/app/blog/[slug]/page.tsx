@@ -5,7 +5,6 @@ import React from 'react';
 import Link from 'next/link';
 import { Briefcase } from 'lucide-react';
 import { notFound } from 'next/navigation';
-
 // 💥 FIX: ADD THE MISSING BUTTON IMPORT 💥
 import { Button } from '@/components/ui/button';
 
@@ -13,7 +12,6 @@ import { Button } from '@/components/ui/button';
 const fetchPostBySlug = async (slug: string) => {
     // In a real application, this would query the Drizzle ORM:
     // const post = await db.query.posts.findFirst({ where: eq(posts.slug, slug) });
-    
     // Using mock data for immediate compilation and testing
     const POSTS = [
         {
@@ -21,22 +19,41 @@ const fetchPostBySlug = async (slug: string) => {
             title: "Pirelli vs. Michelin: Which Tyre Guarantees More Safety on Alberton Roads?",
             content: `<p>Choosing the right tyre is the single most important safety decision you make. For Alberton's mix of highway and local roads, we break down why both Pirelli and Michelin offer superior performance over budget brands...</p>
                       <h3>Why Pirelli Excels on Wet Alberton Roads</h3>
-                      <p>Pirelli's advanced tread compounds provide optimal grip in wet conditions, a necessity during our high summer rainfall months. This translates directly to shorter stopping distances when you need it most. We are your official local dealer...</p>
+                      <p>Pirelli's advanced tread compounds provide optimal grip in wet conditions, a necessity during our high summer rainfall months. This translates directly to shorter stopping distances when you need it most.</p>
                       <h3>Michelin: Longevity Meets Performance</h3>
                       <p>Michelin often leads in tread life and fuel efficiency. If you are a high-mileage driver in Alberton, investing in Michelin means fewer replacements and better long-term value. Our computerized fitting ensures you get maximum life out of every rotation...</p>`,
             author: "Jaco V.",
             published: "October 28, 2025",
         },
-        // ... include other posts here for testing ...
+        {
+             slug: "stop-the-squeal-ate-brakes-vs-generic",
+             title: "Stop the Squeal: ATE Brakes vs. Generic Systems—Your Safety Investment.",
+             content: `<p>Brakes are non-negotiable. Don't risk your safety with cheaper parts.</p>`,
+             author: "Carel W.",
+             published: "September 15, 2025",
+        },
+        {
+             slug: "shock-absorber-warning-signs",
+             title: "5 Warning Signs Your Shock Absorbers are Failing (And Why You Need a Free Check)",
+             content: `<p>Worn shocks compromise steering and braking. Learn the signs of failure...</p>`,
+             author: "Shane J.",
+             published: "July 4, 2025",
+        },
+        // --- NEW POST MOCK DATA (to support linking from TyresServicePage) ---
+        {
+            slug: "how-to-read-your-tyre-size",
+            title: "How to Read Your Tyre Size: The Definitive Safety Guide",
+            content: `<p>Knowing your tyre size is critical. We break down the numbers: width, aspect ratio, construction, rim diameter, load index, and speed rating.</p>`,
+            author: "The ATC Team",
+            published: "November 10, 2025",
+        },
     ];
-
     return POSTS.find(p => p.slug === slug);
 };
 
 // --- SEO Feature 1: Dynamic Metadata (Top-Tier Google Performance) ---
 export async function generateMetadata({ params }: { params: { slug: string } }) {
   const post = await fetchPostBySlug(params.slug);
-
   if (!post) {
     return { title: "Article Not Found | Alberton Tyre Clinic" };
   }
@@ -54,6 +71,8 @@ export async function generateStaticParams() {
         { slug: "pirelli-vs-michelin-safety-alberton" },
         { slug: "stop-the-squeal-ate-brakes-vs-generic" },
         { slug: "shock-absorber-warning-signs" },
+        // --- NEW SLUG ADDED ---
+        { slug: "how-to-read-your-tyre-size" }, 
     ];
 }
 
@@ -61,7 +80,6 @@ export async function generateStaticParams() {
 // --- The Core Article Component ---
 export default async function SinglePostPage({ params }: { params: { slug: string } }) {
     const post = await fetchPostBySlug(params.slug);
-
     if (!post) {
         notFound(); // Renders the default Next.js 404 page
     }

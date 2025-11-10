@@ -4,6 +4,9 @@ import React from 'react';
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
 import { Zap, ShieldCheck, TrendingUp, Handshake } from 'lucide-react'; // Removed unused 'Image' and 'Car' imports
+// --- NEW IMPORT ---
+import TyreGuide from '@/components/sections/TyreGuide';
+
 
 // --- Metadata: Targeted for High-Volume SEO Keywords ---
 export const metadata = {
@@ -11,6 +14,7 @@ export const metadata = {
   title: "New Tyre Sales, Fitment & Alignment | Alberton's Premium Tyre Experts",
   description: "Official dealer for Pirelli, Michelin, and 8 top brands. Get precision tyre fitting, computerized balancing, and 3D wheel alignment for guaranteed safety in Alberton.",
 };
+
 // Data Structure for Key Tyre Brands & Value
 const PREMIUM_BRANDS = [
   { name: "Pirelli", detail: "The ultimate in high-performance grip and wet-road safety. Official local dealer.", logo: "/logos/pirelli.svg" },
@@ -18,6 +22,7 @@ const PREMIUM_BRANDS = [
   { name: "Dunlop", detail: "A balance of quality and value for everyday local driving and long-distance comfort.", logo: "/logos/dunlop.svg" },
   { name: "BF Goodrich", detail: "Rugged all-terrain and off-road capability for trucks and SUVs.", logo: "/logos/bfgoodrich.svg" },
 ];
+
 export default function TyreServicesPage() {
   return (
     <main>
@@ -36,7 +41,7 @@ export default function TyreServicesPage() {
       {/* 2. Premium Brand Showcase (Authority) */}
       <section className="py-24 bg-white dark:bg-neutral-800">
         <div className="container mx-auto px-4 max-w-7xl">
-         
+          
           <h2 className="text-4xl font-extrabold text-center text-neutral-800 dark:text-white mb-12">
             Official Dealers for Premium Safety Brands
           </h2>
@@ -94,7 +99,10 @@ export default function TyreServicesPage() {
         </div>
       </section>
 
-      {/* 4. Final CTA (Lead Magnet Repetition) */}
+      {/* 4. NEW: Tyre Size Guide (Utility and final CTA) */}
+      <TyreGuide />
+
+      {/* 5. Final CTA (Lead Magnet Repetition) */}
       <section className="py-16 bg-primary dark:bg-primary/90 text-white text-center">
           <div className="container mx-auto px-4 max-w-4xl">
               <h2 className="text-3xl font-extrabold mb-4">

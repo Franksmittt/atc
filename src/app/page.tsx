@@ -8,6 +8,9 @@ import BrandsOfAuthority from '@/components/sections/BrandsOfAuthority';
 import ReviewWall from '@/components/sections/ReviewWall';
 import LocalProof from '@/components/sections/LocalProof';
 import ServiceFunnel from '@/components/sections/ServiceFunnel'; // <-- UNCOMMENT THIS IMPORT
+// --- NEW IMPORT ---
+import TyreGuide from '@/components/sections/TyreGuide';
+
 
 // Force dynamic rendering
 export const dynamic = 'force-dynamic';
@@ -39,8 +42,11 @@ export default function Home() {
       {/* 6. CONVERSION: Quick metrics */}
       <LocalProof />
 
-      {/* 7. CONVERSION: Service Funnel */}
-      <ServiceFunnel /> {/* <-- UNCOMMENT THIS INSTANCE */}
+      {/* 7. NEW: Tyre Guide Component */}
+      <TyreGuide />
+
+      {/* 8. CONVERSION: Service Funnel */}
+      <ServiceFunnel />
 
     </main>
   );

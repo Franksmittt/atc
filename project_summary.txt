@@ -1434,80 +1434,70 @@ export default async function SinglePostPage({ params }: { params: { slug: strin
 --------------------------------------------------------------------------------📄 FILE PATH: C:\Users\User1\alberton-tyre-clinic\src\app\contact\page.tsx--------------------------------------------------------------------------------// src/app/contact/page.tsx
 "use client"; // This page must be a client component to use React Hook Form
 
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react'; 
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
-import { useFormState, useFormStatus } from 'react-dom';
-import { createAppointment } from '@/lib/actions';
+// REMOVED: useFormState and useFormStatus as they are no longer needed
+// REMOVED: createAppointment as it is no longer needed
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
-import { Phone, User, MessageSquare, MessageSquareText } from 'lucide-react';
+// FIX: Added Mail icon to the imports
+import { Phone, User, MessageSquare, MessageSquareText, Info, Send, Mail } from 'lucide-react'; 
 
 // --- Zod Client Schema (Used for Client-Side UX Validation) ---
 const ClientSchema = z.object({
   clientName: z.string().min(3, "Please enter your name."),
   phoneNumber: z.string().min(10, "A valid 10-digit phone number is required."),
+  // NOTE: Formspree uses an _replyto field for the submitter's email.
+  _replyto: z.string().email("A valid email address is required for contact.").optional(),
   serviceType: z.string().optional(),
   message: z.string().optional(),
 });
-
 // Define the type based on the Zod schema
 type ClientFormData = z.infer<typeof ClientSchema>;
 
-// Helper component for the submit button state (to show 'Submitting...')
+// Helper component for the submit button state (Simplified)
 function SubmitButton() {
-    // Hooks into the Server Action state (pending/loading)
-    const { pending } = useFormStatus();
+    const [isSubmitting, setIsSubmitting] = useState(false);
+
+    // This form now uses traditional HTML submission, so pending state is managed locally
     return (
         <Button
             type="submit"
             size="lg"
             className="w-full bg-primary hover:bg-primary/hover text-white transition-opacity"
-            disabled={pending}
+            disabled={isSubmitting}
         >
-            {pending ? 'Submitting Request...' : 'Request Quote / Assessment'}
+            <Send className="h-4 w-4 mr-2" />
+            {isSubmitting ? 'Sending Request...' : 'Request Quote / Assessment'}
         </Button>
     );
 }
 
-
 export default function ContactPage() {
-    // 1. React Hook Form setup for client-side validation and state
-    const { register, handleSubmit, reset, formState: { errors } } = useForm<ClientFormData>({ // Use the defined type
+    // 1. Local state for showing success message after Formspree redirect
+    const [submissionStatus, setSubmissionStatus] = useState<'idle' | 'success' | 'error'>('idle');
+
+    // 2. React Hook Form setup for client-side validation
+    const { register, handleSubmit, reset, formState: { errors } } = useForm<ClientFormData>({ 
         resolver: zodResolver(ClientSchema),
     });
-    // 2. Next.js Server Action State setup
-    const [state, dispatch] = useFormState(createAppointment, null);
 
-    // 3. Effect to handle server response (clear form on success, show error)
-    useEffect(() => {
-         // Check if state exists, has a message, isn't validation failure, and has no errors object
-         if (state && typeof state === 'object' && state !== null && 'message' in state && state.message && state.message !== 'Validation Failed.' && !('errors' in state)) {
-            // Success response triggers redirection via the Server Action itself (redirect('/contact/thanks'))
-            reset(); // Clear the form fields
-        }
-    }, [state, reset]);
-
-    // 4. Client-side submit handler (validates, then dispatches Server Action)
-    const onSubmit = (data: ClientFormData) => { // Use the defined type
-        // Create a FormData object for the Server Action
-        const formData = new FormData();
-         // Loop through the keys of the validated data and append to FormData
-         Object.keys(data).forEach(key => {
-            // Type assertion to ensure key is valid for ClientFormData
-            const typedKey = key as keyof ClientFormData;
-            const value = data[typedKey];
-            // Append only if the value is not undefined or null
-            if (value !== undefined && value !== null) {
-              formData.append(typedKey, String(value));
-            }
-          });
-
-        // Dispatch the Server Action
-        dispatch(formData);
+    // 3. Client-side submit handler (validates, then uses native browser submission)
+    const onSubmit = (data: ClientFormData) => {
+        // You would typically handle form submission logic here (e.g., set loading state, clear form)
+        // For Formspree, the form submission is handled by the <form action="..."> itself.
+    
+        // NOTE: Since the Server Action is removed, you must replace the action URL
+        // with your own registered Formspree endpoint (e.g., https://formspree.io/f/your-form-id)
+        // If left as-is, the form will still validate client-side before redirecting to the Formspree success page.
     };
+    
+    // NOTE: The form will redirect away from this page upon successful submission to Formspree's own thank you page.
+    // To handle success status locally without redirect, Formspree Pro is required.
+    // For now, we rely on Formspree's default thank you page.
 
     return (
         <main>
@@ -1519,14 +1509,24 @@ export default function ContactPage() {
                     </h1>
                     <p className="text-xl text-neutral-400">
                         Use the secure form below or WhatsApp us directly. Safety and service guaranteed by our Alberton team.
-                    </p>
+                   </p>
                 </div>
             </section>
+            
+            {/* WHATSAPP CLARITY BLOCK */}
+             <div className="bg-primary/10 dark:bg-primary/20 text-neutral-800 dark:text-neutral-200 py-4">
+                <div className="container mx-auto px-4 max-w-5xl flex items-center text-sm sm:text-base">
+                    <Info className="h-5 w-5 mr-3 text-primary flex-shrink-0" />
+                    <p className='font-medium'>
+                        **WhatsApp Line Clarity:** The 081 884 9807 number is for **messages only** (text/voice notes). It **cannot receive phone calls**. Please use the Landline (+27 11 907 8495) for voice calls.
+                    </p>
+                </div>
+            </div>
 
             {/* Form & Contact Info */}
             <section className="py-24 bg-white dark:bg-neutral-800">
                 <div className="container mx-auto px-4 max-w-5xl">
-                     <div className="grid lg:grid-cols-2 gap-12">
+                    <div className="grid lg:grid-cols-2 gap-12">
 
                         {/* Contact Info Column (High-Intent, Enhanced) */}
                         <div className="space-y-6 text-neutral-800 dark:text-neutral-200 p-6 rounded-lg bg-neutral-50 dark:bg-neutral-900 border border-neutral-200 dark:border-neutral-700 h-full">
@@ -1537,21 +1537,24 @@ export default function ContactPage() {
                             </p>
 
                             <div className="space-y-6">
-                                {/* Direct Call Link */}
-                                 <a href="tel:+27119078495" className="flex items-center text-2xl font-extrabold text-primary hover:text-primary/70 transition-colors">
+                                {/* Direct Call Link (LANDLINE - UNCHANGED) */}
+                                 <a href="tel:+27119078495" 
+                                className="flex items-center text-2xl font-extrabold text-primary hover:text-primary/70 transition-colors">
                                     <Phone className="h-7 w-7 mr-3 text-primary" />
-                                    +27 11 907 8495
+                                    +27 11 907 8495 (Landline)
                                 </a>
 
-                                {/* WhatsApp Link (High-Conversion) */}
-                                 <a href="https://wa.me/27119078495?text=Hello%2C%20I%20need%20urgent%20help%20with%20my%20tyres." target="_blank" rel="noopener noreferrer" className="flex items-center text-2xl font-extrabold text-[#25D366] hover:text-[#128C7E] transition-colors">
+                                {/* WhatsApp Link (UPDATED NUMBER) */}
+                                 <a href="https://wa.me/27818849807?text=Hello%2C%20I%20need%20urgent%20help%20with%20my%20tyres."
+                                target="_blank" rel="noopener noreferrer" className="flex items-center text-2xl font-extrabold text-[#25D366] hover:text-[#128C7E] transition-colors">
                                     <MessageSquareText className="h-7 w-7 mr-3" />
-                                    WhatsApp Us Now
-                                 </a>
+                                    081 884 9807 (WhatsApp Now)
+                            
+                                </a>
                             </div>
 
                             {/* Hours Block */}
-                             <div className="pt-8 border-t border-neutral-300 dark:border-neutral-700">
+                            <div className="pt-8 border-t border-neutral-300 dark:border-neutral-700">
                                 <h3 className='text-xl font-bold mb-2'>Operational Hours</h3>
                                 <div className="text-neutral-600 dark:text-neutral-400 space-y-1">
                                     <p>Monday - Friday: 08:00 - 17:00</p>
@@ -1565,8 +1568,15 @@ export default function ContactPage() {
                          <div className="bg-white dark:bg-neutral-950 p-6 rounded-lg shadow-xl border border-neutral-200 dark:border-neutral-700">
                             <h2 className="text-3xl font-bold text-neutral-800 dark:text-white mb-6">Request a Call Back</h2>
 
-                             {/* Form uses the handleSubmit wrapper from React Hook Form */}
-                            <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
+                            {/* Form uses the handleSubmit wrapper from React Hook Form */}
+                            {/* CRITICAL CHANGE: FORM ACTION & METHOD. Replace YOUR_FORMSPREE_ENDPOINT with your endpoint. */}
+                            <form 
+                                onSubmit={handleSubmit(onSubmit)} 
+                                className="space-y-4"
+                                // The email address you registered with Formspree will receive submissions
+                                action="https://formspree.io/f/YOUR_FORMSPREE_ENDPOINT" 
+                                method="POST"
+                            >
 
                                  {/* Name Input */}
                                 <div>
@@ -1574,88 +1584,92 @@ export default function ContactPage() {
                                         <User className="h-4 w-4 mr-2" /> Full Name
                                     </label>
                                      <Input
-                                        id="clientName"
+                                         id="clientName"
                                          type="text"
                                         placeholder="John Smith"
                                         {...register("clientName")}
                                          className={errors.clientName ? 'border-destructive' : ''}
+                                         name="Client Name" // HTML name attribute for Formspree field identification
                                     />
                                     {/* Display Client-Side Validation Error */}
-                                     {errors.clientName && <p className="text-sm text-destructive mt-1">{errors.clientName.message?.toString()}</p>}
-                                    {/* Display Server-Side Validation Error (if it exists) */}
-                                    {state && typeof state === 'object' && state !== null && 'errors' in state && state.errors && 'clientName' in state.errors && state.errors.clientName && <p className="text-sm text-destructive mt-1">{state.errors.clientName.join(', ')}</p>}
+                                 {errors.clientName && <p className="text-sm text-destructive mt-1">{errors.clientName.message?.toString()}</p>}
                                 </div>
+
+                                {/* Email Input - ADDED for Formspree compatibility/replies */}
+                                <div>
+                                    <label htmlFor="_replyto" className="flex items-center text-sm font-medium mb-1 dark:text-neutral-300">
+                                         <Mail className="h-4 w-4 mr-2" /> Email Address (Required for quote)
+                                    </label>
+                                     <Input
+                                        id="_replyto"
+                                        type="email"
+                                        placeholder="sales@albertontyreclinic.co.za"
+                                        {...register("_replyto")}
+                                        className={errors._replyto ? 'border-destructive' : ''}
+                                        name="_replyto" // CRITICAL Formspree field for setting Reply-To header
+                                    />
+                                    {errors._replyto && <p className="text-sm text-destructive mt-1">{errors._replyto.message?.toString()}</p>}
+                                </div>
+
 
                                 {/* Phone Input */}
-                                 <div>
+                                <div>
                                     <label htmlFor="phoneNumber" className="flex items-center text-sm font-medium mb-1 dark:text-neutral-300">
-                                        <Phone className="h-4 w-4 mr-2" /> Phone Number
+                                         <Phone className="h-4 w-4 mr-2" /> Phone Number
                                     </label>
                                     <Input
-                                         id="phoneNumber"
+                                        id="phoneNumber"
                                         type="tel"
-                                        placeholder="082 555 1234"
+                                           placeholder="082 555 1234"
                                          {...register("phoneNumber")}
                                         className={errors.phoneNumber ? 'border-destructive' : ''}
+                                        name="Phone Number"
                                     />
                                     {errors.phoneNumber && <p className="text-sm text-destructive mt-1">{errors.phoneNumber.message?.toString()}</p>}
-                                     {state && typeof state === 'object' && state !== null && 'errors' in state && state.errors && 'phoneNumber' in state.errors && state.errors.phoneNumber && <p className="text-sm text-destructive mt-1">{state.errors.phoneNumber.join(', ')}</p>}
                                 </div>
 
-                                {/* Service Type (Example of selecting a service) */}
+                                 {/* Service Type (Example of selecting a service) */}
                                  <div>
                                     <label htmlFor="serviceType" className="text-sm font-medium mb-1 dark:text-neutral-300 block">
-                                         Service Required (Optional)
+                                          Service Required (Optional)
                                     </label>
-                                    <select
+                                     <select
                                          id="serviceType"
                                         {...register("serviceType")}
                                          className="w-full p-2 border border-input rounded-md bg-background text-foreground"
+                                         name="Service Type"
                                     >
-                                        <option value="">I need a Free Assessment (Default)</option>
+                                         <option value="">I need a Free Assessment (Default)</option>
                                          <option value="Tyre Quote">Tyre Quote</option>
                                         <option value="Brake/Shock Quote">Brake/Shock Quote</option>
                                         <option value="Battery Quote">Battery Quote</option>
-                                        {/* REMOVED: <option value="Minor Service">Minor Service</option> */}
-                                    </select>
+                                     </select>
                                 </div>
 
                                  {/* Message Input */}
-                                <div>
+                                 <div>
                                     <label htmlFor="message" className="flex items-center text-sm font-medium mb-1 dark:text-neutral-300">
-                                         <MessageSquare className="h-4 w-4 mr-2" /> Message
+                                          <MessageSquare className="h-4 w-4 mr-2" /> Message
                                     </label>
                                        <Textarea
-                                        id="message"
+                                         id="message"
                                         placeholder="e.g., Need 2 Pirelli tyres for a Golf 7..."
-                                        {...register("message")}
+                                     {...register("message")}
+                                     name="Message"
                                     />
                                  </div>
 
-                                {/* Submit Button with Server Action status */}
+                                 {/* Submit Button */}
                                 <SubmitButton />
 
-                                 {/* Server-Side Validation Failure Messages (General) */}
-                                {state?.message && state.message === 'Validation Failed.' && (
-                                     <p className="text-sm text-destructive font-bold pt-2 text-center">
-                                         Please correct the errors above.
-                                     </p>
-                                )}
-                                {/* Other Server Messages */}
-                                {state?.message && state.message !== 'Validation Failed.' && !state.errors && (
-                                    <p className="text-sm text-destructive font-bold pt-2 text-center">
-                                        {state.message}
-                                     </p>
-                                )}
                             </form>
-                         </div>
+                   </div>
                     </div>
                 </div>
             </section>
         </main>
     );
 }
-
 
 --------------------------------------------------------------------------------📄 FILE PATH: C:\Users\User1\alberton-tyre-clinic\src\app\contact\thanks\page.tsx--------------------------------------------------------------------------------// src/app/contact/thanks/page.tsx
 import React from 'react';
@@ -1715,15 +1729,18 @@ export default function PrivacyPolicyPage() {
             Alberton Tyre Clinic (&quot;we&quot;, &quot;our&quot;, or &quot;us&quot;) is committed to protecting the privacy of your personal information. This policy describes how we collect, use, and share information about you when you use our website or services.
           </p>
 
-          <h2>2. Information We Collect</h2>
+          <h2>2.
+          Information We Collect</h2>
           <p>We collect information you provide directly to us:</p>
           <ul>
             <li>**Contact Information:** Name and Phone Number when you book an assessment or request a quote (via forms on the /assessment and /contact pages).</li>
             <li>**Vehicle Information:** Optional details about your vehicle make and model.</li>
-            <li>**Communication Data:** Content of messages and emails you send us.</li>
+            <li>**Communication Data:** Content of 
+            messages and emails you send us.</li>
           </ul>
 
-          <h2>3. How We Use Your Information</h2>
+          <h2>3.
+          How We Use Your Information</h2>
           <p>We use the collected information primarily for:</p>
           <ul>
             <li>To book and confirm your vehicle assessment or service appointment.</li>
@@ -1731,9 +1748,11 @@ export default function PrivacyPolicyPage() {
             <li>To improve the efficiency of our service and website experience.</li>
           </ul>
 
-          <h2>4. Data Sharing and Disclosure</h2>
+          <h2>4.
+          Data Sharing and Disclosure</h2>
           <p>
-            We do not sell, rent, or trade your personal information to third parties. We may share your information only with:
+            We do not sell, rent, or trade your personal information to third parties.
+            We may share your information only with:
           </p>
           <ul>
             <li>Service providers (e.g., payment processors, hosting partners) necessary to deliver our services, who are bound by confidentiality agreements.</li>
@@ -1742,12 +1761,14 @@ export default function PrivacyPolicyPage() {
           
           <h2>5. Your Choices and Rights</h2>
           <p>
-            You have the right to request access to the personal data we hold about you and to ask for corrections to be made. To exercise these rights, please contact us at info@albertontyreclinic.co.za.
+            You have the right to request access to the personal data we hold about you and to ask for corrections to be made.
+            To exercise these rights, please contact us at **sales@albertontyreclinic.co.za**.
           </p>
 
           <p className="not-prose mt-10 text-center">
             <Link href="/contact" className="font-bold text-primary hover:underline">
-              Questions about this policy? Contact us here.
+              Questions about this policy?
+              Contact us here.
             </Link>
           </p>
         </div>
@@ -2307,13 +2328,15 @@ export default function BatteriesServicesPage() {
       {/* 2. Funneling Section (Primary SEO Callout & Link) */}
       <section className="py-24 bg-white dark:bg-neutral-800">
         <div className="container mx-auto px-4 max-w-6xl grid lg:grid-cols-2 gap-12 items-center">
-       
+        
             <div className="space-y-6">
                 <h2 className="text-4xl font-extrabold text-neutral-800 dark:text-white">
-                    Need a New Battery? Visit Our Specialist Partner.
+                    Need a New Battery?
+                    Visit Our Specialist Partner.
                 </h2>
                 <p className="text-lg text-neutral-600 dark:text-neutral-400">
-                    While we check battery health as part of our FREE 6-Point Assessment, all primary battery sales, urgent callouts, and specialist fitment services are handled by Alberton Battery Mart. They are the local authority and offer:
+                    While we check battery health as part of our FREE 6-Point Assessment, all primary battery sales, urgent callouts, and specialist fitment services are handled by Alberton Battery Mart.
+                    They are the local authority and offer:
                 </p>
                 <ul className="space-y-4 pt-4">
                     <li className="flex items-center text-lg text-primary font-semibold">
@@ -2345,7 +2368,8 @@ export default function BatteriesServicesPage() {
       <section className="py-16 bg-primary dark:bg-primary/90 text-white text-center">
           <div className="container mx-auto px-4 max-w-4xl">
               <h2 className="text-3xl font-extrabold mb-4">
-                  Still Not Sure? Start With Our FREE Assessment.
+                  Still Not Sure?
+                  Start With Our FREE Assessment.
               </h2>
               <p className="text-lg mb-6">
                   Our FREE 6-Point Vehicle Assessment includes a quick battery check and directs you to the right place.
@@ -2665,7 +2689,7 @@ export default function TyreServicesPage() {
 // Server Component - Required for legal and operational clarity.
 
 import React from 'react';
-import Link from 'next/link';
+
 
 // --- Metadata: Legal Compliance ---
 export const metadata = {
@@ -2682,7 +2706,7 @@ export default function TermsOfServicePage() {
             Terms of <span className="text-primary">Service</span>
           </h1>
           <p className="text-xl text-neutral-400">
-            Governing the use of our website and services.
+             Governing the use of our website and services.
           </p>
         </div>
       </section>
@@ -2696,33 +2720,42 @@ export default function TermsOfServicePage() {
             By accessing or using the services of Alberton Tyre Clinic, you agree to be bound by these Terms of Service. If you disagree with any part of the terms, then you may not access the Service.
           </p>
 
-          <h2>2. Service Appointments and Quotes</h2>
+          <h2>2.
+          Service Appointments and Quotes</h2>
           <ul>
             <li>
                 **Quote Validity:** All quotes for tyres, parts, and labour are valid for 7 days unless specified otherwise in writing.
             </li>
             <li>
-                **Free Assessment:** The &quot;FREE 6-Point Vehicle Assessment&quot; is a visual check of accessible components and does not involve dismantling parts. It is non-binding and does not constitute a full diagnostic.
+                **Free Assessment:** The &quot;FREE 6-Point Vehicle Assessment&quot;
+                is a visual check of accessible components and does not involve dismantling parts.
+                It is non-binding and does not constitute a full diagnostic.
             </li>
             <li>
-                **Cancellations:** We request at least 4 hours&apos; notice for any appointment cancellations.
+                **Cancellations:** We request at least 4 hours&apos;
+                notice for any appointment cancellations.
             </li>
           </ul>
 
-          <h2>3. Warranties and Guarantees</h2>
+          <h2>3.
+          Warranties and Guarantees</h2>
           <p>
-            All parts (tyres, brakes, batteries, shocks) are covered by the original manufacturer&apos;s warranty. [cite_start]Warranties on tyres are subject to the manufacturer&apos;s conditions, often requiring **mandatory alignment and balancing every 10,000 km**[cite: 331]. Failure to adhere to maintenance schedules may void the warranty.
+            All parts (tyres, brakes, batteries, shocks) are covered by the original manufacturer&apos;s warranty.
+            [cite_start]Warranties on tyres are subject to the manufacturer&apos;s conditions, often requiring **mandatory alignment and balancing every 10,000 km**[cite: 4030].
+            Failure to adhere to maintenance schedules may void the warranty.
           </p>
 
-          <h2>4. Limitation of Liability</h2>
+          <h2>4.
+          Limitation of Liability</h2>
           <p>
-            Alberton Tyre Clinic will not be liable for any indirect, incidental, special, consequential or punitive damages, including without limitation, loss of profits, data, or other intangible losses, resulting from (i) your access to or inability to access or use the Service; (ii) any conduct or content of any third party on the Service.
+            Alberton Tyre Clinic will not be liable for any indirect, incidental, special, consequential or punitive damages, including without limitation, loss of profits, data, or other intangible losses, resulting from (i) your access to or inability to access or use the Service;
+            (ii) any conduct or content of any third party on the Service.
           </p>
 
           <p className="not-prose mt-10 text-center">
-            <Link href="/contact" className="font-bold text-primary hover:underline">
-              Contact us for any questions regarding these terms.
-            </Link>
+            <a href="mailto:sales@albertontyreclinic.co.za" className="font-bold text-primary hover:underline">
+              Contact us for any questions regarding these terms: **sales@albertontyreclinic.co.za**.
+            </a>
           </p>
         </div>
       </section>
@@ -2785,7 +2818,8 @@ export function ThemeToggle() {
             size="icon"
             aria-label="Toggle theme"
         >
-          {/* Sun icon is visible when light (scale-100), Moon icon when dark (dark:scale-100) */}
+          {/* Sun 
+          icon is visible when light (scale-100), Moon icon when dark (dark:scale-100) */}
           <Sun className="h-[1.2rem] w-[1.2rem] rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0" />
           <Moon className="absolute h-[1.2rem] w-[1.2rem] rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100" />
           <span className="sr-only">Toggle theme</span>
@@ -2809,11 +2843,12 @@ export function ThemeToggle() {
 --------------------------------------------------------------------------------📄 FILE PATH: C:\Users\User1\alberton-tyre-clinic\src\components\layout\Footer.tsx--------------------------------------------------------------------------------// src/components/layout/Footer.tsx
 import React from 'react';
 import Link from 'next/link';
-import { Phone, MapPin, Clock, Mail } from 'lucide-react';
+import { Phone, MapPin, Clock, Mail, MessageSquareText } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 export default function Footer() {
     // Current year for copyright date
     const currentYear = new Date().getFullYear();
+    const WHATSAPP_LINK = "https://wa.me/27818849807?text=Hello%2C%20I%20need%20a%20quote%20for%20tyres.";
     return (
         // High-contrast, dark background footer
         <footer className="pt-16 pb-8 bg-neutral-900 dark:bg-neutral-950 text-neutral-300 border-t-8 border-primary/50">
@@ -2827,8 +2862,9 @@ export default function Footer() {
                              Alberton <span className="text-primary">Tyre Clinic</span> {/* */}
                          </Link>
                         <p className="text-sm leading-relaxed text-neutral-400 max-w-xs mb-4">
-                            {/* FIX: Replaced ' with &apos; to resolve unescaped entity error (Line 24) */}
-                            Alberton&apos;s trusted **family-run fitment experts since 1989**. We prioritize your safety over sales, guaranteed.
+                            {/* FIX: Escaped apostrophe ' */}
+                             Alberton&apos;s trusted **family-run fitment experts since 1989**.
+                            We prioritize your safety over sales, guaranteed.
                         </p>
 
                         {/* Trust Anchor Badges */}
@@ -2842,13 +2878,13 @@ export default function Footer() {
                     {/* Column 2: Core Services & Quick Links (SEO Focus) */}
                     <div>
                         <h4 className="text-lg font-bold uppercase text-white mb-4 border-b border-primary/30 pb-2"> {/* */}
-                            Quick Service Links
+                             Quick Service Links
                         </h4>
                         <ul className="space-y-3 text-sm">
                             <li><Link href="/services" className="hover:text-primary transition-colors">All Services</Link></li>
                             <li><Link href="/about" className="hover:text-primary transition-colors">Our Experts</Link></li>
                             <li><Link href="/blog" className="hover:text-primary transition-colors">Safety Blog</Link></li>
-                            <li><Link href="/contact" className="hover:text-primary transition-colors">Contact Us</Link></li>
+                           <li><Link href="/contact" className="hover:text-primary transition-colors">Contact Us</Link></li>
                         </ul>
                      </div>
 
@@ -2863,39 +2899,51 @@ export default function Footer() {
                                  <MapPin className="h-4 w-4 mr-2 text-primary flex-shrink-0 mt-1" /> {/* */}
                                  <a href="http://googleusercontent.com/maps/google.com/0" target="_blank" rel="noopener noreferrer" className="hover:text-primary transition-colors">
                                      26 St Columb St, New Redruth, Alberton {/* */}
-                                </a>
+                            </a>
                             </li>
                              <li className="flex items-center">
-                                 <Phone className="h-4 w-4 mr-2 text-primary flex-shrink-0" /> {/* */}
+                                 <Phone className="h-4 w-4 mr-2 
+                                 text-primary flex-shrink-0" /> {/* */}
                                  <a href="tel:+27119078495" className="font-extrabold hover:text-primary transition-colors">
-                                     +27 11 907 8495 {/* */}
+                                     +27 11 907 8495 (Landline) {/* */}
                                  </a>
                             </li>
-                             <li className="flex items-start">
-                                 <Mail className="h-4 w-4 mr-2 mt-1 text-primary flex-shrink-0" /> {/* */}
-                                 <a href="mailto:info@albertontyreclinic.co.za" className="break-all hover:text-primary transition-colors">
-                                     info@albertontyreclinic.co.za {/* */}
+                            {/* NEW: WHATSAPP NUMBER */}
+                            <li className="flex items-center">
+                                 <MessageSquareText className="h-4 w-4 mr-2 text-[#25D366] flex-shrink-0" /> {/* */}
+                                 <a href={WHATSAPP_LINK} target="_blank" rel="noopener noreferrer" className="font-extrabold text-[#25D366] hover:text-[#128C7E] transition-colors">
+                                     081 884 9807 (WhatsApp)
                                  </a>
+                            </li>
+                            <li className="flex items-start">
+                                 <Mail className="h-4 w-4 mr-2 mt-1 text-primary flex-shrink-0" /> {/* */}
+                                 {/* REMOVED ** from email */}
+                                 <a href="mailto:sales@albertontyreclinic.co.za" className="break-all hover:text-primary transition-colors">
+                                     sales@albertontyreclinic.co.za {/* */}
+                                   </a>
                             </li>
                             <li className="pt-2 flex items-start text-primary font-bold"> {/* */}
-                                <Clock className="h-4 w-4 mr-2 flex-shrink-0 mt-1" />
+                                 <Clock className="h-4 w-4 mr-2 flex-shrink-0 mt-1" />
                                 <div>
-                                    <span>Mon - Fri: 08:00 - 17:00</span>
+                                    <span>Mon - Fri: 08:00 - 
+                                    17:00</span>
                                     <br />
                                     <span>Sat: 08:00 - 12:00</span>
-                                </div>
+                                 </div>
                             </li>
                         </ul>
                     </div>
 
+                    
                     {/* Column 4: Primary CTA / Lead Magnet (Adjusted margin for tablet) */}
                      <div className="bg-neutral-800 p-6 rounded-lg border-t-4 border-primary shadow-xl md:mt-10 lg:mt-0"> {/* */}
                         <h4 className="text-xl font-extrabold text-white mb-3">
                             Safety is Free.
                         </h4> {/* */}
                         <p className="text-sm text-neutral-400 mb-4">
-                            {/* FIX: Replaced ' with &apos; to resolve unescaped entity error (Line 91) */}
-                            Don&apos;t guess your vehicle&apos;s condition. Book your free safety check today.
+                            {/* FIX: Escaped apostrophe ' */}
+                            Don&apos;t guess your vehicle&apos;s condition.
+                            Book your free safety check today.
                         </p>
                          <Button asChild className="w-full bg-primary hover:bg-primary/hover text-white font-bold">
                             <Link href="/assessment">
@@ -2907,29 +2955,31 @@ export default function Footer() {
                 </div>
 
 
-                {/* Bottom Bar: Legal, Copyright, and Maintenance Credit (Stack on small screens) */}
+                   {/* Bottom Bar: Legal, Copyright, and Maintenance Credit (Stack on small screens) */}
                 <div className="flex flex-col md:flex-row justify-between items-center text-xs text-neutral-500 pt-4 space-y-4 md:space-y-0"> {/* */}
 
                     {/* Copyright & Maintenance Credit (Combined for visual impact) */}
-                     <div className="flex flex-col md:flex-row items-center space-y-2 md:space-y-0 md:space-x-4 text-center md:text-left"> {/* */}
+                     <div 
+                    className="flex flex-col md:flex-row items-center space-y-2 md:space-y-0 md:space-x-4 text-center md:text-left"> {/* */}
                         <a href="https://www.endpointmedia.co.za" target="_blank" rel="noopener noreferrer" className="font-semibold text-primary hover:text-white transition-colors">
                             Designed, Developed & Maintained by Endpoint Media.
                         </a> {/* */}
                         <span className="hidden md:inline-block">|</span>
                         <span className="mb-2 md:mb-0">
-                            © {currentYear} Alberton Tyre Clinic. All rights reserved.
+                            © {currentYear} Alberton Tyre Clinic.
+                            All rights reserved.
                         </span>
                     </div>
 
                     {/* Legal Links */}
                     <div className="space-x-4">
                          <Link href="/privacy" className="hover:text-primary transition-colors">Privacy Policy</Link>
-                         <span className="hidden md:inline-block">|</span> {/* */}
+                        <span className="hidden md:inline-block">|</span> {/* */}
                         <Link href="/terms" className="hover:text-primary transition-colors">Terms of Service</Link>
                     </div>
                 </div>
 
-            </div>
+           </div>
          </footer> //
     );
 }
@@ -2956,33 +3006,39 @@ const NAV_LINKS = [
     { name: 'Blog', href: '/blog' },
     { name: 'Contact Us', href: '/contact' },
 ];
-const WHATSAPP_LINK = "https://wa.me/27119078495?text=Hello%2C%20I%20saw%20your%20website%20and%20need%20a%20quote%20for%20tyres.";
+const WHATSAPP_LINK = "https://wa.me/27818849807?text=Hello%2C%20I%20saw%20your%20website%20and%20need%20a%20quote%20for%20tyres.";
 
 
 export default function Header() {
     const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
     return (
         <header className="sticky top-0 z-50 w-full">
-            {/* Top Bar (Keep as before, but added flex-wrap for responsiveness) */}
+            {/* Top Bar (UPDATED: Added WhatsApp Number) */}
             <div className="bg-neutral-900 hidden md:block border-b border-neutral-800">
                 <div className="container flex h-10 max-w-screen-2xl items-center justify-end px-4 mx-auto">
                     {/* ... content ... */}
                      <div className="flex flex-wrap items-center justify-end text-xs text-neutral-400 space-x-4 md:space-x-6">
                         <a href="https://maps.app.goo.gl/YourMapLink" target="_blank" rel="noopener noreferrer" className="flex items-center hover:text-white transition-colors">
-                            <MapPin className="h-4 w-4 mr-1 text-primary" /> 26 St Columb St, New Redruth, Alberton
+                            <MapPin className="h-4 w-4 mr-1 text-primary" /> 26 St Columb St, 
+                            New Redruth, Alberton
                          </a>
                         <a href="tel:+27119078495" className="flex items-center font-bold text-primary hover:text-white transition-colors">
-                            <Phone className="h-4 w-4 mr-1" /> +27 11 907 8495
-                         </a>
+                            <Phone className="h-4 w-4 mr-1" /> +27 11 907 8495 (Landline)
+                       </a>
+                       {/* NEW: WHATSAPP NUMBER ON TOP BAR */}
+                         <a href={WHATSAPP_LINK} target="_blank" rel="noopener noreferrer" className="flex items-center font-bold text-[#25D366] hover:text-white transition-colors">
+                            <MessageSquareText className="h-4 w-4 mr-1" /> 081 884 9807 (WhatsApp)
+                        </a>
                         <span className="flex items-center">
-                            <Clock className="h-4 w-4 mr-1 text-primary" /> Mon - Fri: 08:00 - 17:00 | Sat: 08:00 - 12:00
+                            <Clock className="h-4 w-4 mr-1 text-primary" /> Mon - Fri: 08:00 - 17:00 |
+                            Sat: 08:00 - 12:00
                         </span>
                     </div>
                 </div>
             </div>
 
             {/* Main Nav Bar */}
-             <div className="bg-white/95 dark:bg-neutral-800/95 backdrop-blur supports-[backdrop-filter]:bg-background/80 border-b border-neutral-200 dark:border-neutral-700">
+            <div className="bg-white/95 dark:bg-neutral-800/95 backdrop-blur supports-[backdrop-filter]:bg-background/80 border-b border-neutral-200 dark:border-neutral-700">
                 <div className="container flex h-16 max-w-screen-2xl items-center justify-between px-4 mx-auto">
                     {/* Logo (Adjusted for responsiveness) */}
                     <Link href="/" className="flex items-center space-x-2 mr-4 min-w-0">
@@ -2991,21 +3047,22 @@ export default function Header() {
                         </span>
                     </Link>
 
-                     {/* Desktop Nav */}
+                    {/* Desktop Nav */}
                     <nav className="hidden lg:flex items-center justify-center flex-grow space-x-1 mx-6">
                        {NAV_LINKS.map(link => (
-                            <Button key={link.name} variant="ghost" asChild>
+                            <Button key={link.name} 
+                            variant="ghost" asChild>
                                  <Link
                                     href={link.href}
                                     className="text-sm font-medium text-neutral-700 dark:text-neutral-200 hover:text-primary transition-colors px-3 py-2"
                                 >
                                     {link.name}
-                                 </Link>
+                               </Link>
                             </Button>
                         ))}
                     </nav>
 
-                    {/* Right Side (Adjusted spacing) */}
+                    {/* Right Side (UPDATED: WhatsApp button text) */}
                     <div className="flex items-center space-x-1 sm:space-x-2 flex-shrink-0">
                         {/* WhatsApp Button */}
                         <Button
@@ -3014,8 +3071,8 @@ export default function Header() {
                             className="bg-[#25D366] hover:bg-[#128C7E] text-white font-bold transition-colors shadow-md hidden sm:flex"
                         >
                              <a href={WHATSAPP_LINK} target="_blank" rel="noopener noreferrer" className="flex items-center">
-                                <MessageSquareText className="h-4 w-4 mr-1.5" /> WhatsApp Now
-                            </a>
+                                <MessageSquareText className="h-4 w-4 mr-1.5" /> WhatsApp Us Now
+                         </a>
                          </Button>
                         {/* Assessment Button */}
                         <Button
@@ -3023,16 +3080,16 @@ export default function Header() {
                              className="hidden sm:inline-flex bg-primary hover:bg-primary/hover text-white font-bold transition-colors"
                             size="sm"
                         >
-                         <Link href="/assessment">
+                             <Link href="/assessment">
                                 FREE Assessment
                             </Link>
-                        </Button>
+                      </Button>
 
                          {/* UNCOMMENT ThemeToggle */}
                         <ThemeToggle />
 
                         {/* Mobile Menu (using DynamicSheet components) */}
-                         <DynamicSheet open={isMobileMenuOpen} onOpenChange={setIsMobileMenuOpen}>
+                        <DynamicSheet open={isMobileMenuOpen} onOpenChange={setIsMobileMenuOpen}>
                             {/* ... SheetTrigger and SheetContent using Dynamic components ... */}
                             <DynamicSheetTrigger asChild>
                                  <Button
@@ -3044,37 +3101,38 @@ export default function Header() {
                                      <Menu className="h-6 w-6" />
                                 </Button>
                             </DynamicSheetTrigger>
-                             <DynamicSheetContent side="right" className="w-[300px] sm:w-[400px] bg-white dark:bg-neutral-900 p-6">
+                            <DynamicSheetContent side="right" className="w-[300px] sm:w-[400px] bg-white dark:bg-neutral-900 p-6">
                                 <div className="flex justify-between items-center mb-6">
-                                    <span className="font-bold text-lg">Menu</span>
+                                     <span className="font-bold text-lg">Menu</span>
                                      <DynamicSheetClose asChild>
                                         <Button variant="ghost" size="icon" aria-label="Close menu">
                                              <X className="h-6 w-6" />
                                         </Button>
-                                    </DynamicSheetClose>
+                             </DynamicSheetClose>
                                  </div>
                                 <nav className="flex flex-col space-y-3">
-                                    {NAV_LINKS.map((link) => (
+                                     {NAV_LINKS.map((link) => (
                                          <DynamicSheetClose asChild key={link.name}>
                                             <Link
                                                  href={link.href}
                                                 className="text-lg font-medium text-neutral-700 dark:text-neutral-200 hover:text-primary transition-colors py-2"
                                                  onClick={() => setIsMobileMenuOpen(false)}
-                                            >
+                                           >
                                                  {link.name}
                                             </Link>
                                          </DynamicSheetClose>
                                     ))}
                                     <hr className="my-4 border-neutral-200 dark:border-neutral-700"/>
                                      <DynamicSheetClose asChild>
-                                        <a href={WHATSAPP_LINK} target="_blank" rel="noopener noreferrer" className="flex items-center text-lg font-medium py-2 text-[#25D366] hover:text-[#128C7E] transition-colors">
-                                             <MessageSquareText className="h-5 w-5 mr-2" /> WhatsApp Us
+                                        <a href={WHATSAPP_LINK} target="_blank" rel="noopener noreferrer" className="flex items-center text-lg font-medium py-2 text-[#25D366] 
+                                        hover:text-[#128C7E] transition-colors">
+                                             <MessageSquareText className="h-5 w-5 mr-2" /> WhatsApp Us Now
                                         </a>
                                      </DynamicSheetClose>
                                      <DynamicSheetClose asChild>
-                                        <Link href="/assessment" className="flex items-center text-lg font-medium py-2 text-primary hover:text-primary/80 transition-colors">
+                                         <Link href="/assessment" className="flex items-center text-lg font-medium py-2 text-primary hover:text-primary/80 transition-colors">
                                              Book FREE Assessment
-                                        </Link>
+                                         </Link>
                                      </DynamicSheetClose>
                                 </nav>
                             </DynamicSheetContent>
@@ -4189,15 +4247,13 @@ export { Textarea }
 
 
 --------------------------------------------------------------------------------📄 FILE PATH: C:\Users\User1\alberton-tyre-clinic\src\lib\actions.ts--------------------------------------------------------------------------------// src/lib/actions.ts
+// REMOVED: All database connection logic and the createAppointment Server Action.
+// This prevents the "unexpected server error" caused by missing database environment variables.
 "use server";
-
-import { db } from '@/lib/db/index';
-import { appointments } from '@/lib/db/schema';
-// Removed unused 'eq' and 'revalidatePath' imports
-import { redirect } from 'next/navigation';
 import { z } from 'zod';
+import { redirect } from 'next/navigation';
 
-// --- 1. Define Form Schema using Zod for Validation ---
+// --- Define the form schema used by the client for type safety, even if unused directly ---
 const AppointmentSchema = z.object({
   clientName: z.string().min(3, { message: "Name must be at least 3 characters." }),
   phoneNumber: z.string().min(10, { message: "Please provide a valid 10-digit phone number." }),
@@ -4205,67 +4261,16 @@ const AppointmentSchema = z.object({
   message: z.string().optional(),
 });
 
-// Define a type for the potential state returned by the action
-type FormState = {
-    message: string;
-    errors?: {
-        clientName?: string[];
-        phoneNumber?: string[];
-        serviceType?: string[];
-        message?: string[];
-    };
-} | null;
-
-
-// --- 2. The Core Server Action Function ---
-// Use the specific 'FormState' type for prevState instead of 'any' or 'unknown'
-export async function createAppointment(prevState: FormState, formData: FormData): Promise<FormState> {
-  // Extract data from FormData object
-  const rawData = {
-    clientName: formData.get('clientName'),
-    phoneNumber: formData.get('phoneNumber'),
-    // Default to 'General Inquiry' if serviceType is missing or empty
-    serviceType: formData.get('serviceType') || 'General Inquiry',
-    message: formData.get('message'),
-  };
-
-  // 3. Validate against Zod Schema
-  const validatedFields = AppointmentSchema.safeParse(rawData);
-  // If validation fails, return an error object matching FormState
-  if (!validatedFields.success) {
-    return {
-      message: 'Validation Failed.',
-      errors: validatedFields.error.flatten().fieldErrors,
-    };
-  }
-
-  // If validation succeeds, attempt database insertion
-  try {
-    // 4. Database Write (Drizzle ORM)
-    await db.insert(appointments).values({
-      clientName: validatedFields.data.clientName,
-      phoneNumber: validatedFields.data.phoneNumber,
-      serviceType: validatedFields.data.serviceType ?? 'General Inquiry', // Use validated data, ensure fallback
-      // message: validatedFields.data.message // Uncomment if you add 'message' to your db schema
-    });
-    // 5. Success Handling
-    // Optional: Revalidate paths if needed
-    // revalidatePath('/');
-
-    // Redirect to a confirmation page on success
-    redirect('/contact/thanks');
-
-    // Technically unreachable due to redirect, but satisfies return type if redirect were conditional
-    // return { message: 'Appointment created successfully!' };
-
-  } catch (error) {
-    console.error("Database or Server Error:", error);
-    // Return a generic server error message matching FormState
-    return {
-      message: 'An unexpected server error occurred. Please try again later.',
-    };
-  }
+// A dummy Server Action to maintain project structure if necessary, though the contact form no longer calls it.
+// This function would usually handle the form data, but now acts as a placeholder.
+export async function placeholderAction(prevState: any, formData: FormData): Promise<any> {
+  console.log("Placeholder Server Action triggered. Data should now be sent to Formspree.");
+  // Example: Redirect manually if formspree didn't handle it, to ensure the user gets feedback.
+  // redirect('/contact/thanks');
+  return { message: "Success (Placeholder only)." };
 }
+
+// NOTE: You must now configure the <form action="..."> in contact/page.tsx with your actual Formspree endpoint.
 
 --------------------------------------------------------------------------------📄 FILE PATH: C:\Users\User1\alberton-tyre-clinic\src\lib\utils.ts--------------------------------------------------------------------------------import { clsx, type ClassValue } from "clsx"
 import { twMerge } from "tailwind-merge"
