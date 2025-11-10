@@ -48,8 +48,7 @@ export default function BlogIndexPage() {
                         Expert <span className="text-primary">Safety</span> & Maintenance Insights
                     </h1>
                     <p className="text-xl text-neutral-400">
-                         {/* UPDATED from '28-year' to '35-year' */}
-                        Content written by our 35-year experienced technicians to keep you and your family safe on the road.
+                        Content written by our **36-year** experienced technicians to keep you and your family safe on the road.
                     </p>
                 </div>
             </section>
@@ -77,7 +76,7 @@ export default function BlogIndexPage() {
                                         Read Full Article →
                                     </Link>
                                 </Button>
-                             </div>
+                            </div>
                         ))}
                     </div>
                 </div>

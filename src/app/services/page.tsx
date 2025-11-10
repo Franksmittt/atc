@@ -5,8 +5,7 @@ import React from 'react';
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
 // REMOVED: Wrench was causing the unused variable error.
-import { Car, Zap, BatteryCharging, Disc3, Shield, RotateCw } from 'lucide-react'; 
-
+import { Car, Zap, BatteryCharging, Disc3, Shield, RotateCw } from 'lucide-react';
 // --- Metadata: Targeted for High-Volume SEO Keywords ---
 export const metadata = {
   // Target keywords: Tyre Brands, Fitment, Brakes, Alignment, Alberton
@@ -75,7 +74,7 @@ export default function ServicesPage() {
             Your <span className="text-primary">Full-Service</span> Vehicle Maintenance Center
           </h1>
           <p className="text-xl text-neutral-400 text-center">
-            We offer expert tyre fitment, routine minor servicing, and safety component replacement—all backed by a 35-year family guarantee in Alberton.
+            We offer expert tyre fitment, routine minor servicing, and safety component replacement—all backed by a **36-year** family guarantee in Alberton.
           </p>
         </div>
       </section>

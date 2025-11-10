@@ -42,7 +42,7 @@ export default function LocalProof() {
                     {/* Metric 3: Years Experience */}
                     <div className="bg-white dark:bg-neutral-800 text-neutral-800 dark:text-white p-6 rounded-lg shadow-xl">
                         <div className="text-5xl font-bold text-primary mb-2">
-                            38
+                            36
                          </div>
                         <p className="text-sm font-semibold">Years in Alberton</p>
                     </div>

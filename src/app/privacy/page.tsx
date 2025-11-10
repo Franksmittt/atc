@@ -33,15 +33,18 @@ export default function PrivacyPolicyPage() {
             Alberton Tyre Clinic (&quot;we&quot;, &quot;our&quot;, or &quot;us&quot;) is committed to protecting the privacy of your personal information. This policy describes how we collect, use, and share information about you when you use our website or services.
           </p>
 
-          <h2>2. Information We Collect</h2>
+          <h2>2.
+          Information We Collect</h2>
           <p>We collect information you provide directly to us:</p>
           <ul>
             <li>**Contact Information:** Name and Phone Number when you book an assessment or request a quote (via forms on the /assessment and /contact pages).</li>
             <li>**Vehicle Information:** Optional details about your vehicle make and model.</li>
-            <li>**Communication Data:** Content of messages and emails you send us.</li>
+            <li>**Communication Data:** Content of 
+            messages and emails you send us.</li>
           </ul>
 
-          <h2>3. How We Use Your Information</h2>
+          <h2>3.
+          How We Use Your Information</h2>
           <p>We use the collected information primarily for:</p>
           <ul>
             <li>To book and confirm your vehicle assessment or service appointment.</li>
@@ -49,9 +52,11 @@ export default function PrivacyPolicyPage() {
             <li>To improve the efficiency of our service and website experience.</li>
           </ul>
 
-          <h2>4. Data Sharing and Disclosure</h2>
+          <h2>4.
+          Data Sharing and Disclosure</h2>
           <p>
-            We do not sell, rent, or trade your personal information to third parties. We may share your information only with:
+            We do not sell, rent, or trade your personal information to third parties.
+            We may share your information only with:
           </p>
           <ul>
             <li>Service providers (e.g., payment processors, hosting partners) necessary to deliver our services, who are bound by confidentiality agreements.</li>
@@ -60,12 +65,14 @@ export default function PrivacyPolicyPage() {
           
           <h2>5. Your Choices and Rights</h2>
           <p>
-            You have the right to request access to the personal data we hold about you and to ask for corrections to be made. To exercise these rights, please contact us at info@albertontyreclinic.co.za.
+            You have the right to request access to the personal data we hold about you and to ask for corrections to be made.
+            To exercise these rights, please contact us at **sales@albertontyreclinic.co.za**.
           </p>
 
           <p className="not-prose mt-10 text-center">
             <Link href="/contact" className="font-bold text-primary hover:underline">
-              Questions about this policy? Contact us here.
+              Questions about this policy?
+              Contact us here.
             </Link>
           </p>
         </div>

@@ -16,7 +16,7 @@ export default function Hero() {
         </h2>
         <div className="flex flex-col sm:flex-row justify-center items-center space-y-4 sm:space-y-0 sm:space-x-6 mb-10 text-lg text-white">
           <span>✓ Pirelli & ATE Quality</span>
-          <span>✓ Over 35 Years Experience</span>
+          <span>✓ Over 36 Years Experience</span>
         </div>
         <Button
           asChild
@@ -27,7 +27,6 @@ export default function Hero() {
           </Link>
         </Button>
         <p className="mt-4 text-sm text-neutral-500">
-          {/* FIX: Replaced ' with &apos; to resolve unescaped entity error (Line 32) */}
           *No Obligation. No Hassle. We Check Shocks, Brakes & Batteries.
         </p>
       </div>

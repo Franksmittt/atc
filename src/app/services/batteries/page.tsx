@@ -37,13 +37,15 @@ export default function BatteriesServicesPage() {
       {/* 2. Funneling Section (Primary SEO Callout & Link) */}
       <section className="py-24 bg-white dark:bg-neutral-800">
         <div className="container mx-auto px-4 max-w-6xl grid lg:grid-cols-2 gap-12 items-center">
-       
+        
             <div className="space-y-6">
                 <h2 className="text-4xl font-extrabold text-neutral-800 dark:text-white">
-                    Need a New Battery? Visit Our Specialist Partner.
+                    Need a New Battery?
+                    Visit Our Specialist Partner.
                 </h2>
                 <p className="text-lg text-neutral-600 dark:text-neutral-400">
-                    While we check battery health as part of our FREE 6-Point Assessment, all primary battery sales, urgent callouts, and specialist fitment services are handled by Alberton Battery Mart. They are the local authority and offer:
+                    While we check battery health as part of our FREE 6-Point Assessment, all primary battery sales, urgent callouts, and specialist fitment services are handled by Alberton Battery Mart.
+                    They are the local authority and offer:
                 </p>
                 <ul className="space-y-4 pt-4">
                     <li className="flex items-center text-lg text-primary font-semibold">
@@ -75,7 +77,8 @@ export default function BatteriesServicesPage() {
       <section className="py-16 bg-primary dark:bg-primary/90 text-white text-center">
           <div className="container mx-auto px-4 max-w-4xl">
               <h2 className="text-3xl font-extrabold mb-4">
-                  Still Not Sure? Start With Our FREE Assessment.
+                  Still Not Sure?
+                  Start With Our FREE Assessment.
               </h2>
               <p className="text-lg mb-6">
                   Our FREE 6-Point Vehicle Assessment includes a quick battery check and directs you to the right place.

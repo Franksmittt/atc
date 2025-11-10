@@ -1,11 +1,12 @@
 // src/components/layout/Footer.tsx
 import React from 'react';
 import Link from 'next/link';
-import { Phone, MapPin, Clock, Mail } from 'lucide-react';
+import { Phone, MapPin, Clock, Mail, MessageSquareText } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 export default function Footer() {
     // Current year for copyright date
     const currentYear = new Date().getFullYear();
+    const WHATSAPP_LINK = "https://wa.me/27818849807?text=Hello%2C%20I%20need%20a%20quote%20for%20tyres.";
     return (
         // High-contrast, dark background footer
         <footer className="pt-16 pb-8 bg-neutral-900 dark:bg-neutral-950 text-neutral-300 border-t-8 border-primary/50">
@@ -19,8 +20,9 @@ export default function Footer() {
                              Alberton <span className="text-primary">Tyre Clinic</span> {/* */}
                          </Link>
                         <p className="text-sm leading-relaxed text-neutral-400 max-w-xs mb-4">
-                            {/* FIX: Replaced ' with &apos; to resolve unescaped entity error (Line 24) */}
-                            Alberton&apos;s trusted **family-run fitment experts since 1989**. We prioritize your safety over sales, guaranteed.
+                            {/* FIX: Escaped apostrophe ' */}
+                             Alberton&apos;s trusted **family-run fitment experts since 1989**.
+                            We prioritize your safety over sales, guaranteed.
                         </p>
 
                         {/* Trust Anchor Badges */}
@@ -34,13 +36,13 @@ export default function Footer() {
                     {/* Column 2: Core Services & Quick Links (SEO Focus) */}
                     <div>
                         <h4 className="text-lg font-bold uppercase text-white mb-4 border-b border-primary/30 pb-2"> {/* */}
-                            Quick Service Links
+                             Quick Service Links
                         </h4>
                         <ul className="space-y-3 text-sm">
                             <li><Link href="/services" className="hover:text-primary transition-colors">All Services</Link></li>
                             <li><Link href="/about" className="hover:text-primary transition-colors">Our Experts</Link></li>
                             <li><Link href="/blog" className="hover:text-primary transition-colors">Safety Blog</Link></li>
-                            <li><Link href="/contact" className="hover:text-primary transition-colors">Contact Us</Link></li>
+                           <li><Link href="/contact" className="hover:text-primary transition-colors">Contact Us</Link></li>
                         </ul>
                      </div>
 
@@ -55,39 +57,51 @@ export default function Footer() {
                                  <MapPin className="h-4 w-4 mr-2 text-primary flex-shrink-0 mt-1" /> {/* */}
                                  <a href="http://googleusercontent.com/maps/google.com/0" target="_blank" rel="noopener noreferrer" className="hover:text-primary transition-colors">
                                      26 St Columb St, New Redruth, Alberton {/* */}
-                                </a>
+                            </a>
                             </li>
                              <li className="flex items-center">
-                                 <Phone className="h-4 w-4 mr-2 text-primary flex-shrink-0" /> {/* */}
+                                 <Phone className="h-4 w-4 mr-2 
+                                 text-primary flex-shrink-0" /> {/* */}
                                  <a href="tel:+27119078495" className="font-extrabold hover:text-primary transition-colors">
-                                     +27 11 907 8495 {/* */}
+                                     +27 11 907 8495 (Landline) {/* */}
                                  </a>
                             </li>
-                             <li className="flex items-start">
-                                 <Mail className="h-4 w-4 mr-2 mt-1 text-primary flex-shrink-0" /> {/* */}
-                                 <a href="mailto:info@albertontyreclinic.co.za" className="break-all hover:text-primary transition-colors">
-                                     info@albertontyreclinic.co.za {/* */}
+                            {/* NEW: WHATSAPP NUMBER */}
+                            <li className="flex items-center">
+                                 <MessageSquareText className="h-4 w-4 mr-2 text-[#25D366] flex-shrink-0" /> {/* */}
+                                 <a href={WHATSAPP_LINK} target="_blank" rel="noopener noreferrer" className="font-extrabold text-[#25D366] hover:text-[#128C7E] transition-colors">
+                                     081 884 9807 (WhatsApp)
                                  </a>
+                            </li>
+                            <li className="flex items-start">
+                                 <Mail className="h-4 w-4 mr-2 mt-1 text-primary flex-shrink-0" /> {/* */}
+                                 {/* REMOVED ** from email */}
+                                 <a href="mailto:sales@albertontyreclinic.co.za" className="break-all hover:text-primary transition-colors">
+                                     sales@albertontyreclinic.co.za {/* */}
+                                   </a>
                             </li>
                             <li className="pt-2 flex items-start text-primary font-bold"> {/* */}
-                                <Clock className="h-4 w-4 mr-2 flex-shrink-0 mt-1" />
+                                 <Clock className="h-4 w-4 mr-2 flex-shrink-0 mt-1" />
                                 <div>
-                                    <span>Mon - Fri: 08:00 - 17:00</span>
+                                    <span>Mon - Fri: 08:00 - 
+                                    17:00</span>
                                     <br />
                                     <span>Sat: 08:00 - 12:00</span>
-                                </div>
+                                 </div>
                             </li>
                         </ul>
                     </div>
 
+                    
                     {/* Column 4: Primary CTA / Lead Magnet (Adjusted margin for tablet) */}
                      <div className="bg-neutral-800 p-6 rounded-lg border-t-4 border-primary shadow-xl md:mt-10 lg:mt-0"> {/* */}
                         <h4 className="text-xl font-extrabold text-white mb-3">
                             Safety is Free.
                         </h4> {/* */}
                         <p className="text-sm text-neutral-400 mb-4">
-                            {/* FIX: Replaced ' with &apos; to resolve unescaped entity error (Line 91) */}
-                            Don&apos;t guess your vehicle&apos;s condition. Book your free safety check today.
+                            {/* FIX: Escaped apostrophe ' */}
+                            Don&apos;t guess your vehicle&apos;s condition.
+                            Book your free safety check today.
                         </p>
                          <Button asChild className="w-full bg-primary hover:bg-primary/hover text-white font-bold">
                             <Link href="/assessment">
@@ -99,29 +113,31 @@ export default function Footer() {
                 </div>
 
 
-                {/* Bottom Bar: Legal, Copyright, and Maintenance Credit (Stack on small screens) */}
+                   {/* Bottom Bar: Legal, Copyright, and Maintenance Credit (Stack on small screens) */}
                 <div className="flex flex-col md:flex-row justify-between items-center text-xs text-neutral-500 pt-4 space-y-4 md:space-y-0"> {/* */}
 
                     {/* Copyright & Maintenance Credit (Combined for visual impact) */}
-                     <div className="flex flex-col md:flex-row items-center space-y-2 md:space-y-0 md:space-x-4 text-center md:text-left"> {/* */}
+                     <div 
+                    className="flex flex-col md:flex-row items-center space-y-2 md:space-y-0 md:space-x-4 text-center md:text-left"> {/* */}
                         <a href="https://www.endpointmedia.co.za" target="_blank" rel="noopener noreferrer" className="font-semibold text-primary hover:text-white transition-colors">
                             Designed, Developed & Maintained by Endpoint Media.
                         </a> {/* */}
                         <span className="hidden md:inline-block">|</span>
                         <span className="mb-2 md:mb-0">
-                            © {currentYear} Alberton Tyre Clinic. All rights reserved.
+                            © {currentYear} Alberton Tyre Clinic.
+                            All rights reserved.
                         </span>
                     </div>
 
                     {/* Legal Links */}
                     <div className="space-x-4">
                          <Link href="/privacy" className="hover:text-primary transition-colors">Privacy Policy</Link>
-                         <span className="hidden md:inline-block">|</span> {/* */}
+                        <span className="hidden md:inline-block">|</span> {/* */}
                         <Link href="/terms" className="hover:text-primary transition-colors">Terms of Service</Link>
                     </div>
                 </div>
 
-            </div>
+           </div>
          </footer> //
     );
 }

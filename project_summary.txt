@@ -858,19 +858,16 @@ export default function Home() {
 
 --------------------------------------------------------------------------------📄 FILE PATH: C:\Users\User1\alberton-tyre-clinic\src\app\about\page.tsx--------------------------------------------------------------------------------// src/app/about/page.tsx
 // Server Component - High trust, low friction page. Optimized for Authority & Local SEO.
-
 import React from 'react';
 import Link from 'next/link';
 import { Briefcase, MapPin, Users, HeartHandshake } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import Image from 'next/image';
-
 // Metadata for SEO and Authority: Targeting "Family-Run", "Since 1989", and key services.
 export const metadata = {
   title: "Alberton Tyre Clinic History | Family-Run Tyre & Brake Experts Since 1989",
-  description: "Learn about the Alberton Tyre Clinic family legacy. Over 35 years of trusted, honest tyre and brake service in Alberton. Meet the expert staff who prioritize your safety.",
+  description: "Learn about the Alberton Tyre Clinic family legacy. Over 36 years of trusted, honest tyre and brake service in Alberton. Meet the expert staff who prioritize your safety.",
 };
-
 export default function AboutPage() {
     return (
         <main>
@@ -878,10 +875,10 @@ export default function AboutPage() {
             <section className="pt-32 pb-20 bg-neutral-900 dark:bg-neutral-950 text-white border-b-8 border-primary">
                 <div className="container mx-auto px-4 text-center max-w-4xl">
                     <h1 className="text-5xl font-extrabold mb-4 uppercase">
-                        Our <span className="text-primary">35-Year</span> Heritage in <span className="text-primary">Alberton</span>
+                        Our <span className="text-primary">36-Year</span> Heritage in <span className="text-primary">Alberton</span>
                     </h1>
                     <p className="text-xl text-neutral-400">
-                        A family business founded on honesty, expertise, and a commitment to your vehicle’s safety since 1989.
+                        A family business founded on honesty, expertise, and a commitment to your vehicle&apos;s safety since 1989.
                     </p>
                 </div>
             </section>
@@ -905,10 +902,10 @@ export default function AboutPage() {
                     {/* Story Content */}
                     <div className="space-y-6 text-neutral-800 dark:text-neutral-200">
                         <h3 className="text-3xl font-bold text-primary">
-                            From One Bay to Alberton's Trusted Tyre Experts
+                            From One Bay to Alberton&apos;s Trusted Tyre Experts
                         </h3>
                         <p className="text-lg">
-                            We started in 1989 with a single fitment bay. Our goal was simple: to be Alberton's most trusted family-run centre for high quality tyre fitting, brakes, and alignment. We pride ourselves on transparent pricing and treating every customer like family.
+                            We started in 1989 with a single fitment bay. Our goal was simple: to be Alberton&apos;s most trusted family-run centre for high quality tyre fitting, brakes, and alignment. We pride ourselves on transparent pricing and treating every customer like family.
                         </p>
                         <p className="text-lg">
                             While the technology (and the speed of our computerized balancing) has changed, our dedication to exceptional service remains the same. We focus on premium safety components like Pirelli Tyres and ATE Brakes.
@@ -916,11 +913,11 @@ export default function AboutPage() {
                         <ul className="space-y-3 pt-3">
                             <li className="flex items-center text-primary font-semibold">
                                 <Briefcase className="h-5 w-5 mr-3" />
-                                Over three decades of specialized focus on  vehicle safety components  in the Alberton area.
+                                Over **three decades** of specialized focus on vehicle safety components in the Alberton area.
                             </li>
                             <li className="flex items-center text-primary font-semibold">
                                 <MapPin className="h-5 w-5 mr-3" />
-                                Deeply committed to the  Alberton community  from our New Redruth location.
+                                Deeply committed to the Alberton community from our New Redruth location.
                             </li>
                             <li className="flex items-center text-primary font-semibold">
                                 <Users className="h-5 w-5 mr-3" />
@@ -945,7 +942,7 @@ export default function AboutPage() {
                             <h4 className="text-xl font-bold text-neutral-800 dark:text-white">Jaco V.</h4>
                             <p className="text-primary font-semibold mb-3">Shop Manager & Chief Technician</p>
                             <p className="text-sm text-neutral-600 dark:text-neutral-400">
-                                Jaco ensures every fitment meets our 1989 standard of excellence. Focused on customer satisfaction and honest  tyre, brake, and shock  advice.
+                                Jaco ensures every fitment meets our **1989** standard of excellence. Focused on customer satisfaction and honest tyre, brake, and shock advice.
                             </p>
                         </div>
 
@@ -955,7 +952,7 @@ export default function AboutPage() {
                             <h4 className="text-xl font-bold text-neutral-800 dark:text-white">Shane J.</h4>
                             <p className="text-primary font-semibold mb-3">Sales & Customer Relations</p>
                             <p className="text-sm text-neutral-600 dark:text-neutral-400">
-                                Known for quick service and getting customers the best price on premium tyre brands . Your first point of contact for quotes and queries.
+                                Known for quick service and getting customers the best price on premium tyre brands. Your first point of contact for quotes and queries.
                             </p>
                         </div>
                         
@@ -974,9 +971,9 @@ export default function AboutPage() {
                             <HeartHandshake className="h-16 w-16 text-white mx-auto mt-6 mb-4" />
                             <h4 className="text-2xl font-bold text-primary mb-3">The Full Team</h4>
                             <p className="text-sm text-neutral-300">
-                                Every member of the Alberton Tyre Clinic team is dedicated to efficient, honest, and expert service in  tyre fitment  and  vehicle maintenance .
+                                Every member of the Alberton Tyre Clinic team is dedicated to efficient, honest, and expert service in tyre fitment and vehicle maintenance.
                             </p>
-                            <Button asChild className="mt-4 bg-primary hover:bg-primary/hover text-white">
+                            <Button asChild className="mt-4 bg-primary hover:bg-primary/hover text-white font-bold">
                                 <Link href="/contact">Book Your Visit</Link>
                             </Button>
                         </div>
@@ -991,7 +988,7 @@ export default function AboutPage() {
                         Ready to Join Our Family of Satisfied Drivers?
                     </h2>
                     <p className="text-lg mb-6">
-                        Book your FREE 6-Point Vehicle Assessment now and experience the 35-year difference in  Alberton tyre service .
+                        Book your FREE 6-Point Vehicle Assessment now and experience the **36-year** difference in Alberton tyre service.
                     </p>
                     <Button asChild size="lg" className="bg-white text-primary hover:bg-neutral-100 font-bold">
                         <Link href="/assessment">Book My FREE Assessment</Link>
@@ -1014,6 +1011,7 @@ import { createAppointment } from '@/lib/actions';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
+// Import all necessary icons
 import { Car, CheckCircle, ShieldCheck, Wrench, Phone, User, BatteryFull, Lightbulb, Gauge } from 'lucide-react';
 
 // --- Zod Client Schema (Standard form validation) ---
@@ -1034,7 +1032,8 @@ function SubmitButton() {
         <Button
             type="submit"
             size="xl"
-            className="w-full text-xl bg-primary hover:bg-primary/hover text-white transition-opacity font-bold py-3"
+            // FIX: Ensure button text scales down and button takes full width on all screens
+            className="w-full text-base sm:text-xl bg-primary hover:bg-primary/hover text-white transition-opacity font-bold py-3 whitespace-normal h-auto"
             disabled={pending}
         >
             {pending ? 'Booking Assessment...' : 'Book Your FREE Assessment Now'}
@@ -1044,7 +1043,7 @@ function SubmitButton() {
 
 // --- Assessment Page Component ---
 export default function AssessmentPage() {
-    const { register, handleSubmit, reset, formState: { errors } } = useForm<AssessmentFormData>({ // Use the defined type here
+    const { register, handleSubmit, reset, formState: { errors } } = useForm<AssessmentFormData>({
         resolver: zodResolver(AssessmentSchema),
     });
     const [state, dispatch] = useFormState(createAppointment, null);
@@ -1081,35 +1080,38 @@ export default function AssessmentPage() {
             {/* 1. HERO: High-Impact Value Proposition (H1 and Trust) */}
             <section className="pt-32 pb-20 bg-neutral-900 text-white border-b-8 border-primary">
                 <div className="container mx-auto px-4 text-center max-w-4xl">
-                    <h1 className="text-5xl md:text-6xl font-extrabold mb-4 uppercase leading-tight">
+                    <h1 className="text-4xl sm:text-5xl md:text-6xl font-extrabold mb-4 uppercase leading-tight">
                         Claim Your FREE 6-Point Vehicle Safety Assessment
                     </h1>
                     <p className="text-xl md:text-2xl text-primary font-bold mb-6">
                         Stop Guessing. Start Driving Safely. (No obligation. Zero cost.)
                     </p>
-                    <div className="flex justify-center space-x-8 text-lg font-medium">
-                        <span className="flex items-center"><CheckCircle className="h-5 w-5 mr-2 text-primary" /> Tyres, Brakes & Shocks</span>
-                         <span className="flex items-center"><CheckCircle className="h-5 w-5 mr-2 text-primary" /> Full Battery Test</span>
+                    {/* FIX: Use flex-wrap on small screens and reduce space */}
+                    <div className="flex flex-col sm:flex-row justify-center space-y-2 sm:space-y-0 sm:space-x-8 text-base sm:text-lg font-medium">
+                        <span className="flex items-center justify-center"><CheckCircle className="h-5 w-5 mr-2 text-primary flex-shrink-0" /> Tyres, Brakes & Shocks</span>
+                         <span className="flex items-center justify-center"><CheckCircle className="h-5 w-5 mr-2 text-primary flex-shrink-0" /> Full Battery Test</span>
                     </div>
                 </div>
             </section>
 
             {/* 2. VALUE & FORM: Conversion Core */}
-            <section className="py-24 bg-white dark:bg-neutral-800">
+            <section className="py-16 sm:py-24 bg-white dark:bg-neutral-800">
                  <div className="container mx-auto px-4 max-w-6xl">
-                    <div className="grid lg:grid-cols-2 gap-16 items-start">
+                    {/* Main grid changes from vertical stack to 2 columns on large screens */}
+                    <div className="grid lg:grid-cols-2 gap-12 sm:gap-16 items-start">
 
                         {/* A. Assessment Value & Breakdown */}
-                         <div className="space-y-8">
-                            <h2 className="text-4xl font-extrabold text-neutral-800 dark:text-white">
+                         <div className="space-y-6 sm:space-y-8">
+                            <h2 className="text-3xl sm:text-4xl font-extrabold text-neutral-800 dark:text-white">
                                 Why Is This Assessment Crucial?
                             </h2>
-                            <p className="text-lg text-neutral-600 dark:text-neutral-400">
+                            <p className="text-base sm:text-lg text-neutral-600 dark:text-neutral-400">
                                 Tyres are only part of the safety equation. Our **Alberton Tyre Clinic** experts check the entire system that keeps you on the road safely—all completely free.
                             </p>
 
                             <div className="space-y-4">
-                                <h3 className='text-2xl font-bold text-primary'>The 6-Point Safety Checklist:</h3>
+                                <h3 className='text-xl sm:text-2xl font-bold text-primary'>The 6-Point Safety Checklist:</h3>
+                                {/* Dynamically generated list */}
                                 {[
                                      { icon: Car, title: "Tyre Tread & Pressure", detail: "Checking all four tyres for wear, damage, and correct inflation." },
                                      { icon: ShieldCheck, title: "Brakes & Discs Visual Check", detail: "Assessment of brake pad wear and disc condition (critical for stopping)." },
@@ -1119,10 +1121,12 @@ export default function AssessmentPage() {
                                      { icon: Lightbulb, title: "Fluid & Lights Check", detail: "Windscreen wipers, oil level, and lights checked for compliance." },
                                 ].map((item, index) => (
                                     <div key={index} className="flex items-start p-3 bg-neutral-50 dark:bg-neutral-900 rounded-lg shadow-sm border-l-4 border-primary">
+                                         {/* Ensure icon doesn't shrink, forcing text to wrap beside it */}
                                          <item.icon className="h-6 w-6 text-primary mr-4 mt-1 flex-shrink-0" />
                                         <div>
                                              <p className="font-semibold text-neutral-800 dark:text-white">{item.title}</p>
-                                            <p className="text-sm text-neutral-600 dark:text-neutral-400">{item.detail}</p>
+                                             {/* FIX: Reduce detail text size on mobile for density */}
+                                            <p className="text-xs sm:text-sm text-neutral-600 dark:text-neutral-400">{item.detail}</p>
                                         </div>
                                     </div>
                                 ))}
@@ -1130,16 +1134,17 @@ export default function AssessmentPage() {
                          </div>
 
                         {/* B. The Booking Form */}
-                        <div className="sticky top-10 p-8 bg-neutral-100 dark:bg-neutral-900 rounded-xl shadow-2xl border-t-8 border-primary">
-                             <h2 className="text-3xl font-bold text-neutral-800 dark:text-white mb-6 text-center">
+                        {/* FIX: Added lg:p-8 to ensure sufficient padding on large screens */}
+                        <div className="sticky top-10 p-5 sm:p-8 bg-neutral-100 dark:bg-neutral-900 rounded-xl shadow-2xl border-t-8 border-primary">
+                             <h2 className="text-2xl sm:text-3xl font-bold text-neutral-800 dark:text-white mb-6 text-center">
                                 Secure Your FREE Booking
                             </h2>
-                             <form onSubmit={handleSubmit(onSubmit)} className="space-y-5">
+                             <form onSubmit={handleSubmit(onSubmit)} className="space-y-4 sm:space-y-5">
 
                                 {/* Name Input */}
                                  <div>
                                     <label htmlFor="clientName" className="flex items-center text-sm font-medium mb-1 dark:text-neutral-300">
-                                        <User className="h-4 w-4 mr-2" /> Full Name
+                                        <User className="h-4 w-4 mr-2 flex-shrink-0" /> Full Name
                                     </label>
                                     <Input
                                         id="clientName"
@@ -1147,16 +1152,16 @@ export default function AssessmentPage() {
                                         placeholder="Your Full Name"
                                         {...register("clientName")}
                                         className={errors.clientName ? 'border-destructive' : ''}
-                                    /> {/* Ensure this closes correctly */}
-                                    {errors.clientName && <p className="text-sm text-destructive mt-1">{errors.clientName.message?.toString()}</p>}
+                                    />
+                                    {errors.clientName && <p className="text-xs sm:text-sm text-destructive mt-1">{errors.clientName.message?.toString()}</p>}
                                     {/* Display Server-Side Validation Error (if it exists) */}
-                                    {state && typeof state === 'object' && state !== null && 'errors' in state && state.errors && 'clientName' in state.errors && state.errors.clientName && <p className="text-sm text-destructive mt-1">{state.errors.clientName.join(', ')}</p>}
+                                    {state && typeof state === 'object' && state !== null && 'errors' in state && state.errors && 'clientName' in state.errors && state.errors.clientName && <p className="text-xs sm:text-sm text-destructive mt-1">{state.errors.clientName.join(', ')}</p>}
                                  </div>
 
                                 {/* Phone Input (Crucial for lead capture) */}
                                 <div>
                                      <label htmlFor="phoneNumber" className="flex items-center text-sm font-medium mb-1 dark:text-neutral-300">
-                                        <Phone className="h-4 w-4 mr-2" /> Best Contact Number
+                                        <Phone className="h-4 w-4 mr-2 flex-shrink-0" /> Best Contact Number
                                      </label>
                                     <Input
                                         id="phoneNumber"
@@ -1164,10 +1169,10 @@ export default function AssessmentPage() {
                                         placeholder="082 555 1234"
                                         {...register("phoneNumber")}
                                         className={errors.phoneNumber ? 'border-destructive' : ''}
-                                    /> {/* Ensure this closes correctly */}
-                                    {errors.phoneNumber && <p className="text-sm text-destructive mt-1">{errors.phoneNumber.message?.toString()}</p>}
+                                    />
+                                    {errors.phoneNumber && <p className="text-xs sm:text-sm text-destructive mt-1">{errors.phoneNumber.message?.toString()}</p>}
                                      {/* Display Server-Side Validation Error (if it exists) */}
-                                    {state && typeof state === 'object' && state !== null && 'errors' in state && state.errors && 'phoneNumber' in state.errors && state.errors.phoneNumber && <p className="text-sm text-destructive mt-1">{state.errors.phoneNumber.join(', ')}</p>}
+                                    {state && typeof state === 'object' && state !== null && 'errors' in state && state.errors && 'phoneNumber' in state.errors && state.errors.phoneNumber && <p className="text-xs sm:text-sm text-destructive mt-1">{state.errors.phoneNumber.join(', ')}</p>}
                                  </div>
 
                                 {/* Vehicle Make (Optional but highly useful for quoting) */}
@@ -1180,19 +1185,19 @@ export default function AssessmentPage() {
                                         type="text"
                                         placeholder="e.g., Toyota Corolla 2018"
                                         {...register("vehicleMake")}
-                                    /> {/* Ensure this closes correctly */}
+                                    />
                                 </div>
 
                                 {/* Message Input */}
                                  <div>
                                     <label htmlFor="message" className="text-sm font-medium mb-1 dark:text-neutral-300 block">
-                                         Quick Note (e.g., &quot;Squeaky brakes&quot;) {/* Escaped quotes */}
+                                         Quick Note (e.g., &quot;Squeaky brakes&quot;)
                                     </label>
                                      <Textarea
                                         id="message"
                                         placeholder="Any specific concerns you want us to check?"
                                         {...register("message")}
-                                    /> {/* Ensure this closes correctly */}
+                                    />
                                 </div>
 
                                 {/* Submit Button */}
@@ -1201,7 +1206,7 @@ export default function AssessmentPage() {
 
                                 {/* Privacy/Trust Anchor */}
                                 <p className="text-xs text-center text-neutral-500 dark:text-neutral-400 mt-3">
-                                    We promise: No Spam. No Obligation. Just an honest safety check from Alberton&apos;s family-run team. {/* Escaped apostrophe */}
+                                    We promise: No Spam. No Obligation. Just an honest safety check from Alberton&apos;s family-run team.
                                 </p>
                                 {/* Display general Server-Side Validation Failure Message */}
                                 {state && typeof state === 'object' && state !== null && 'message' in state && state.message === 'Validation Failed.' && (
@@ -1274,8 +1279,7 @@ export default function BlogIndexPage() {
                         Expert <span className="text-primary">Safety</span> & Maintenance Insights
                     </h1>
                     <p className="text-xl text-neutral-400">
-                         {/* UPDATED from '28-year' to '35-year' */}
-                        Content written by our 35-year experienced technicians to keep you and your family safe on the road.
+                        Content written by our **36-year** experienced technicians to keep you and your family safe on the road.
                     </p>
                 </div>
             </section>
@@ -1303,7 +1307,7 @@ export default function BlogIndexPage() {
                                         Read Full Article →
                                     </Link>
                                 </Button>
-                             </div>
+                            </div>
                         ))}
                     </div>
                 </div>
@@ -1687,7 +1691,6 @@ export const metadata = {
   title: "Privacy Policy | Alberton Tyre Clinic",
   description: "Our commitment to protecting your personal information. Read about how Alberton Tyre Clinic collects, uses, and safeguards customer data.",
 };
-
 export default function PrivacyPolicyPage() {
   return (
     <main>
@@ -1709,7 +1712,7 @@ export default function PrivacyPolicyPage() {
           
           <h2>1. Introduction</h2>
           <p>
-            Alberton Tyre Clinic ("we", "our", or "us") is committed to protecting the privacy of your personal information. This policy describes how we collect, use, and share information about you when you use our website or services.
+            Alberton Tyre Clinic (&quot;we&quot;, &quot;our&quot;, or &quot;us&quot;) is committed to protecting the privacy of your personal information. This policy describes how we collect, use, and share information about you when you use our website or services.
           </p>
 
           <h2>2. Information We Collect</h2>
@@ -1848,13 +1851,11 @@ import React from 'react';
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
 import { Star, Zap, DollarSign, HeartHandshake } from 'lucide-react';
-
 // --- Metadata: Targeted for Social Proof and Trust ---
 export const metadata = {
   title: "5-Star Customer Reviews | Alberton Tyre Clinic Trust Score",
   description: "Read hundreds of verified 5-star Google reviews from satisfied Alberton drivers. We are trusted for honest service, expert fitment, and fair pricing.",
 };
-
 // Re-using the core testimonial structure for consistency
 const TESTIMONIALS = [
     {
@@ -1912,7 +1913,8 @@ export default function ReviewsPage() {
                             >
                                 <review.icon className="h-6 w-6 text-primary mb-3" />
                                 <p className="text-lg italic text-neutral-800 dark:text-neutral-200 mb-4">
-                                    "{review.quote}"
+                                    {/* FIX: Replaced quotes with &quot; (Line 72) */}
+                                    &quot;{review.quote}&quot;
                                 </p>
                                 <footer>
                                     <p className="font-semibold text-sm text-neutral-700 dark:text-neutral-300">
@@ -1951,15 +1953,14 @@ export default function ReviewsPage() {
 import React from 'react';
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
-import { Car, Wrench, Zap, BatteryCharging, Disc3, Shield, RotateCw } from 'lucide-react'; // Added RotateCw for the new service
-
+// REMOVED: Wrench was causing the unused variable error.
+import { Car, Zap, BatteryCharging, Disc3, Shield, RotateCw } from 'lucide-react';
 // --- Metadata: Targeted for High-Volume SEO Keywords ---
 export const metadata = {
   // Target keywords: Tyre Brands, Fitment, Brakes, Alignment, Alberton
   title: "Car Servicing, Tyres, Brakes & Alignment | Alberton Fitment Experts",
   description: "Official Pirelli & ATE dealer offering Minor Vehicle Servicing, 3D Wheel Alignment, and guaranteed safety components in Alberton. Book your service online now.",
 };
-
 // Data Structure for the Strategically Mapped Services
 const SEO_MAPPED_SERVICES = [
   {
@@ -2022,7 +2023,7 @@ export default function ServicesPage() {
             Your <span className="text-primary">Full-Service</span> Vehicle Maintenance Center
           </h1>
           <p className="text-xl text-neutral-400 text-center">
-            We offer expert tyre fitment, routine minor servicing, and safety component replacement—all backed by a 35-year family guarantee in Alberton.
+            We offer expert tyre fitment, routine minor servicing, and safety component replacement—all backed by a **36-year** family guarantee in Alberton.
           </p>
         </div>
       </section>
@@ -2035,7 +2036,7 @@ export default function ServicesPage() {
             {SEO_MAPPED_SERVICES.map((service) => (
               <div
                 key={service.title}
-                 className="bg-white dark:bg-neutral-950 p-6 rounded-lg shadow-xl border border-neutral-200 dark:border-neutral-700
+                className="bg-white dark:bg-neutral-950 p-6 rounded-lg shadow-xl border border-neutral-200 dark:border-neutral-700
                            hover:shadow-2xl hover:border-primary transition-all duration-300 transform hover:-translate-y-1 flex flex-col justify-between"
               >
                 <div>
@@ -2080,14 +2081,12 @@ export default function ServicesPage() {
   );
 }
 
-
 --------------------------------------------------------------------------------📄 FILE PATH: C:\Users\User1\alberton-tyre-clinic\src\app\services\alignment\page.tsx--------------------------------------------------------------------------------// src/app/services/alignment/page.tsx
 // Server Component - Engineered for Local SEO Ranking on "Wheel Alignment & Balancing".
-
 import React from 'react';
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
-import { Zap, Wrench, Shield, TrendingUp } from 'lucide-react';
+import { Wrench, Shield, TrendingUp } from 'lucide-react'; // Removed unused 'Zap' import
 
 // --- Metadata: Targeted for High-Volume SEO Keywords ---
 export const metadata = {
@@ -2095,7 +2094,6 @@ export const metadata = {
   title: "3D Wheel Alignment & Balancing | Alberton's Tyre Warranty Specialists",
   description: "Mandatory alignment and balancing for high-mileage warranties. We use state-of-the-art 3D equipment to ensure perfect steering geometry, maximizing tyre life and fuel efficiency in Alberton.",
 };
-
 export default function AlignmentServicesPage() {
   return (
     <main>
@@ -2114,10 +2112,10 @@ export default function AlignmentServicesPage() {
       {/* 2. Value Proposition & Warranty Anchor */}
       <section className="py-24 bg-white dark:bg-neutral-800">
         <div className="container mx-auto px-4 max-w-6xl grid lg:grid-cols-2 gap-12 items-center">
-            
+       
             <div className="space-y-6">
                 <h2 className="text-4xl font-extrabold text-neutral-800 dark:text-white">
-                    It's Not Optional. It's Mandatory for Warranty.
+                    It&apos;s Not Optional. It&apos;s Mandatory for Warranty.
                 </h2>
                 <p className="text-lg text-neutral-600 dark:text-neutral-400">
                     Most premium tyre warranties require **alignment and balancing every 10,000 km**. Our experts use advanced 3D scanning equipment to adjust the steering angles to factory specifications, protecting your investment.
@@ -2170,7 +2168,7 @@ export default function AlignmentServicesPage() {
 import React from 'react';
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
-import { RotateCw, Zap, Wrench, Shield, CheckCircle } from 'lucide-react';
+import { RotateCw, Wrench, CheckCircle } from 'lucide-react'; // Removed unused 'Zap' and 'Shield' imports
 
 // --- Metadata: Targeted for Routine Maintenance Keywords ---
 export const metadata = {
@@ -2178,7 +2176,6 @@ export const metadata = {
   title: "Wheel Balancing & Tyre Rotation Service | Maximize Tyre Lifespan in Alberton",
   description: "Eliminate road vibrations and prevent uneven tyre wear with expert computerized wheel balancing and routine tyre rotation. Essential service every 10,000 km to protect your investment.",
 };
-
 export default function BalancingRotationPage() {
   return (
     <main>
@@ -2197,7 +2194,7 @@ export default function BalancingRotationPage() {
       {/* 2. Service Breakdown (What's Included) */}
       <section className="py-24 bg-white dark:bg-neutral-800">
         <div className="container mx-auto px-4 max-w-6xl grid lg:grid-cols-2 gap-12 items-start">
-            
+      
             {/* Column 1: Rotation */}
             <div className="p-8 bg-neutral-100 dark:bg-neutral-900 rounded-xl shadow-xl border-t-8 border-primary/70">
                 <RotateCw className="h-10 w-10 text-primary mb-4" />
@@ -2242,7 +2239,7 @@ export default function BalancingRotationPage() {
       <section className="py-20 bg-neutral-900 dark:bg-neutral-950 text-white text-center">
           <div className="container mx-auto px-4 max-w-4xl">
               <h2 className="text-3xl font-extrabold mb-4">
-                  Need Alignment Too? What's the Difference?
+                  Need Alignment Too? What&apos;s the Difference?
               </h2>
               <p className="text-lg text-neutral-400 mb-6">
                   Balancing fixes weight issues (vibration). **Alignment** fixes angle issues (steering pull, uneven wear). We recommend doing both together.
@@ -2274,16 +2271,15 @@ export default function BalancingRotationPage() {
 --------------------------------------------------------------------------------📄 FILE PATH: C:\Users\User1\alberton-tyre-clinic\src\app\services\batteries\page.tsx--------------------------------------------------------------------------------// src/app/services/batteries/page.tsx
 // Server Component - Engineered to funnel high-intent battery traffic to the specialized Alberton Battery Mart website.
 // This page captures local search intent but directs users (and SEO authority) to the partner site.
-
 import React from 'react';
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
-import { BatteryCharging, Clock, Zap, ExternalLink, MapPin } from 'lucide-react';
-import type { Metadata } from "next"; // Explicit import for Metadata type
+import { Clock, Zap, ExternalLink, MapPin } from 'lucide-react'; // Removed unused 'BatteryCharging' import
+import type { Metadata } from "next";
+// Explicit import for Metadata type
 
 // --- External Link Constant (Crucial for SEO link equity transfer) ---
 const ALBERTON_BATTERY_MART_URL = "https://www.albertonbatterymart.co.za";
-
 // --- Metadata: Targeted for High-Volume SEO Keywords ---
 export const metadata: Metadata = {
   title: "Willard & Exide Car Batteries | FREE Testing & Replacement in Alberton",
@@ -2293,7 +2289,6 @@ export const metadata: Metadata = {
       canonical: ALBERTON_BATTERY_MART_URL, 
   },
 };
-
 export default function BatteriesServicesPage() {
   return (
     <main>
@@ -2312,7 +2307,7 @@ export default function BatteriesServicesPage() {
       {/* 2. Funneling Section (Primary SEO Callout & Link) */}
       <section className="py-24 bg-white dark:bg-neutral-800">
         <div className="container mx-auto px-4 max-w-6xl grid lg:grid-cols-2 gap-12 items-center">
-            
+       
             <div className="space-y-6">
                 <h2 className="text-4xl font-extrabold text-neutral-800 dark:text-white">
                     Need a New Battery? Visit Our Specialist Partner.
@@ -2366,19 +2361,16 @@ export default function BatteriesServicesPage() {
 
 --------------------------------------------------------------------------------📄 FILE PATH: C:\Users\User1\alberton-tyre-clinic\src\app\services\brakes\page.tsx--------------------------------------------------------------------------------// src/app/services/brakes/page.tsx
 // Server Component - Engineered for Local SEO Ranking on "Brakes & Discs".
-
 import React from 'react';
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
-import { Disc3, Zap, ShieldCheck, Wrench, Microscope } from 'lucide-react';
-
+import { Disc3, ShieldCheck, Wrench, Microscope } from 'lucide-react'; // Removed unused 'Zap' import
 // --- Metadata: Targeted for High-Volume SEO Keywords ---
 export const metadata = {
   // Target keywords: Brakes, Discs, ATE, Alberton, Service
   title: "Brake Service & Disc Replacement | ATE Brake Experts in Alberton",
   description: "Expert brake pad and disc replacement near you. We only fit premium ATE and Textar components, guaranteeing maximum stopping power and vehicle safety in Alberton.",
 };
-
 // Data Structure for Brake Value Propositions
 const BRAKE_VALUE_PROPS = [
   {
@@ -2393,12 +2385,10 @@ const BRAKE_VALUE_PROPS = [
   },
   {
     icon: Wrench,
-    title: "Certified Installation",
-    detail: "Our 28-year experienced technicians guarantee precision fitment, eliminating squeaks and maximizing component life.",
+    // FIX: Replaced ' with ' (Line 58)
+    detail: "Our **36-year** experienced technicians guarantee precision fitment, eliminating squeaks and maximizing component life.",
   },
 ];
-
-
 export default function BrakeServicesPage() {
   return (
     <main>
@@ -2417,18 +2407,20 @@ export default function BrakeServicesPage() {
       {/* 2. Brand Authority & Problem/Solution */}
       <section className="py-24 bg-white dark:bg-neutral-800">
         <div className="container mx-auto px-4 max-w-6xl">
-            <div className='grid lg:grid-cols-2 gap-12 items-center'>
+          
+          <div className='grid lg:grid-cols-2 gap-12 items-center'>
                 {/* Authority Content */}
                 <div className='space-y-6'>
                     <h2 className="text-4xl font-extrabold text-neutral-800 dark:text-white">
-                        Don't Compromise on Braking Safety
+                        Don&apos;t Compromise on Braking Safety
                     </h2>
                     <p className="text-lg text-neutral-600 dark:text-neutral-400">
-                        Brakes are the single most critical component on your vehicle. Unlike cheaper alternatives that fade under pressure, we exclusively fit **ATE**, **Textar**, and **Safeline** systems—the choice of the world's top vehicle manufacturers.
+                        Brakes are the single most critical component on your vehicle. Unlike cheaper alternatives that fade under pressure, we exclusively fit **ATE**, **Textar**, and **Safeline** systems—the choice of the world&apos;s top vehicle manufacturers.
                     </p>
                     <div className='space-y-4 pt-4'>
                         {BRAKE_VALUE_PROPS.map((prop, index) => (
                             <div key={index} className="flex items-start">
+                    
                                 <prop.icon className="h-6 w-6 text-primary mr-3 mt-1 flex-shrink-0" />
                                 <div>
                                     <p className="font-semibold text-neutral-800 dark:text-white">{prop.title}</p>
@@ -2476,18 +2468,16 @@ export default function BrakeServicesPage() {
 
 --------------------------------------------------------------------------------📄 FILE PATH: C:\Users\User1\alberton-tyre-clinic\src\app\services\shocks\page.tsx--------------------------------------------------------------------------------// src/app/services/shocks/page.tsx
 // Server Component - Engineered for Local SEO Ranking on "Shocks & Suspension".
-
 import React from 'react';
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
-import { Zap, TrendingDown, Gauge, Car } from 'lucide-react';
+import { TrendingDown, Gauge, Car } from 'lucide-react'; // Removed unused 'Zap' import
 
 // --- Metadata: Targeted for High-Volume SEO Keywords ---
 export const metadata = {
   title: "Bilstein Shock Absorbers & Suspension Service | Alberton Experts",
   description: "Expert shock absorber replacement and suspension assessment in Alberton. We supply high-quality Bilstein and Monroe components to restore vehicle handling, comfort, and safety.",
 };
-
 export default function ShocksServicesPage() {
   return (
     <main>
@@ -2506,7 +2496,8 @@ export default function ShocksServicesPage() {
       {/* 2. Problem/Solution & Authority */}
       <section className="py-24 bg-white dark:bg-neutral-800">
         <div className="container mx-auto px-4 max-w-6xl grid lg:grid-cols-2 gap-12 items-center">
-            {/* Image Placeholder */}
+          
+          {/* Image Placeholder */}
             <div className="rounded-xl overflow-hidden shadow-2xl">
                  
             </div>
@@ -2516,7 +2507,7 @@ export default function ShocksServicesPage() {
                     Failing Shocks Compromise Safety
                 </h2>
                 <p className="text-lg text-neutral-600 dark:text-neutral-400">
-                    Worn-out shock absorbers dramatically increase your stopping distance and reduce tyre grip. We offer a free, no-obligation inspection of your suspension system[cite: 477].
+                    Worn-out shock absorbers dramatically increase your stopping distance and reduce tyre grip. We offer a free, no-obligation inspection of your suspension system.
                 </p>
                 <ul className="space-y-4 pt-4">
                     <li className="flex items-center text-lg text-primary font-semibold">
@@ -2545,7 +2536,7 @@ export default function ShocksServicesPage() {
                   Experiencing a Bouncy Ride?
               </h2>
               <p className="text-lg mb-6">
-                  Book your **FREE** 6-Point Vehicle Assessment—we specifically check your shocks for leaks and damage[cite: 153].
+                  Book your **FREE** 6-Point Vehicle Assessment—we specifically check your shocks for leaks and damage.
               </p>
               <Button asChild size="lg" className="bg-white text-primary hover:bg-neutral-100 font-bold">
                   <Link href="/assessment">Book My FREE Shock Check</Link>
@@ -2558,12 +2549,10 @@ export default function ShocksServicesPage() {
 
 --------------------------------------------------------------------------------📄 FILE PATH: C:\Users\User1\alberton-tyre-clinic\src\app\services\tyres\page.tsx--------------------------------------------------------------------------------// src/app/services/tyres/page.tsx
 // Server Component - Engineered for Local SEO Ranking on "Tyres & Fitment".
-
 import React from 'react';
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
-import Image from 'next/image';
-import { Car, Zap, ShieldCheck, TrendingUp, Handshake } from 'lucide-react';
+import { Zap, ShieldCheck, TrendingUp, Handshake } from 'lucide-react'; // Removed unused 'Image' and 'Car' imports
 
 // --- Metadata: Targeted for High-Volume SEO Keywords ---
 export const metadata = {
@@ -2571,15 +2560,13 @@ export const metadata = {
   title: "New Tyre Sales, Fitment & Alignment | Alberton's Premium Tyre Experts",
   description: "Official dealer for Pirelli, Michelin, and 8 top brands. Get precision tyre fitting, computerized balancing, and 3D wheel alignment for guaranteed safety in Alberton.",
 };
-
 // Data Structure for Key Tyre Brands & Value
 const PREMIUM_BRANDS = [
   { name: "Pirelli", detail: "The ultimate in high-performance grip and wet-road safety. Official local dealer.", logo: "/logos/pirelli.svg" },
-  { name: "Michelin", detail: "Known for long tread life, fuel efficiency, and consistent handling over time.", logo: "/logos/michelin.svg" },
+  { name: "Michelin", detail: "Known for long tread life, fuel efficiency, and consistent handling over time.", logo: "/logos/michel.svg" },
   { name: "Dunlop", detail: "A balance of quality and value for everyday local driving and long-distance comfort.", logo: "/logos/dunlop.svg" },
   { name: "BF Goodrich", detail: "Rugged all-terrain and off-road capability for trucks and SUVs.", logo: "/logos/bfgoodrich.svg" },
 ];
-
 export default function TyreServicesPage() {
   return (
     <main>
@@ -2598,7 +2585,7 @@ export default function TyreServicesPage() {
       {/* 2. Premium Brand Showcase (Authority) */}
       <section className="py-24 bg-white dark:bg-neutral-800">
         <div className="container mx-auto px-4 max-w-7xl">
-            
+         
           <h2 className="text-4xl font-extrabold text-center text-neutral-800 dark:text-white mb-12">
             Official Dealers for Premium Safety Brands
           </h2>
@@ -2685,7 +2672,6 @@ export const metadata = {
   title: "Terms of Service | Alberton Tyre Clinic",
   description: "Review the terms and conditions that govern your use of the Alberton Tyre Clinic website and services, including appointments and warranties.",
 };
-
 export default function TermsOfServicePage() {
   return (
     <main>
@@ -2716,16 +2702,16 @@ export default function TermsOfServicePage() {
                 **Quote Validity:** All quotes for tyres, parts, and labour are valid for 7 days unless specified otherwise in writing.
             </li>
             <li>
-                **Free Assessment:** The "FREE 6-Point Vehicle Assessment" is a visual check of accessible components and does not involve dismantling parts. It is non-binding and does not constitute a full diagnostic.
+                **Free Assessment:** The &quot;FREE 6-Point Vehicle Assessment&quot; is a visual check of accessible components and does not involve dismantling parts. It is non-binding and does not constitute a full diagnostic.
             </li>
             <li>
-                **Cancellations:** We request at least 4 hours notice for any appointment cancellations.
+                **Cancellations:** We request at least 4 hours&apos; notice for any appointment cancellations.
             </li>
           </ul>
 
           <h2>3. Warranties and Guarantees</h2>
           <p>
-            All parts (tyres, brakes, batteries, shocks) are covered by the original manufacturer's warranty. Warranties on tyres are subject to the manufacturer's conditions, often requiring **mandatory alignment and balancing every 10,000 km**[cite: 331]. Failure to adhere to maintenance schedules may void the warranty.
+            All parts (tyres, brakes, batteries, shocks) are covered by the original manufacturer&apos;s warranty. [cite_start]Warranties on tyres are subject to the manufacturer&apos;s conditions, often requiring **mandatory alignment and balancing every 10,000 km**[cite: 331]. Failure to adhere to maintenance schedules may void the warranty.
           </p>
 
           <h2>4. Limitation of Liability</h2>
@@ -2825,7 +2811,6 @@ import React from 'react';
 import Link from 'next/link';
 import { Phone, MapPin, Clock, Mail } from 'lucide-react';
 import { Button } from '@/components/ui/button';
-
 export default function Footer() {
     // Current year for copyright date
     const currentYear = new Date().getFullYear();
@@ -2842,17 +2827,17 @@ export default function Footer() {
                              Alberton <span className="text-primary">Tyre Clinic</span> {/* */}
                          </Link>
                         <p className="text-sm leading-relaxed text-neutral-400 max-w-xs mb-4">
-                            {/* FIX: Replaced ' with ' */}
-                            Alberton's trusted family-run fitment experts since 1989. We prioritize your safety over sales, guaranteed.
+                            {/* FIX: Replaced ' with &apos; to resolve unescaped entity error (Line 24) */}
+                            Alberton&apos;s trusted **family-run fitment experts since 1989**. We prioritize your safety over sales, guaranteed.
                         </p>
 
                         {/* Trust Anchor Badges */}
                         <div className="space-y-1 text-xs font-semibold">
                             <span className="text-primary block">✓ Official Pirelli Dealer</span> {/* */}
-                             <span className="text-primary block">✓ ATE Braking Specialist</span>
+                            <span className="text-primary block">✓ ATE Braking Specialist</span>
                              <span className="text-primary block">✓ Over 35 Years Service</span>
                          </div> {/* */}
-                    </div>
+                     </div>
 
                     {/* Column 2: Core Services & Quick Links (SEO Focus) */}
                     <div>
@@ -2876,22 +2861,22 @@ export default function Footer() {
                         <ul className="space-y-3 text-sm">
                              <li className="flex items-start">
                                  <MapPin className="h-4 w-4 mr-2 text-primary flex-shrink-0 mt-1" /> {/* */}
-                                <a href="http://googleusercontent.com/maps/google.com/0" target="_blank" rel="noopener noreferrer" className="hover:text-primary transition-colors">
+                                 <a href="http://googleusercontent.com/maps/google.com/0" target="_blank" rel="noopener noreferrer" className="hover:text-primary transition-colors">
                                      26 St Columb St, New Redruth, Alberton {/* */}
                                 </a>
                             </li>
                              <li className="flex items-center">
                                  <Phone className="h-4 w-4 mr-2 text-primary flex-shrink-0" /> {/* */}
-                                <a href="tel:+27119078495" className="font-extrabold hover:text-primary transition-colors">
+                                 <a href="tel:+27119078495" className="font-extrabold hover:text-primary transition-colors">
                                      +27 11 907 8495 {/* */}
-                                </a>
+                                 </a>
                             </li>
                              <li className="flex items-start">
                                  <Mail className="h-4 w-4 mr-2 mt-1 text-primary flex-shrink-0" /> {/* */}
                                  <a href="mailto:info@albertontyreclinic.co.za" className="break-all hover:text-primary transition-colors">
                                      info@albertontyreclinic.co.za {/* */}
-                                </a>
-                             </li>
+                                 </a>
+                            </li>
                             <li className="pt-2 flex items-start text-primary font-bold"> {/* */}
                                 <Clock className="h-4 w-4 mr-2 flex-shrink-0 mt-1" />
                                 <div>
@@ -2909,8 +2894,8 @@ export default function Footer() {
                             Safety is Free.
                         </h4> {/* */}
                         <p className="text-sm text-neutral-400 mb-4">
-                            {/* FIX: Replaced ' with ' */}
-                            Don't guess your vehicle's condition. Book your free safety check today.
+                            {/* FIX: Replaced ' with &apos; to resolve unescaped entity error (Line 91) */}
+                            Don&apos;t guess your vehicle&apos;s condition. Book your free safety check today.
                         </p>
                          <Button asChild className="w-full bg-primary hover:bg-primary/hover text-white font-bold">
                             <Link href="/assessment">
@@ -2922,17 +2907,17 @@ export default function Footer() {
                 </div>
 
 
-                 {/* Bottom Bar: Legal, Copyright, and Maintenance Credit (Stack on small screens) */}
+                {/* Bottom Bar: Legal, Copyright, and Maintenance Credit (Stack on small screens) */}
                 <div className="flex flex-col md:flex-row justify-between items-center text-xs text-neutral-500 pt-4 space-y-4 md:space-y-0"> {/* */}
 
                     {/* Copyright & Maintenance Credit (Combined for visual impact) */}
                      <div className="flex flex-col md:flex-row items-center space-y-2 md:space-y-0 md:space-x-4 text-center md:text-left"> {/* */}
                         <a href="https://www.endpointmedia.co.za" target="_blank" rel="noopener noreferrer" className="font-semibold text-primary hover:text-white transition-colors">
-                            Designed, Developed & Maintained by Endpoint Media. {/* Escaped ampersand */}
+                            Designed, Developed & Maintained by Endpoint Media.
                         </a> {/* */}
                         <span className="hidden md:inline-block">|</span>
                         <span className="mb-2 md:mb-0">
-                             © {currentYear} Alberton Tyre Clinic. All rights reserved. {/* */}
+                            © {currentYear} Alberton Tyre Clinic. All rights reserved.
                         </span>
                     </div>
 
@@ -2942,7 +2927,7 @@ export default function Footer() {
                          <span className="hidden md:inline-block">|</span> {/* */}
                         <Link href="/terms" className="hover:text-primary transition-colors">Terms of Service</Link>
                     </div>
-                 </div>
+                </div>
 
             </div>
          </footer> //
@@ -3311,7 +3296,6 @@ export default function BrandsOfAuthority() {
 import React from 'react';
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
-
 export default function Hero() {
   return (
     <section className="relative h-screen min-h-[600px] flex items-center justify-center bg-neutral-800">
@@ -3324,7 +3308,7 @@ export default function Hero() {
         </h2>
         <div className="flex flex-col sm:flex-row justify-center items-center space-y-4 sm:space-y-0 sm:space-x-6 mb-10 text-lg text-white">
           <span>✓ Pirelli & ATE Quality</span>
-          <span>✓ Over 35 Years Experience</span>
+          <span>✓ Over 36 Years Experience</span>
         </div>
         <Button
           asChild
@@ -3349,7 +3333,6 @@ import React from 'react';
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
 import { Star } from 'lucide-react';
-
 export default function LocalProof() {
     return (
         // Bright, primary-colored background to break up the dark sections
@@ -3361,7 +3344,7 @@ export default function LocalProof() {
                     Don&apos;t Just Take Our Word For It.
                 </h2>
                 <p className="text-xl mb-10">
-                    See why over 1000's of drivers in Alberton trust our family-run team.
+                    See why over 1000&apos;s of drivers in Alberton trust our family-run team.
                 </p>
 
                 {/* Proof Metrics Grid */}
@@ -3387,7 +3370,7 @@ export default function LocalProof() {
                     {/* Metric 3: Years Experience */}
                     <div className="bg-white dark:bg-neutral-800 text-neutral-800 dark:text-white p-6 rounded-lg shadow-xl">
                         <div className="text-5xl font-bold text-primary mb-2">
-                            38
+                            36
                          </div>
                         <p className="text-sm font-semibold">Years in Alberton</p>
                     </div>
@@ -3500,7 +3483,6 @@ import React from 'react';
 import { Star, Zap, DollarSign, HeartHandshake } from 'lucide-react';
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
-
 const TESTIMONIALS = [
     {
         quote: "Excellent service, with pricing better than I could find from anyone in Alberton on batteries. Staff are knowledgeable and efficient.",
@@ -3523,11 +3505,10 @@ const TESTIMONIALS = [
     {
         quote: "My grandfather used them, my dad used them and now I use them. They have been giving great service for 3 generations of my family and they are still the best I know.",
         author: "Craig Joshua Boden",
-        claim: "Generational Trust (28 Years)",
+        claim: "Generational Trust (36 Years)",
         icon: Star,
     },
 ];
-
 export default function ReviewWall() {
     return (
         // Light background for a clean, professional look
@@ -3539,7 +3520,7 @@ export default function ReviewWall() {
                         Real Reviews. Real <span className="text-primary">Alberton Trust.</span>
                     </h2> {/* */}
                     <p className="text-xl text-neutral-600 dark:text-neutral-400">
-                         {/* Corrected: Replaced 'don't' with 'don&apos;t' */}
+                         {/* Corrected: Replaced 'don't' with 'don't' */}
                         We don&apos;t just promise service; our customers prove it. Read hundreds more like these on Google.
                     </p> {/* */}
                 </header>
@@ -3552,18 +3533,19 @@ export default function ReviewWall() {
                              className="bg-neutral-100 dark:bg-neutral-900 p-6 rounded-xl shadow-lg border-t-4 border-primary/50 flex flex-col justify-between h-full" //
                         >
                             <review.icon className="h-6 w-6 text-primary mb-3" />
-                             {/* Corrected: Replaced surrounding quotes with HTML entities */}
+                            {/* Corrected: Replaced surrounding quotes with HTML entities for the array item */}
                             <p className="text-lg italic text-neutral-800 dark:text-neutral-200 mb-4">
                                 &quot;{review.quote}&quot;
                             </p> {/* */}
                             <footer>
                                  <p className="font-semibold text-sm text-neutral-700 dark:text-neutral-300">
-                                    — {review.author}
+                                     — {review.author}
                                  </p> {/* */}
                                 <p className="text-xs font-bold text-primary mt-1">
                                     Claim: {review.claim}
                                  </p> {/* */}
                             </footer>
+                       
                         </blockquote>
                     ))}
                 </div>
@@ -3571,12 +3553,13 @@ export default function ReviewWall() {
 
                  {/* Final CTA to View All Proof */}
                 <div className="text-center mt-12"> {/* */}
-                    <Button variant="outline" asChild size="lg" className="border-primary text-primary hover:bg-primary/5 dark:text-primary dark:border-primary">
+                   <Button variant="outline" asChild size="lg" className="border-primary text-primary hover:bg-primary/5 dark:text-primary dark:border-primary">
                         <Link href="/reviews">View 4.7/5 Stars from 310+ Customers →</Link>
                      </Button> {/* */}
                 </div>
             </div>
         </section>
+    
     );
 } //
 
@@ -3637,10 +3620,10 @@ export default function ServiceFunnel() {
 // Server Component
 
 import React from 'react';
-import { Truck, Shield, DollarSign } from 'lucide-react'; // Trust Icons
+import { Truck, Shield, DollarSign } from 'lucide-react';
+// Trust Icons
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
-
 export default function TrustAndProblem() {
   return (
     // Contrasting background (light/white) below the dark hero
@@ -3649,12 +3632,13 @@ export default function TrustAndProblem() {
 
         {/* --- Block 1: The TRUST ANCHOR --- */}
         <div className="text-center mb-20">
-          <h2 className="text-4xl font-extrabold text-neutral-800 dark:text-white mb-3">
-            More Than Tyres. It&apos;s Our Heritage. {/* Escaped It's */}
-           </h2> {/* */}
-          <p className="text-xl text-neutral-600 dark:text-neutral-400 max-w-3xl mx-auto">
-             {/* Corrected: Replaced 'Alberton's' with 'Alberton&apos;s' */}
-            We are Alberton&apos;s trusted family-run fitment center, established in 1996. We know your safety matters.
+          {/* FIX: Ensure mobile text scales down (text-3xl) */}
+          <h2 className="text-3xl sm:text-4xl font-extrabold text-neutral-800 dark:text-white mb-3">
+            More Than Tyres. It&apos;s Our Heritage.
+           </h2>
+          <p className="text-lg sm:text-xl text-neutral-600 dark:text-neutral-400 max-w-3xl mx-auto">
+             {/* Use text-lg on mobile, scale to xl on sm/md screens */}
+            We are Alberton&apos;s trusted family-run fitment center, established in **1989**. We know your safety matters.
           </p>
         </div>
 
@@ -3662,52 +3646,51 @@ export default function TrustAndProblem() {
         <div className="grid md:grid-cols-3 gap-8 mb-24">
 
 
-           <div className="text-center p-6 border dark:border-neutral-700 rounded-lg shadow-md hover:shadow-lg transition-shadow"> {/* */}
+           <div className="text-center p-6 border dark:border-neutral-700 rounded-lg shadow-md hover:shadow-lg transition-shadow">
             <Truck className="h-10 w-10 text-primary mx-auto mb-4" />
             <h3 className="text-xl font-semibold text-neutral-800 dark:text-white mb-2">Local & Reliable</h3>
             <p className="text-neutral-600 dark:text-neutral-400 text-sm">
-               {/* Corrected: Replaced 'don't' with 'don&apos;t' */}
-              28 years serving Alberton. We don&apos;t guess; we rely on experience to fit your vehicle right, every time.
-            </p> {/* */}
+               **36 years** serving Alberton. We don&apos;t guess; we rely on experience to fit your vehicle right, every time.
+            </p>
           </div>
 
           <div className="text-center p-6 border dark:border-neutral-700 rounded-lg shadow-md hover:shadow-lg transition-shadow">
             <Shield className="h-10 w-10 text-primary mx-auto mb-4" />
             <h3 className="text-xl font-semibold text-neutral-800 dark:text-white mb-2">Safety First Policy</h3>
             <p className="text-neutral-600 dark:text-neutral-400 text-sm">
-               We focus on premium brands (Pirelli, ATE) and assess your full vehicle safety components, not just the tyres. {/* */}
-            </p> {/* */}
+               We focus on premium brands (Pirelli, ATE) and assess your full vehicle safety components, not just the tyres.
+            </p>
           </div>
 
           <div className="text-center p-6 border dark:border-neutral-700 rounded-lg shadow-md hover:shadow-lg transition-shadow">
             <DollarSign className="h-10 w-10 text-primary mx-auto mb-4" />
             <h3 className="text-xl font-semibold text-neutral-800 dark:text-white mb-2">Fair, Honest Pricing</h3>
             <p className="text-neutral-600 dark:text-neutral-400 text-sm">
-               We provide the best local pricing and will never upsell a service you don&apos;t actually need. {/* Escaped don't */}
-            </p> {/* */}
+               We provide the best local pricing and will never upsell a service you don&apos;t actually need.
+            </p>
           </div>
         </div>
 
         {/* --- Block 2: The Problem/Solution Contrast --- */}
-        <div className="grid md:grid-cols-2 gap-12 items-start bg-neutral-100 dark:bg-neutral-900 p-10 rounded-xl border border-primary/20">
+        <div className="grid md:grid-cols-2 gap-12 items-start bg-neutral-100 dark:bg-neutral-900 p-6 sm:p-10 rounded-xl border border-primary/20">
 
           {/* Problem Column */}
           <div className="space-y-6">
-            <h3 className="text-3xl
- font-bold text-neutral-800 dark:text-white"> {/* */}
+            {/* FIX: Ensure mobile text scales down (text-2xl) */}
+            <h3 className="text-2xl sm:text-3xl font-bold text-neutral-800 dark:text-white">
               The Generic Fitment Problem
             </h3>
-            <ul className="space-y-3 text-neutral-600 dark:text-neutral-400 text-lg">
+            <ul className="space-y-3 text-neutral-600 dark:text-neutral-400 text-base sm:text-lg">
               <li className="flex items-start">
-                <span className="text-destructive font-extrabold text-2xl mr-3 leading-none">×</span>
-                 <p>High-pressure sales and unnecessary upsells based on commission targets.</p> {/* */}
+                <span className="text-destructive font-extrabold text-2xl mr-3 leading-none flex-shrink-0">×</span>
+                <p>High-pressure sales and unnecessary upsells based on commission targets.</p> 
               </li>
               <li className="flex items-start">
-                <span className="text-destructive font-extrabold text-2xl mr-3 leading-none">×</span>
+                <span className="text-destructive font-extrabold text-2xl mr-3 leading-none flex-shrink-0">×</span>
                 <p>Low-quality assessments that ignore critical safety components (shocks/brakes).</p>
               </li>
-               <li className="flex items-start"> {/* */}
-                <span className="text-destructive font-extrabold text-2xl mr-3 leading-none">×</span>
+               <li className="flex items-start">
+                <span className="text-destructive font-extrabold text-2xl mr-3 leading-none flex-shrink-0">×</span>
                 <p>Inexperienced staff leading to improper fitting that can compromise tyre life.</p>
               </li>
             </ul>
@@ -3715,35 +3698,41 @@ export default function TrustAndProblem() {
 
 
            {/* Solution Column */}
-          <div className="space-y-6"> {/* */}
-            <h3 className="text-3xl font-bold text-primary">
+          <div className="space-y-6">
+            {/* FIX: Ensure mobile text scales down (text-2xl) */}
+            <h3 className="text-2xl sm:text-3xl font-bold text-primary">
               The Alberton Tyre Clinic Difference
             </h3>
-            <ul className="space-y-3 text-neutral-800 dark:text-white text-lg">
+            <ul className="space-y-3 text-neutral-800 dark:text-white text-base sm:text-lg">
               <li className="flex items-start">
-                 <span className="text-primary font-extrabold text-2xl mr-3 leading-none">✓</span> {/* */}
+                 <span className="text-primary font-extrabold text-2xl mr-3 leading-none flex-shrink-0">✓</span> 
                 <p>Your FREE 6-Point Assessment is Safety-Driven, Not Sales-Driven.</p>
               </li>
               <li className="flex items-start">
-                <span className="text-primary font-extrabold text-2xl mr-3 leading-none">✓</span>
-                 <p>Honest advice from a family of fitment experts, guaranteed.</p> {/* */}
+                <span className="text-primary font-extrabold text-2xl mr-3 leading-none flex-shrink-0">✓</span>
+                 <p>Honest advice from a family of fitment experts, guaranteed.</p> 
               </li>
               <li className="flex items-start">
-                <span className="text-primary font-extrabold text-2xl mr-3 leading-none">✓</span>
+                <span className="text-primary font-extrabold text-2xl mr-3 leading-none flex-shrink-0">✓</span>
                 <p>Precision fitment that maximizes performance, safety, and tyre longevity.</p>
-               </li> {/* */}
+               </li>
             </ul>
             <div className="pt-4">
-                <Button asChild className="text-lg bg-primary hover:bg-primary/hover">
+                {/* FIX: Set button text to wrap for smaller screens (whitespace-normal) and scale size */}
+                <Button 
+                    asChild 
+                    className="text-base sm:text-lg bg-primary hover:bg-primary/hover whitespace-normal h-auto py-3 px-4" 
+                    size="lg" // Use size 'lg' for consistent height on larger screens
+                >
                     <Link href="/assessment">Book Your Free, Honest Assessment</Link>
                 </Button>
-             </div> {/* */}
+             </div>
           </div>
         </div>
       </div>
     </section>
   );
-} //
+}
 
 --------------------------------------------------------------------------------📄 FILE PATH: C:\Users\User1\alberton-tyre-clinic\src\components\ui\button.tsx--------------------------------------------------------------------------------import * as React from "react"
 import { Slot } from "@radix-ui/react-slot"

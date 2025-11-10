@@ -8,7 +8,7 @@ import Image from 'next/image';
 // Metadata for SEO and Authority: Targeting "Family-Run", "Since 1989", and key services.
 export const metadata = {
   title: "Alberton Tyre Clinic History | Family-Run Tyre & Brake Experts Since 1989",
-  description: "Learn about the Alberton Tyre Clinic family legacy. Over 35 years of trusted, honest tyre and brake service in Alberton. Meet the expert staff who prioritize your safety.",
+  description: "Learn about the Alberton Tyre Clinic family legacy. Over 36 years of trusted, honest tyre and brake service in Alberton. Meet the expert staff who prioritize your safety.",
 };
 export default function AboutPage() {
     return (
@@ -17,7 +17,7 @@ export default function AboutPage() {
             <section className="pt-32 pb-20 bg-neutral-900 dark:bg-neutral-950 text-white border-b-8 border-primary">
                 <div className="container mx-auto px-4 text-center max-w-4xl">
                     <h1 className="text-5xl font-extrabold mb-4 uppercase">
-                        Our <span className="text-primary">35-Year</span> Heritage in <span className="text-primary">Alberton</span>
+                        Our <span className="text-primary">36-Year</span> Heritage in <span className="text-primary">Alberton</span>
                     </h1>
                     <p className="text-xl text-neutral-400">
                         A family business founded on honesty, expertise, and a commitment to your vehicle&apos;s safety since 1989.
@@ -55,11 +55,11 @@ export default function AboutPage() {
                         <ul className="space-y-3 pt-3">
                             <li className="flex items-center text-primary font-semibold">
                                 <Briefcase className="h-5 w-5 mr-3" />
-                                Over three decades of specialized focus on  vehicle safety components  in the Alberton area.
+                                Over **three decades** of specialized focus on vehicle safety components in the Alberton area.
                             </li>
                             <li className="flex items-center text-primary font-semibold">
                                 <MapPin className="h-5 w-5 mr-3" />
-                                Deeply committed to the  Alberton community  from our New Redruth location.
+                                Deeply committed to the Alberton community from our New Redruth location.
                             </li>
                             <li className="flex items-center text-primary font-semibold">
                                 <Users className="h-5 w-5 mr-3" />
@@ -84,7 +84,7 @@ export default function AboutPage() {
                             <h4 className="text-xl font-bold text-neutral-800 dark:text-white">Jaco V.</h4>
                             <p className="text-primary font-semibold mb-3">Shop Manager & Chief Technician</p>
                             <p className="text-sm text-neutral-600 dark:text-neutral-400">
-                                Jaco ensures every fitment meets our 1989 standard of excellence. Focused on customer satisfaction and honest  tyre, brake, and shock  advice.
+                                Jaco ensures every fitment meets our **1989** standard of excellence. Focused on customer satisfaction and honest tyre, brake, and shock advice.
                             </p>
                         </div>
 
@@ -94,7 +94,7 @@ export default function AboutPage() {
                             <h4 className="text-xl font-bold text-neutral-800 dark:text-white">Shane J.</h4>
                             <p className="text-primary font-semibold mb-3">Sales & Customer Relations</p>
                             <p className="text-sm text-neutral-600 dark:text-neutral-400">
-                                Known for quick service and getting customers the best price on premium tyre brands . Your first point of contact for quotes and queries.
+                                Known for quick service and getting customers the best price on premium tyre brands. Your first point of contact for quotes and queries.
                             </p>
                         </div>
                         
@@ -113,7 +113,7 @@ export default function AboutPage() {
                             <HeartHandshake className="h-16 w-16 text-white mx-auto mt-6 mb-4" />
                             <h4 className="text-2xl font-bold text-primary mb-3">The Full Team</h4>
                             <p className="text-sm text-neutral-300">
-                                Every member of the Alberton Tyre Clinic team is dedicated to efficient, honest, and expert service in  tyre fitment  and  vehicle maintenance .
+                                Every member of the Alberton Tyre Clinic team is dedicated to efficient, honest, and expert service in tyre fitment and vehicle maintenance.
                             </p>
                             <Button asChild className="mt-4 bg-primary hover:bg-primary/hover text-white font-bold">
                                 <Link href="/contact">Book Your Visit</Link>
@@ -130,7 +130,7 @@ export default function AboutPage() {
                         Ready to Join Our Family of Satisfied Drivers?
                     </h2>
                     <p className="text-lg mb-6">
-                        Book your FREE 6-Point Vehicle Assessment now and experience the 35-year difference in  Alberton tyre service .
+                        Book your FREE 6-Point Vehicle Assessment now and experience the **36-year** difference in Alberton tyre service.
                     </p>
                     <Button asChild size="lg" className="bg-white text-primary hover:bg-neutral-100 font-bold">
                         <Link href="/assessment">Book My FREE Assessment</Link>

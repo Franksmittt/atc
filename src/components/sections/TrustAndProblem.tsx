@@ -2,10 +2,10 @@
 // Server Component
 
 import React from 'react';
-import { Truck, Shield, DollarSign } from 'lucide-react'; // Trust Icons
+import { Truck, Shield, DollarSign } from 'lucide-react';
+// Trust Icons
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
-
 export default function TrustAndProblem() {
   return (
     // Contrasting background (light/white) below the dark hero
@@ -20,7 +20,7 @@ export default function TrustAndProblem() {
            </h2>
           <p className="text-lg sm:text-xl text-neutral-600 dark:text-neutral-400 max-w-3xl mx-auto">
              {/* Use text-lg on mobile, scale to xl on sm/md screens */}
-            We are Alberton&apos;s trusted family-run fitment center, established in 1996. We know your safety matters.
+            We are Alberton&apos;s trusted family-run fitment center, established in **1989**. We know your safety matters.
           </p>
         </div>
 
@@ -32,8 +32,7 @@ export default function TrustAndProblem() {
             <Truck className="h-10 w-10 text-primary mx-auto mb-4" />
             <h3 className="text-xl font-semibold text-neutral-800 dark:text-white mb-2">Local & Reliable</h3>
             <p className="text-neutral-600 dark:text-neutral-400 text-sm">
-               
-              28 years serving Alberton. We don&apos;t guess; we rely on experience to fit your vehicle right, every time.
+               **36 years** serving Alberton. We don&apos;t guess; we rely on experience to fit your vehicle right, every time.
             </p>
           </div>
 
@@ -41,7 +40,7 @@ export default function TrustAndProblem() {
             <Shield className="h-10 w-10 text-primary mx-auto mb-4" />
             <h3 className="text-xl font-semibold text-neutral-800 dark:text-white mb-2">Safety First Policy</h3>
             <p className="text-neutral-600 dark:text-neutral-400 text-sm">
-               We focus on premium brands (Pirelli, ATE) and assess your full vehicle safety components, not just the tyres. 
+               We focus on premium brands (Pirelli, ATE) and assess your full vehicle safety components, not just the tyres.
             </p>
           </div>
 
@@ -49,7 +48,7 @@ export default function TrustAndProblem() {
             <DollarSign className="h-10 w-10 text-primary mx-auto mb-4" />
             <h3 className="text-xl font-semibold text-neutral-800 dark:text-white mb-2">Fair, Honest Pricing</h3>
             <p className="text-neutral-600 dark:text-neutral-400 text-sm">
-               We provide the best local pricing and will never upsell a service you don&apos;t actually need. 
+               We provide the best local pricing and will never upsell a service you don&apos;t actually need.
             </p>
           </div>
         </div>
@@ -66,7 +65,7 @@ export default function TrustAndProblem() {
             <ul className="space-y-3 text-neutral-600 dark:text-neutral-400 text-base sm:text-lg">
               <li className="flex items-start">
                 <span className="text-destructive font-extrabold text-2xl mr-3 leading-none flex-shrink-0">×</span>
-                 <p>High-pressure sales and unnecessary upsells based on commission targets.</p> 
+                <p>High-pressure sales and unnecessary upsells based on commission targets.</p> 
               </li>
               <li className="flex items-start">
                 <span className="text-destructive font-extrabold text-2xl mr-3 leading-none flex-shrink-0">×</span>

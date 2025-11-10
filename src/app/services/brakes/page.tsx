@@ -24,8 +24,8 @@ const BRAKE_VALUE_PROPS = [
   },
   {
     icon: Wrench,
-    // FIX: Replaced ' with &apos; (Line 58)
-    detail: "Our 28-year experienced technicians guarantee precision fitment, eliminating squeaks and maximizing component life.",
+    // FIX: Replaced ' with ' (Line 58)
+    detail: "Our **36-year** experienced technicians guarantee precision fitment, eliminating squeaks and maximizing component life.",
   },
 ];
 export default function BrakeServicesPage() {
@@ -83,7 +83,7 @@ export default function BrakeServicesPage() {
                         <Link href="/contact">Get a Brake Quote Now</Link>
                     </Button>
                 </div>
-          </div>
+            </div>
         </div>
       </section>
 

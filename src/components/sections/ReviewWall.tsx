@@ -5,7 +5,6 @@ import React from 'react';
 import { Star, Zap, DollarSign, HeartHandshake } from 'lucide-react';
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
-
 const TESTIMONIALS = [
     {
         quote: "Excellent service, with pricing better than I could find from anyone in Alberton on batteries. Staff are knowledgeable and efficient.",
@@ -28,11 +27,10 @@ const TESTIMONIALS = [
     {
         quote: "My grandfather used them, my dad used them and now I use them. They have been giving great service for 3 generations of my family and they are still the best I know.",
         author: "Craig Joshua Boden",
-        claim: "Generational Trust (28 Years)",
+        claim: "Generational Trust (36 Years)",
         icon: Star,
     },
 ];
-
 export default function ReviewWall() {
     return (
         // Light background for a clean, professional look
@@ -44,7 +42,7 @@ export default function ReviewWall() {
                         Real Reviews. Real <span className="text-primary">Alberton Trust.</span>
                     </h2> {/* */}
                     <p className="text-xl text-neutral-600 dark:text-neutral-400">
-                         {/* Corrected: Replaced 'don't' with 'don&apos;t' */}
+                         {/* Corrected: Replaced 'don't' with 'don't' */}
                         We don&apos;t just promise service; our customers prove it. Read hundreds more like these on Google.
                     </p> {/* */}
                 </header>
@@ -57,18 +55,19 @@ export default function ReviewWall() {
                              className="bg-neutral-100 dark:bg-neutral-900 p-6 rounded-xl shadow-lg border-t-4 border-primary/50 flex flex-col justify-between h-full" //
                         >
                             <review.icon className="h-6 w-6 text-primary mb-3" />
-                             {/* Corrected: Replaced surrounding quotes with HTML entities */}
+                            {/* Corrected: Replaced surrounding quotes with HTML entities for the array item */}
                             <p className="text-lg italic text-neutral-800 dark:text-neutral-200 mb-4">
                                 &quot;{review.quote}&quot;
                             </p> {/* */}
                             <footer>
                                  <p className="font-semibold text-sm text-neutral-700 dark:text-neutral-300">
-                                    — {review.author}
+                                     — {review.author}
                                  </p> {/* */}
                                 <p className="text-xs font-bold text-primary mt-1">
                                     Claim: {review.claim}
                                  </p> {/* */}
                             </footer>
+                       
                         </blockquote>
                     ))}
                 </div>
@@ -76,11 +75,12 @@ export default function ReviewWall() {
 
                  {/* Final CTA to View All Proof */}
                 <div className="text-center mt-12"> {/* */}
-                    <Button variant="outline" asChild size="lg" className="border-primary text-primary hover:bg-primary/5 dark:text-primary dark:border-primary">
+                   <Button variant="outline" asChild size="lg" className="border-primary text-primary hover:bg-primary/5 dark:text-primary dark:border-primary">
                         <Link href="/reviews">View 4.7/5 Stars from 310+ Customers →</Link>
                      </Button> {/* */}
                 </div>
             </div>
         </section>
+    
     );
 } //
