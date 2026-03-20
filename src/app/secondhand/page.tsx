@@ -18,13 +18,15 @@ type WheelItem = {
   imageBack: string;
 };
 
-const CONDITION_BADGE_STYLES: Record<Condition, string> = {
-  Excellent:
-    "bg-emerald-500/15 text-emerald-500 border border-emerald-500/35",
-  Good: "bg-sky-500/15 text-sky-500 border border-sky-500/35",
-  Fair: "bg-amber-500/15 text-amber-500 border border-amber-500/35",
-  Poor: "bg-rose-500/15 text-rose-500 border border-rose-500/35",
+/** Card + tab: solid black fill, colored stroke, high-contrast text */
+const CONDITION_STROKE: Record<Condition, string> = {
+  Excellent: "border-emerald-400 text-white",
+  Good: "border-sky-400 text-white",
+  Fair: "border-amber-400 text-white",
+  Poor: "border-rose-400 text-white",
 };
+
+const CONDITIONS: Condition[] = ["Excellent", "Good", "Fair", "Poor"];
 
 const MOCK_INVENTORY: WheelItem[] = [
   {
@@ -108,6 +110,7 @@ const MOCK_INVENTORY: WheelItem[] = [
 ];
 
 export default function SecondhandPage() {
+  const [conditionFilter, setConditionFilter] = useState<"all" | Condition>("all");
   const [sizeFilter, setSizeFilter] = useState<string>("all");
   const [pcdFilter, setPcdFilter] = useState<string>("all");
   const [sortBy, setSortBy] = useState<string>("newest");
@@ -123,9 +126,11 @@ export default function SecondhandPage() {
 
   const visibleItems = useMemo(() => {
     const filtered = MOCK_INVENTORY.filter((item) => {
+      const conditionMatch =
+        conditionFilter === "all" || item.condition === conditionFilter;
       const sizeMatch = sizeFilter === "all" || item.size.toString() === sizeFilter;
       const pcdMatch = pcdFilter === "all" || item.pcd === pcdFilter;
-      return sizeMatch && pcdMatch;
+      return conditionMatch && sizeMatch && pcdMatch;
     });
 
     if (sortBy === "size-asc") {
@@ -137,7 +142,7 @@ export default function SecondhandPage() {
     }
 
     return filtered;
-  }, [pcdFilter, sizeFilter, sortBy]);
+  }, [conditionFilter, pcdFilter, sizeFilter, sortBy]);
 
   return (
     <main className="bg-neutral-950 text-white">
@@ -154,10 +159,51 @@ export default function SecondhandPage() {
       </section>
 
       <section className="border-b border-neutral-800 bg-neutral-900/60">
-        <div className="container mx-auto max-w-screen-2xl px-4 py-6">
+        <div className="container mx-auto max-w-screen-2xl px-4 py-6 space-y-5">
+          <div>
+            <p className="mb-2 text-xs font-semibold uppercase tracking-wider text-neutral-500">
+              Condition
+            </p>
+            <div
+              className="flex flex-wrap gap-2"
+              role="tablist"
+              aria-label="Filter by condition"
+            >
+              <button
+                type="button"
+                role="tab"
+                aria-selected={conditionFilter === "all"}
+                onClick={() => setConditionFilter("all")}
+                className={`rounded-lg border-2 px-4 py-2.5 text-sm font-bold uppercase tracking-wide transition-colors ${
+                  conditionFilter === "all"
+                    ? "border-primary bg-black text-white ring-2 ring-primary/50"
+                    : "border-neutral-500 bg-black text-neutral-200 hover:border-neutral-400 hover:text-white"
+                }`}
+              >
+                All
+              </button>
+              {CONDITIONS.map((cond) => (
+                <button
+                  key={cond}
+                  type="button"
+                  role="tab"
+                  aria-selected={conditionFilter === cond}
+                  onClick={() => setConditionFilter(cond)}
+                  className={`rounded-lg border-2 bg-black px-4 py-2.5 text-sm font-bold uppercase tracking-wide transition-colors ${
+                    conditionFilter === cond
+                      ? `${CONDITION_STROKE[cond]} ring-2 ring-offset-2 ring-offset-neutral-900 ring-primary/60`
+                      : `${CONDITION_STROKE[cond]} opacity-90 hover:opacity-100`
+                  }`}
+                >
+                  {cond}
+                </button>
+              ))}
+            </div>
+          </div>
+
           <div className="grid grid-cols-1 gap-3 sm:grid-cols-3">
             <select
-              className="rounded-md border border-neutral-700 bg-neutral-950 px-3 py-2 text-sm"
+              className="rounded-lg border-2 border-neutral-500 bg-black px-3 py-2.5 text-sm text-white"
               value={sizeFilter}
               onChange={(event) => setSizeFilter(event.target.value)}
               aria-label="Filter by wheel size"
@@ -171,7 +217,7 @@ export default function SecondhandPage() {
             </select>
 
             <select
-              className="rounded-md border border-neutral-700 bg-neutral-950 px-3 py-2 text-sm"
+              className="rounded-lg border-2 border-neutral-500 bg-black px-3 py-2.5 text-sm text-white"
               value={pcdFilter}
               onChange={(event) => setPcdFilter(event.target.value)}
               aria-label="Filter by PCD"
@@ -185,7 +231,7 @@ export default function SecondhandPage() {
             </select>
 
             <select
-              className="rounded-md border border-neutral-700 bg-neutral-950 px-3 py-2 text-sm"
+              className="rounded-lg border-2 border-neutral-500 bg-black px-3 py-2.5 text-sm text-white"
               value={sortBy}
               onChange={(event) => setSortBy(event.target.value)}
               aria-label="Sort wheel results"
@@ -208,7 +254,7 @@ export default function SecondhandPage() {
               >
                 <div className="relative aspect-square overflow-hidden bg-black">
                   <span
-                    className={`absolute left-3 top-3 z-10 rounded-full px-3 py-1 text-xs font-bold uppercase tracking-wide ${CONDITION_BADGE_STYLES[item.condition]}`}
+                    className={`absolute left-3 top-3 z-10 rounded-lg border-2 bg-black px-3 py-1.5 text-xs font-bold uppercase tracking-wide ${CONDITION_STROKE[item.condition]}`}
                   >
                     {item.condition}
                   </span>
