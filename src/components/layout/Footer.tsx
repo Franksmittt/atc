@@ -40,6 +40,7 @@ export default function Footer() {
                         </h4>
                         <ul className="space-y-3 text-sm">
                             <li><Link href="/services" className="hover:text-primary transition-colors">All Services</Link></li>
+                            <li><Link href="/secondhand" className="hover:text-primary transition-colors">Secondhand Wheels</Link></li>
                             <li><Link href="/about" className="hover:text-primary transition-colors">Our Experts</Link></li>
                             <li><Link href="/blog" className="hover:text-primary transition-colors">Safety Blog</Link></li>
                            <li><Link href="/contact" className="hover:text-primary transition-colors">Contact Us</Link></li>
@@ -131,6 +132,8 @@ export default function Footer() {
 
                     {/* Legal Links */}
                     <div className="space-x-4">
+                        <Link href="/secondhand/admin" className="hover:text-primary transition-colors">Admin Login</Link>
+                        <span className="hidden md:inline-block">|</span>
                          <Link href="/privacy" className="hover:text-primary transition-colors">Privacy Policy</Link>
                         <span className="hidden md:inline-block">|</span> {/* */}
                         <Link href="/terms" className="hover:text-primary transition-colors">Terms of Service</Link>

@@ -17,6 +17,7 @@ import { Phone, MapPin, Clock, MessageSquareText, Menu, X } from 'lucide-react';
 const NAV_LINKS = [
     { name: 'Our Experts', href: '/about' },
     { name: 'Services & Brands', href: '/services' },
+    { name: 'Secondhand', href: '/secondhand' },
     { name: 'Blog', href: '/blog' },
     { name: 'Contact Us', href: '/contact' },
 ];
