@@ -2,9 +2,10 @@
 // Server Component - High trust, low friction page. Optimized for Authority & Local SEO.
 import React from 'react';
 import Link from 'next/link';
-import { Briefcase, MapPin, Users, HeartHandshake } from 'lucide-react';
+import { Briefcase, MapPin, Users } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import Image from 'next/image';
+import MeetTheStaff from '@/components/sections/MeetTheStaff';
 // Metadata for SEO and Authority: Targeting "Family-Run", "Since 1989", and key services.
 export const metadata = {
   title: "Alberton Tyre Clinic History | Family-Run Tyre & Brake Experts Since 1989",
@@ -71,57 +72,7 @@ export default function AboutPage() {
             </section>
 
             {/* 3. Section: Meet the Experts (Staff Authority) */}
-            <section className="py-24 bg-neutral-100 dark:bg-neutral-900">
-                <div className="container mx-auto px-4 max-w-6xl text-center">
-                    <h3 className="text-4xl font-extrabold text-neutral-800 dark:text-white mb-12">
-                        Meet the Staff Who Guarantee Your Safety
-                    </h3>
-                    
-                    <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-8">
-                        {/* Staff Member 1: Jaco (Manager/Lead) */}
-                        <div className="p-6 bg-white dark:bg-neutral-800 rounded-xl shadow-lg border-t-4 border-primary/70">
-                            <Image src="/images/about/staff-jaco.jpg" alt="Jaco V., Shop Manager at Alberton Tyre Clinic" width={200} height={200} className="rounded-full mx-auto mb-4 w-32 h-32 object-cover border-4 border-primary/50" />
-                            <h4 className="text-xl font-bold text-neutral-800 dark:text-white">Jaco V.</h4>
-                            <p className="text-primary font-semibold mb-3">Shop Manager & Chief Technician</p>
-                            <p className="text-sm text-neutral-600 dark:text-neutral-400">
-                                Jaco ensures every fitment meets our **1989** standard of excellence. Focused on customer satisfaction and honest tyre, brake, and shock advice.
-                            </p>
-                        </div>
-
-                        {/* Staff Member 2: Shane (Service/Sales) */}
-                        <div className="p-6 bg-white dark:bg-neutral-800 rounded-xl shadow-lg border-t-4 border-primary/70">
-                            <Image src="/images/about/staff-shane.jpg" alt="Shane J., Sales and Customer Relations" width={200} height={200} className="rounded-full mx-auto mb-4 w-32 h-32 object-cover border-4 border-primary/50" />
-                            <h4 className="text-xl font-bold text-neutral-800 dark:text-white">Shane J.</h4>
-                            <p className="text-primary font-semibold mb-3">Sales & Customer Relations</p>
-                            <p className="text-sm text-neutral-600 dark:text-neutral-400">
-                                Known for quick service and getting customers the best price on premium tyre brands. Your first point of contact for quotes and queries.
-                            </p>
-                        </div>
-                        
-                        {/* Staff Member 3: Carel (Fitment Specialist) */}
-                        <div className="p-6 bg-white dark:bg-neutral-800 rounded-xl shadow-lg border-t-4 border-primary/70">
-                            <Image src="/images/about/staff-carel.jpg" alt="Carel W., Lead Alignment Technician" width={200} height={200} className="rounded-full mx-auto mb-4 w-32 h-32 object-cover border-4 border-primary/50" />
-                            <h4 className="text-xl font-bold text-neutral-800 dark:text-white">Carel W.</h4>
-                            <p className="text-primary font-semibold mb-3">Lead 3D Wheel Alignment Technician</p>
-                            <p className="text-sm text-neutral-600 dark:text-neutral-400">
-                                The expert in 3D wheel alignment and balancing, ensuring your high-performance tyres last as long as they should.
-                            </p>
-                        </div>
-
-                        {/* Staff Member 4: The Team (Collective Trust) */}
-                        <div className="p-6 bg-neutral-800 dark:bg-neutral-900 rounded-xl shadow-lg border-t-4 border-primary">
-                            <HeartHandshake className="h-16 w-16 text-white mx-auto mt-6 mb-4" />
-                            <h4 className="text-2xl font-bold text-primary mb-3">The Full Team</h4>
-                            <p className="text-sm text-neutral-300">
-                                Every member of the Alberton Tyre Clinic team is dedicated to efficient, honest, and expert service in tyre fitment and vehicle maintenance.
-                            </p>
-                            <Button asChild className="mt-4 bg-primary hover:bg-primary/hover text-white font-bold">
-                                <Link href="/contact">Book Your Visit</Link>
-                            </Button>
-                        </div>
-                    </div>
-                </div>
-            </section>
+            <MeetTheStaff />
 
              {/* 4. CTA Section: Repetition of Lead Magnet (Final Conversion Push) */}
             <section className="py-16 bg-primary dark:bg-primary/90 text-white text-center">
