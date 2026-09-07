@@ -19,6 +19,7 @@ export type TyreProduct = {
   typicalSizes: string[];
   bestFor: string;
   imageFile: string;
+  imageFiles?: string[];
 };
 
 export type TyreBrand = {
@@ -74,7 +75,13 @@ export const TYRE_BRANDS: TyreBrand[] = [
         ],
         typicalSizes: ["205/55R16", "215/55R17", "225/45R17", "225/50R17"],
         bestFor: "Golf / A3 / 3 Series class cars and family sedans that need a premium daily tyre.",
-        imageFile: "turanza-t005.jpg",
+        imageFile: "turanza-t005-1.jpg",
+        imageFiles: [
+          "turanza-t005-1.jpg",
+          "turanza-t005-2.jpg",
+          "turanza-t005-3.jpg",
+          "turanza-t005-4.jpg",
+        ],
       },
       {
         slug: "turanza-6",
@@ -750,4 +757,9 @@ export function productImagePath(brandSlug: string, imageFile: string): string {
 
 export function productImageExists(brandSlug: string, imageFile: string): boolean {
   return existsSync(join(process.cwd(), "public", "images", "brands", brandSlug, imageFile));
+}
+
+export function getProductImageFiles(brandSlug: string, product: TyreProduct): string[] {
+  const candidates = product.imageFiles?.length ? product.imageFiles : [product.imageFile];
+  return candidates.filter((file) => productImageExists(brandSlug, file));
 }
