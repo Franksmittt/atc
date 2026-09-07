@@ -12,8 +12,14 @@ const BRAND_CATEGORIES = [
     name: "Tyres & Fitment",
     icon: Truck,
     brands: [
-      "Pirelli (Dealer)", "Dunlop", "Yokahama", "Kumho",
-      "Michelin", "Bridgestone", "BF Goodrich", "Falken"
+      { name: "Bridgestone", href: "/brands/bridgestone" },
+      { name: "Continental", href: "/brands/continental" },
+      { name: "Goodyear", href: "/brands/goodyear" },
+      { name: "Dunlop", href: "/brands/dunlop" },
+      { name: "Hankook", href: "/brands/hankook" },
+      { name: "Pirelli (Dealer)", href: "/services/tyres" },
+      { name: "Michelin", href: "/services/tyres" },
+      { name: "Falken", href: "/brands/dunlop" },
     ],
     premium: "Pirelli",
   },
@@ -21,8 +27,12 @@ const BRAND_CATEGORIES = [
     name: "Safety & Suspension",
     icon: Disc3,
     brands: [
-      "ATE (Brakes)", "Textar", "Safeline",
-      "Bilstein (Shocks)", "Monroe", "Gabriel"
+      { name: "ATE (Brakes)", href: "/services/brakes" },
+      { name: "Textar", href: "/services/brakes" },
+      { name: "Safeline", href: "/services/brakes" },
+      { name: "Bilstein (Shocks)", href: "/services/shocks" },
+      { name: "Monroe", href: "/services/shocks" },
+      { name: "Gabriel", href: "/services/shocks" },
     ],
     premium: "ATE & Bilstein",
   },
@@ -30,8 +40,13 @@ const BRAND_CATEGORIES = [
     name: "Wheels & Power",
     icon: BatteryCharging,
     brands: [
-      "Lenso", "A-Line Wheels", "Black Rhino",
-      "Willard (Batteries)", "Exide", "Atlas", "Raylite"
+      { name: "Lenso", href: "/secondhand" },
+      { name: "A-Line Wheels", href: "/secondhand" },
+      { name: "Black Rhino", href: "/secondhand" },
+      { name: "Willard (Batteries)", href: "/services/batteries" },
+      { name: "Exide", href: "/services/batteries" },
+      { name: "Atlas", href: "/services/batteries" },
+      { name: "Raylite", href: "/services/batteries" },
     ],
     premium: "Black Rhino & Willard",
   },
@@ -76,13 +91,14 @@ export default function BrandsOfAuthority() {
               {/* Brand List: Proximity & Simplicity */}
               <div className="grid grid-cols-2 gap-y-3 gap-x-4">
                 {category.brands.map(brand => (
-                  <p
-                     key={brand} //
+                  <Link
+                     key={brand.name}
+                    href={brand.href}
                     className="text-neutral-300 text-sm font-medium hover:text-white transition-colors flex items-center"
                   >
                     <Zap className="h-4 w-4 text-primary/80 mr-2 flex-shrink-0" />
-                     {brand} {/* */}
-                  </p>
+                     {brand.name}
+                  </Link>
                 ))}
               </div>
             </div>

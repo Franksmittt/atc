@@ -12,15 +12,17 @@ import TyreGuide from '@/components/sections/TyreGuide';
 export const metadata = {
   // Target keywords: Tyre Brands, Fitment, Pirelli, Michelin, Alberton
   title: "New Tyre Sales, Fitment & Alignment | Alberton's Premium Tyre Experts",
-  description: "Official dealer for Pirelli, Michelin, and 8 top brands. Get precision tyre fitting, computerized balancing, and 3D wheel alignment for guaranteed safety in Alberton.",
+  description: "Bridgestone, Continental, Goodyear, Dunlop and Hankook fitted in Alberton. Precision tyre fitting, computerized balancing, and 3D wheel alignment.",
 };
 
 // Data Structure for Key Tyre Brands & Value
 const PREMIUM_BRANDS = [
-  { name: "Pirelli", detail: "The ultimate in high-performance grip and wet-road safety. Official local dealer.", logo: "/logos/pirelli.svg" },
-  { name: "Michelin", detail: "Known for long tread life, fuel efficiency, and consistent handling over time.", logo: "/logos/michel.svg" },
-  { name: "Dunlop", detail: "A balance of quality and value for everyday local driving and long-distance comfort.", logo: "/logos/dunlop.svg" },
-  { name: "BF Goodrich", detail: "Rugged all-terrain and off-road capability for trucks and SUVs.", logo: "/logos/bfgoodrich.svg" },
+  { name: "Bridgestone", detail: "SA volume leader. Shop hero: Turanza T005. Local Dueler A/T002 for bakkies.", href: "/brands/bridgestone" },
+  { name: "Continental", detail: "Local plant + BestDrive network. Shop hero: PremiumContact 6, with PC7 as current flagship.", href: "/brands/continental" },
+  { name: "Goodyear", detail: "Major local manufacturer. Shop hero: EfficientGrip Performance 2. Wrangler for bakkies.", href: "/brands/goodyear" },
+  { name: "Dunlop", detail: "Sumitomo Rubber SA. Shop hero: Grandtrek AT5 with 100,000 km mileage warranty (T&Cs).", href: "/brands/dunlop" },
+  { name: "Hankook", detail: "Major import player. Shop hero: Ventus Prime 3, with Prime 4 as the current successor.", href: "/brands/hankook" },
+  { name: "Pirelli & Michelin", detail: "Premium import options we still quote alongside the local factory brands.", href: "/brands" },
 ];
 
 export default function TyreServicesPage() {
@@ -43,17 +45,17 @@ export default function TyreServicesPage() {
         <div className="container mx-auto px-4 max-w-7xl">
           
           <h2 className="text-4xl font-extrabold text-center text-neutral-800 dark:text-white mb-12">
-            Official Dealers for Premium Safety Brands
+            Current SA Tyre Brands We Fit
           </h2>
           
-          <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-8">
+          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-8">
             {PREMIUM_BRANDS.map((brand) => (
-              <div key={brand.name} className="p-6 bg-neutral-50 dark:bg-neutral-900 rounded-xl shadow-lg border border-neutral-200 dark:border-neutral-700 text-center">
-                {/* Image placeholder should be replaced with actual SVG or small logo */}
+              <Link key={brand.name} href={brand.href} className="p-6 bg-neutral-50 dark:bg-neutral-900 rounded-xl shadow-lg border border-neutral-200 dark:border-neutral-700 text-center hover:border-primary hover:shadow-xl transition-shadow">
                 <Handshake className="h-10 w-10 text-primary mx-auto mb-4" /> 
                 <h3 className="text-xl font-bold text-neutral-800 dark:text-white mb-2">{brand.name}</h3>
                 <p className="text-sm text-neutral-600 dark:text-neutral-400">{brand.detail}</p>
-              </div>
+                <span className="mt-3 inline-block text-sm font-bold text-primary">View products →</span>
+              </Link>
             ))}
           </div>
 
