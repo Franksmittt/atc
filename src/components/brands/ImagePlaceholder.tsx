@@ -16,7 +16,7 @@ export default function ImagePlaceholder({
   return (
     <div
       className={`flex flex-col items-center justify-center border-2 border-dashed border-primary/40 bg-neutral-900 text-center text-white ${
-        aspect === "logo" ? "aspect-[3/1] min-h-[72px] px-4" : "aspect-[4/5] min-h-[220px] px-6"
+        aspect === "logo" ? "aspect-[3/1] min-h-[72px] px-4" : "aspect-square min-h-[140px] max-w-[180px] px-3"
       } ${className}`}
       role="img"
       aria-label={`${label} image placeholder. Add ${filename}`}
