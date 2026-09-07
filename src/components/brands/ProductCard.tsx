@@ -2,7 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import type { TyreBrand, TyreProduct } from "@/lib/tyre-brands";
-import { productImageExists, productImagePath } from "@/lib/tyre-brands";
+import { getProductImageFiles, productImagePath } from "@/lib/tyre-brands";
 import ImagePlaceholder from "./ImagePlaceholder";
 
 const WHATSAPP_QUOTE =
@@ -15,38 +15,38 @@ export default function ProductCard({
   brand: TyreBrand;
   product: TyreProduct;
 }) {
-  const imageSrc = productImagePath(brand.slug, product.imageFile);
-  const hasImage = productImageExists(brand.slug, product.imageFile);
-  const imageClass = product.hero
-    ? "h-full min-h-[280px] rounded-none border-0 border-b md:border-b-0 md:border-r border-primary/20"
-    : "rounded-none border-0 border-b border-primary/20";
+  const imageFiles = getProductImageFiles(brand.slug, product);
 
   return (
     <article
       id={product.slug}
       className={`overflow-hidden rounded-xl bg-white shadow-lg border-t-4 border-primary dark:bg-neutral-800 ${
-        product.hero ? "md:grid md:grid-cols-[minmax(240px,38%)_1fr]" : ""
+        product.hero ? "md:grid md:grid-cols-[auto_minmax(0,1fr)] md:items-start" : ""
       }`}
     >
-      {hasImage ? (
-        <div className={`relative aspect-[4/5] min-h-[220px] bg-white ${imageClass}`}>
-          <Image
-            src={imageSrc}
-            alt={`${brand.name} ${product.name}`}
-            fill
-            className="object-contain p-6"
-            sizes="(min-width: 768px) 38vw, 100vw"
-          />
-        </div>
+      {imageFiles.length > 0 ? (
+        <ul className="grid grid-cols-2 gap-2 self-start bg-white p-3 md:w-[228px]">
+          {imageFiles.map((file, index) => (
+            <li key={file} className="overflow-hidden rounded-md bg-neutral-50">
+              <Image
+                src={productImagePath(brand.slug, file)}
+                alt={`${brand.name} ${product.name} view ${index + 1}`}
+                width={208}
+                height={240}
+                className="h-auto w-full object-contain"
+              />
+            </li>
+          ))}
+        </ul>
       ) : (
         <ImagePlaceholder
           label={product.name}
-          filename={imageSrc}
-          className={imageClass}
+          filename={productImagePath(brand.slug, product.imageFile)}
+          className="m-3 max-w-[180px] self-start rounded-md border-0"
         />
       )}
 
-      <div className="p-6 sm:p-8">
+      <div className="min-w-0 p-6 sm:p-8">
         <div className="flex flex-wrap items-center gap-2">
           {product.hero ? (
             <span className="rounded-full bg-primary px-3 py-1 text-xs font-bold uppercase tracking-wide text-white">
