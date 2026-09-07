@@ -40,10 +40,15 @@ export default function Footer() {
                         </h4>
                         <ul className="space-y-3 text-sm">
                             <li><Link href="/services" className="hover:text-primary transition-colors">All Services</Link></li>
+                            <li><Link href="/brands" className="hover:text-primary transition-colors">Tyre Brands</Link></li>
+                            <li><Link href="/brands/bridgestone" className="hover:text-primary transition-colors">Bridgestone</Link></li>
+                            <li><Link href="/brands/continental" className="hover:text-primary transition-colors">Continental</Link></li>
+                            <li><Link href="/brands/goodyear" className="hover:text-primary transition-colors">Goodyear</Link></li>
+                            <li><Link href="/brands/dunlop" className="hover:text-primary transition-colors">Dunlop</Link></li>
+                            <li><Link href="/brands/hankook" className="hover:text-primary transition-colors">Hankook</Link></li>
                             <li><Link href="/secondhand" className="hover:text-primary transition-colors">Secondhand Wheels</Link></li>
                             <li><Link href="/about" className="hover:text-primary transition-colors">Our Experts</Link></li>
-                            <li><Link href="/blog" className="hover:text-primary transition-colors">Safety Blog</Link></li>
-                           <li><Link href="/contact" className="hover:text-primary transition-colors">Contact Us</Link></li>
+                            <li><Link href="/contact" className="hover:text-primary transition-colors">Contact Us</Link></li>
                         </ul>
                      </div>
 

@@ -8,14 +8,14 @@ import Link from 'next/link';
 
 // Consolidated Brand List (Used twice for visual infinite looping)
 const ALL_BRANDS = [
-  { name: "Pirelli", icon: Truck },
-  { name: "ATE Brakes", icon: Disc3 },
-  { name: "Michelin", icon: Truck },
-  { name: "Willard Batteries", icon: BatteryCharging },
-  { name: "Bilstein Shocks", icon: Disc3 },
-  { name: "BF Goodrich", icon: Truck },
-  { name: "Dunlop", icon: Truck },
-  { name: "Exide Batteries", icon: BatteryCharging },
+  { name: "Bridgestone", icon: Truck, href: "/brands/bridgestone" },
+  { name: "Continental", icon: Truck, href: "/brands/continental" },
+  { name: "Goodyear", icon: Truck, href: "/brands/goodyear" },
+  { name: "Dunlop", icon: Truck, href: "/brands/dunlop" },
+  { name: "Hankook", icon: Truck, href: "/brands/hankook" },
+  { name: "Pirelli", icon: Truck, href: "/services/tyres" },
+  { name: "ATE Brakes", icon: Disc3, href: "/services/brakes" },
+  { name: "Willard Batteries", icon: BatteryCharging, href: "/services/batteries" },
 ];
 
 export default function BrandSlider() {
@@ -72,7 +72,7 @@ export default function BrandSlider() {
                 className="embla__slide flex-shrink-0 flex items-center justify-center min-w-max pr-6"
                 style={{ flex: '0 0 auto' }}
               > {/* */}
-                <Link href="/services" className="flex items-center space-x-2 sm:space-x-3 
+                <Link href={brand.href} className="flex items-center space-x-2 sm:space-x-3 
  group transition-opacity opacity-80 hover:opacity-100">
                     {/* RESPONSIVENESS: Reduced icon size on small screens */}
                     <brand.icon className="h-5 w-5 sm:h-6 sm:w-6 text-primary group-hover:animate-pulse" />
