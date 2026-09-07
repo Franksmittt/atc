@@ -1,7 +1,8 @@
+import Image from "next/image";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import type { TyreBrand, TyreProduct } from "@/lib/tyre-brands";
-import { productImagePath } from "@/lib/tyre-brands";
+import { productImageExists, productImagePath } from "@/lib/tyre-brands";
 import ImagePlaceholder from "./ImagePlaceholder";
 
 const WHATSAPP_QUOTE =
@@ -14,6 +15,12 @@ export default function ProductCard({
   brand: TyreBrand;
   product: TyreProduct;
 }) {
+  const imageSrc = productImagePath(brand.slug, product.imageFile);
+  const hasImage = productImageExists(brand.slug, product.imageFile);
+  const imageClass = product.hero
+    ? "h-full min-h-[280px] rounded-none border-0 border-b md:border-b-0 md:border-r border-primary/20"
+    : "rounded-none border-0 border-b border-primary/20";
+
   return (
     <article
       id={product.slug}
@@ -21,11 +28,23 @@ export default function ProductCard({
         product.hero ? "md:grid md:grid-cols-[minmax(240px,38%)_1fr]" : ""
       }`}
     >
-      <ImagePlaceholder
-        label={product.name}
-        filename={productImagePath(brand.slug, product.imageFile)}
-        className={product.hero ? "h-full min-h-[280px] rounded-none border-0 border-b md:border-b-0 md:border-r border-primary/20" : "rounded-none border-0 border-b border-primary/20"}
-      />
+      {hasImage ? (
+        <div className={`relative aspect-[4/5] min-h-[220px] bg-white ${imageClass}`}>
+          <Image
+            src={imageSrc}
+            alt={`${brand.name} ${product.name}`}
+            fill
+            className="object-contain p-6"
+            sizes="(min-width: 768px) 38vw, 100vw"
+          />
+        </div>
+      ) : (
+        <ImagePlaceholder
+          label={product.name}
+          filename={imageSrc}
+          className={imageClass}
+        />
+      )}
 
       <div className="p-6 sm:p-8">
         <div className="flex flex-wrap items-center gap-2">
