@@ -1,3 +1,6 @@
+import { existsSync } from "fs";
+import { join } from "path";
+
 export type SpecRow = {
   label: string;
   value: string;
@@ -743,4 +746,8 @@ export function brandLogoPath(slug: string): string {
 
 export function productImagePath(brandSlug: string, imageFile: string): string {
   return `/images/brands/${brandSlug}/${imageFile}`;
+}
+
+export function productImageExists(brandSlug: string, imageFile: string): boolean {
+  return existsSync(join(process.cwd(), "public", "images", "brands", brandSlug, imageFile));
 }
