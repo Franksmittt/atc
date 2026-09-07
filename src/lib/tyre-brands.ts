@@ -728,8 +728,17 @@ export function getAllBrandSlugs(): string[] {
   return TYRE_BRANDS.map((brand) => brand.slug);
 }
 
+const BRAND_LOGO_FILES: Record<string, string> = {
+  bridgestone: "logo.svg",
+  continental: "logo.svg",
+  goodyear: "logo.svg",
+  dunlop: "logo.png",
+  hankook: "logo.svg",
+};
+
 export function brandLogoPath(slug: string): string {
-  return `/images/brands/${slug}/logo.png`;
+  const file = BRAND_LOGO_FILES[slug] ?? "logo.svg";
+  return `/images/brands/${slug}/${file}`;
 }
 
 export function productImagePath(brandSlug: string, imageFile: string): string {

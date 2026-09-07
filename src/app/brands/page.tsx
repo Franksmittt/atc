@@ -1,8 +1,8 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
-import ImagePlaceholder from "@/components/brands/ImagePlaceholder";
-import { TYRE_BRANDS, brandLogoPath } from "@/lib/tyre-brands";
+import BrandLogo from "@/components/brands/BrandLogo";
+import { TYRE_BRANDS } from "@/lib/tyre-brands";
 
 export const metadata: Metadata = {
   title: "Tyre Brands in Alberton | Bridgestone, Continental, Goodyear, Dunlop, Hankook",
@@ -37,11 +37,10 @@ export default function BrandsIndexPage() {
                   key={brand.slug}
                   className="overflow-hidden rounded-xl bg-white shadow-lg border-t-4 border-primary dark:bg-neutral-800 md:grid md:grid-cols-[200px_1fr_auto]"
                 >
-                  <ImagePlaceholder
-                    label={`${brand.name} logo`}
-                    filename={brandLogoPath(brand.slug)}
-                    aspect="logo"
-                    className="h-full min-h-[140px] rounded-none border-0 border-b border-primary/20 md:border-b-0 md:border-r"
+                  <BrandLogo
+                    slug={brand.slug}
+                    name={brand.name}
+                    className="h-full min-h-[140px] border-b border-neutral-200 px-6 py-8 md:border-b-0 md:border-r"
                   />
                   <div className="p-6 sm:p-8">
                     <p className="text-xs font-bold uppercase tracking-wide text-primary">
