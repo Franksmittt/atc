@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
-import { TYRE_BRANDS, type TyreBrand, brandLogoPath } from "@/lib/tyre-brands";
-import ImagePlaceholder from "./ImagePlaceholder";
+import { TYRE_BRANDS, type TyreBrand } from "@/lib/tyre-brands";
+import BrandLogo from "./BrandLogo";
 import ProductCard from "./ProductCard";
 
 const WHATSAPP_QUOTE =
@@ -19,11 +19,10 @@ export default function BrandProfile({ brand }: { brand: TyreBrand }) {
             Tyre brands · #{brand.rank} in our SA line-up
           </p>
           <div className="mt-6 grid items-center gap-10 md:grid-cols-[220px_1fr]">
-            <ImagePlaceholder
-              label={`${brand.name} logo`}
-              filename={brandLogoPath(brand.slug)}
-              aspect="logo"
-              className="rounded-xl"
+            <BrandLogo
+              slug={brand.slug}
+              name={brand.name}
+              className="min-h-[96px] rounded-xl px-6 py-5"
             />
             <div>
               <h1 className="text-4xl font-extrabold uppercase sm:text-5xl">
@@ -98,6 +97,11 @@ export default function BrandProfile({ brand }: { brand: TyreBrand }) {
                 href={`/brands/${item.slug}`}
                 className="rounded-xl border border-neutral-200 bg-neutral-50 p-5 transition-shadow hover:border-primary hover:shadow-lg dark:border-neutral-700 dark:bg-neutral-900"
               >
+                <BrandLogo
+                  slug={item.slug}
+                  name={item.name}
+                  className="mb-4 min-h-[72px] rounded-lg border border-neutral-200 px-4 py-3 dark:border-neutral-700"
+                />
                 <p className="text-xs font-bold uppercase tracking-wide text-primary">
                   #{item.rank}
                 </p>
